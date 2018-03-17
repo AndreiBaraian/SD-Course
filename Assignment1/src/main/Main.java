@@ -1,15 +1,27 @@
 package main;
 
-import model.Show;
-import services.ShowService;
+import java.security.NoSuchAlgorithmException;
 
-public class Main {
+import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+import presentation.LoginView;
+
+public class Main extends Application {
 	
-	public static void main(String[] args){
+	Stage window;
+	Button button;
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException{
+		launch(args);
 		
-		Show show1 = new Show("Ballet", "Swan Lake", "Ionut Caras, Victor Rebengiuc", "18/12/2017", 340);
-		ShowService showService = new ShowService();
-		showService.addShow(show1);
+	}
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		
+		LoginView loginView = new LoginView(primaryStage);
+		loginView.display();
 		
 	}
 

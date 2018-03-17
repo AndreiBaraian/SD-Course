@@ -17,10 +17,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import connection.ConnectionFactory;
+import repository.dbmodel.Admin;
 
 public class AbstractRepo<T> {
 
-	private final Class<T> type;
+	protected final Class<T> type;
 	protected static final Logger LOGGER = Logger.getLogger(AbstractRepo.class.getName());
 	
 	@SuppressWarnings("unchecked")
@@ -28,10 +29,11 @@ public class AbstractRepo<T> {
 		this.type = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 	
-	private String createSelectQuery(String field) {
+	protected String createSelectQuery(String field) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT * FROM ");
 		sb.append(type.getSimpleName());
+		sb.append("table");
 		sb.append(" WHERE " + field + " =?");
 		return sb.toString();
 	}
@@ -155,6 +157,31 @@ public class AbstractRepo<T> {
 			ConnectionFactory.close(connection);
 		}
 		return insertedId;
+	}
+	
+	public T findByField(String field, String value) {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String query = createSelectQuery(field);
+		try{
+			connection = ConnectionFactory.getConnection();
+			statement = connection.prepareStatement(query);
+			statement.setString(1, value);
+			resultSet = statement.executeQuery();
+			List<T> objects = createObjects(resultSet);
+			if(objects.isEmpty())
+				return null;
+			else
+				return objects.get(0);
+		} catch (SQLException e){
+			LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
+		} finally {
+			ConnectionFactory.close(resultSet);
+			ConnectionFactory.close(statement);
+			ConnectionFactory.close(connection);
+		}
+		return null;
 	}
 	
 }

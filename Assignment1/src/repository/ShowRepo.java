@@ -1,6 +1,6 @@
 package repository;
 
-import model.Show;
+import repository.dbmodel.Show;
 
 public class ShowRepo extends AbstractRepo<Show> {
 	

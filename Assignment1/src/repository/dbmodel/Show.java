@@ -1,4 +1,4 @@
-package model;
+package repository.dbmodel;
 
 public class Show {
 	
@@ -8,6 +8,8 @@ public class Show {
 	private String distributionList;
 	private String dateOfShow;
 	private int numberOfTickets;
+	
+	public Show() {}
 	
 	public Show(String genre, String title, String distributionList, String dateOfShow, int numberOfTickets) {
 		this.genre = genre;

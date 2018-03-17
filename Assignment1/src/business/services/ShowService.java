@@ -1,11 +1,12 @@
-package services;
+package business.services;
 
-import model.Show;
+import repository.AbstractRepo;
 import repository.ShowRepo;
+import repository.dbmodel.Show;
 
 public class ShowService {
 	
-	private ShowRepo showRepo;
+	private AbstractRepo<Show> showRepo;
 	
 	public ShowService() {
 		this.showRepo = new ShowRepo();
