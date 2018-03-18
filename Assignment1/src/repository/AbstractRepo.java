@@ -159,6 +159,36 @@ public class AbstractRepo<T> {
 		return insertedId;
 	}
 	
+	private String createSelectQueryAll(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT * FROM ");
+		sb.append(type.getSimpleName());
+		sb.append("table");
+		return sb.toString();
+	}
+	
+	public List<T> findAll() {
+		Connection connection = null;	
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		String query = createSelectQueryAll();
+		try{
+			connection = ConnectionFactory.getConnection();
+			statement = connection.prepareStatement(query);
+			System.out.println(statement.toString());
+			resultSet = statement.executeQuery();
+			
+			return createObjects(resultSet);
+		} catch(SQLException e){
+			LOGGER.log(Level.WARNING, type.getName() + "DAO:findAll " + e.getMessage());
+		} finally{
+			ConnectionFactory.close(resultSet);
+			ConnectionFactory.close(statement);
+			ConnectionFactory.close(connection);
+		}
+		return null;
+	}
+	
 	public T findByField(String field, String value) {
 		Connection connection = null;
 		PreparedStatement statement = null;
@@ -175,7 +205,7 @@ public class AbstractRepo<T> {
 			else
 				return objects.get(0);
 		} catch (SQLException e){
-			LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
+			LOGGER.log(Level.WARNING, type.getName() + "DAO:findByField " + e.getMessage());
 		} finally {
 			ConnectionFactory.close(resultSet);
 			ConnectionFactory.close(statement);

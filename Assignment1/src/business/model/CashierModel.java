@@ -1,14 +1,16 @@
-package services.models;
+package business.model;
 
-public class AdminModel {
+public class CashierModel {
 	
-	 private int id;
+	private int id;
 	 private String username;
 	 private String password;
 	 private String firstName;
 	 private String lastName;
 	 
-	public AdminModel(String username, String password, String firstName, String lastName) {
+	 public CashierModel() {}
+	 
+	public CashierModel(String username, String password, String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
