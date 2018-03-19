@@ -52,7 +52,14 @@ public class CashierService {
 		cashierDB.setFirstName(cashierModel.getFirstName());
 		cashierDB.setLastName(cashierModel.getLastName());
 		cashierDB.setUsername(cashierModel.getUsername());
+		if(cashierModel.getPassword() != "")
+			cashierDB.setPassword(computeHash(cashierModel.getPassword()));
 		cashierRepo.update(cashierDB);
+	}
+	
+	public void deleteCashier(CashierModel cashierModel) {
+		Cashier cashierDB = cashierRepo.findById(cashierModel.getId());
+		cashierRepo.delete(cashierDB);
 	}
 	
 	public boolean checkPassword(String username, String password) {

@@ -37,7 +37,7 @@ public class AdminView {
 		initialize();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initialize() {
 		window.setTitle("Admin View");
 		
@@ -54,16 +54,24 @@ public class AdminView {
 		updateButton.setOnAction(e -> {
 			ObservableList<ObservableList> selectedCashier;
 			selectedCashier = tableView.getSelectionModel().getSelectedItems();
-			CashierModel model = convertRowToModel(selectedCashier);
-			//System.out.println(model);
-			UpdateView updateView = new UpdateView(cashierService,model);
+			CashierModel cashierModel = convertRowToModel(selectedCashier);
+			UpdateView updateView = new UpdateView(cashierService,cashierModel);
+			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+		});
+		
+		Button deleteButton = new Button("Delete cashier");
+		deleteButton.setOnAction(e -> {
+			ObservableList<ObservableList> selectedCashier;
+			selectedCashier = tableView.getSelectionModel().getSelectedItems();
+			CashierModel cashierModel = convertRowToModel(selectedCashier);
+			cashierService.deleteCashier(cashierModel);
 			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
 		});
 		
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10,10,10,10));
 		vBox.setSpacing(15);
-		vBox.getChildren().addAll(addButton, updateButton);
+		vBox.getChildren().addAll(addButton, updateButton, deleteButton);
 		
         tableView = new TableView<>();
 		

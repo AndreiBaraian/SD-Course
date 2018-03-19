@@ -280,4 +280,44 @@ public class AbstractRepo<T> {
 		}
 	}
 	
+	private String createDeleteQuery(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("DELETE FROM ");
+		sb.append(type.getSimpleName());
+		sb.append("table");
+		sb.append(" WHERE id=?");
+		return sb.toString();
+	}
+	
+	public void delete(T t){
+		Connection connection = null;
+		PreparedStatement deleteStatement = null;
+		ResultSet resultSet = null;
+		String deleteStatementString = createDeleteQuery();
+		try{
+			connection = ConnectionFactory.getConnection();
+			deleteStatement = connection.prepareStatement(deleteStatementString);
+			PropertyDescriptor propertyDescriptor = new PropertyDescriptor(t.getClass().getDeclaredFields()[0].getName(),type);
+			Method method = propertyDescriptor.getReadMethod();
+			Object value = method.invoke(t);
+			deleteStatement.setObject(1, value);
+			System.out.println(deleteStatement.toString());
+			deleteStatement.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.log(Level.WARNING, type.getName() + "DAO:Delete " + e.getMessage());
+		} catch (IntrospectionException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionFactory.close(resultSet);
+			ConnectionFactory.close(deleteStatement);
+			ConnectionFactory.close(connection);
+		}
+	}
+	
 }
