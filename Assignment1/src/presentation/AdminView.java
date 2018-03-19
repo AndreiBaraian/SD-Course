@@ -1,19 +1,34 @@
 package presentation;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import business.model.CashierModel;
 import business.services.AdminService;
 import business.services.CashierService;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class AdminView {
 	
 	private Stage window;
 	private AdminService adminService;
 	private CashierService cashierService;
+	@SuppressWarnings("rawtypes")
+	private TableView tableView;
 	
 	public AdminView(Stage window) {
 		this.window = window;
@@ -22,27 +37,58 @@ public class AdminView {
 		initialize();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void initialize() {
 		window.setTitle("Admin View");
 		
-		Label label = new Label("Helllo");
-		GridPane grid = new GridPane();
-		grid.setPadding(new Insets(10,10,10,10));
-		grid.setVgap(10);
-		grid.setHgap(10);
-		GridPane.setConstraints(label, 0, 0);
+		List<String> notDisplay = new ArrayList<String>();
+	    notDisplay.add("password");
 		
 		Button addButton = new Button("Add Cashier");
-		GridPane.setConstraints(addButton, 0, 1);
 		addButton.setOnAction(e -> {
 			RegisterView registerView = new RegisterView(cashierService);
+			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
 		});
 		
-		grid.getChildren().addAll(label, addButton);
+		Button updateButton = new Button("Update cashier");
+		updateButton.setOnAction(e -> {
+			ObservableList<ObservableList> selectedCashier;
+			selectedCashier = tableView.getSelectionModel().getSelectedItems();
+			CashierModel model = convertRowToModel(selectedCashier);
+			//System.out.println(model);
+			UpdateView updateView = new UpdateView(cashierService,model);
+			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+		});
 		
-		Scene scene = new Scene(grid,500,450);
+		VBox vBox = new VBox();
+		vBox.setPadding(new Insets(10,10,10,10));
+		vBox.setSpacing(15);
+		vBox.getChildren().addAll(addButton, updateButton);
+		
+        tableView = new TableView<>();
+		
+		HBox hBox = new HBox();
+        hBox.setPadding(new Insets(10,10,10,10));
+        hBox.setSpacing(10);
+        hBox.getChildren().addAll(vBox,tableView);
+        
+        GenericTableView.createColumns(tableView,cashierService.findAll(),notDisplay);
+        
+        GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+		
+		Scene scene = new Scene(hBox,500,450);
 		window.setScene(scene);
 		window.show();
 	}
+	
+	private CashierModel convertRowToModel(ObservableList<ObservableList> list) {
+		CashierModel cashierModel = new CashierModel();
+		cashierModel.setId(Integer.parseInt((String)list.get(0).get(0)));
+		cashierModel.setFirstName((String)list.get(0).get(2));
+		cashierModel.setLastName((String)list.get(0).get(3));
+		cashierModel.setUsername((String)list.get(0).get(1));
+		return cashierModel;
+	}
+	
 
 }

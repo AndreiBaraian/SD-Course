@@ -1,5 +1,6 @@
 package presentation;
 
+import business.model.CashierModel;
 import business.services.CashierService;
 import exceptions.InsertException;
 import javafx.geometry.Insets;
@@ -11,19 +12,21 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class RegisterView {
-	
+public class UpdateView {
+
 	private CashierService cashierService;
+	private CashierModel cashierModel;
 	
-	public RegisterView(CashierService cashierService) {
+	public UpdateView(CashierService cashierService, CashierModel cashierModel) {
 		this.cashierService = cashierService;
+		this.cashierModel = cashierModel;
 		display();
 	}
 	
 	public void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Register new cashier");
+		window.setTitle("Update cashier");
 		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(10,10,10,10));
@@ -39,37 +42,37 @@ public class RegisterView {
 		Label usernameLabel = new Label("Username");
 		GridPane.setConstraints(usernameLabel, 0, 2);
 		
-		Label passLabel = new Label("Password");
-		GridPane.setConstraints(passLabel, 0, 3);
+		//Label passLabel = new Label("Password");
+		//GridPane.setConstraints(passLabel, 0, 3);
 		
-		TextField firstNameInput = new TextField();
+		TextField firstNameInput = new TextField(cashierModel.getFirstName());
 		GridPane.setConstraints(firstNameInput, 1, 0);
 		
-		TextField lastNameInput = new TextField();
+		TextField lastNameInput = new TextField(cashierModel.getLastName());
 		GridPane.setConstraints(lastNameInput, 1, 1);
 		
-		TextField usernameInput = new TextField();
+		TextField usernameInput = new TextField(cashierModel.getUsername());
 		GridPane.setConstraints(usernameInput, 1, 2);
 		
-		TextField passInput = new TextField();
-		GridPane.setConstraints(passInput, 1, 3);
+		//TextField passInput = new TextField();
+		//GridPane.setConstraints(passInput, 1, 3);
 		
 		Button submitBtn = new Button("Submit");
 		GridPane.setConstraints(submitBtn, 0, 4);
 		
 		submitBtn.setOnAction(e -> {
-			try {
-				cashierService.addCashier(firstNameInput.getText(), lastNameInput.getText(), usernameInput.getText(), passInput.getText());
-				window.close();
-			} catch (InsertException e1) {
-				AlertBox.display("Error", e1.getMessage());
-			}
+			cashierModel.setFirstName(firstNameInput.getText());
+			cashierModel.setLastName(lastNameInput.getText());
+			cashierModel.setUsername(usernameInput.getText());
+			System.out.println(cashierModel.getUsername());
+			cashierService.updateCashier(cashierModel);
+			window.close();
 		});
 		
-		grid.getChildren().addAll(submitBtn, firstNameInput, lastNameInput, usernameInput, passInput, firstNameLabel, lastNameLabel, usernameLabel, passLabel);
+		grid.getChildren().addAll(submitBtn, firstNameInput, lastNameInput, usernameInput, firstNameLabel, lastNameLabel, usernameLabel);
 		Scene scene = new Scene(grid,300,250);
 		window.setScene(scene);
 		window.showAndWait();
 	}
-
+	
 }

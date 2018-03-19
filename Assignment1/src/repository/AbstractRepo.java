@@ -48,7 +48,7 @@ public class AbstractRepo<T> {
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, id);
 			resultSet = statement.executeQuery();
-
+			System.out.println(statement);
 			return createObjects(resultSet).get(0);
 		} catch (SQLException e) {
 			LOGGER.log(Level.WARNING, type.getName() + "DAO:findById " + e.getMessage());
@@ -212,6 +212,72 @@ public class AbstractRepo<T> {
 			ConnectionFactory.close(connection);
 		}
 		return null;
+	}
+	
+	private String createUpdateQuery(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("UPDATE ");
+		sb.append(type.getSimpleName());
+		sb.append("table");
+		sb.append(" SET ");
+		boolean first = true;
+		for(Field field : type.getDeclaredFields()){
+			if(first)
+				first = false;
+			else{
+				field.setAccessible(true);
+				sb.append(field.getName());
+				sb.append("=? , ");
+			}
+		}
+		sb.deleteCharAt(sb.length()-2);
+		sb.append("WHERE id = ?");
+		return sb.toString();
+	}
+
+	public void update(T t) {
+		int cntField = -1;
+		Connection connection = null;
+		PreparedStatement updateStatement = null;
+		ResultSet resultSet = null;
+		String updateStatementString = createUpdateQuery();
+		Object valueId = new Object();
+		try{
+			connection = ConnectionFactory.getConnection();
+			updateStatement = connection.prepareStatement(updateStatementString);
+			boolean first = true;
+			for(Field field : t.getClass().getDeclaredFields()){
+				cntField++;
+				PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(),type);
+				Method method = propertyDescriptor.getReadMethod();
+				Object value = method.invoke(t);
+				if(first){ //remeber the id value
+					valueId = value;
+					first = false;
+				}
+				else
+					updateStatement.setObject(cntField,value);
+			}
+			cntField++;
+			updateStatement.setObject(cntField, valueId);
+			System.out.println(updateStatement.toString());
+			updateStatement.executeUpdate();
+			
+		}  catch (SQLException e) {
+			LOGGER.log(Level.WARNING, type.getName() + "DAO:Update " + e.getMessage());
+		} catch (IntrospectionException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionFactory.close(resultSet);
+			ConnectionFactory.close(updateStatement);
+			ConnectionFactory.close(connection);
+		}
 	}
 	
 }
