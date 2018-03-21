@@ -4,74 +4,80 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.model.CashierModel;
-import business.services.AdminService;
-import business.services.CashierService;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+import business.model.ShowModel;
+import business.services.ShowService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
-public class AdminView {
+public class AdminShowView {
 	
 	private Stage window;
-	private AdminService adminService;
-	private CashierService cashierService;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
+	private ShowService showService;
 	
-	public AdminView(Stage window) {
+	public AdminShowView(Stage window) {
 		this.window = window;
-		this.adminService = new AdminService();
-		this.cashierService = new CashierService();
-		initialize();
+		this.showService = new ShowService();
+		display();
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void initialize() {
-		window.setTitle("Admin View");
+	private void display() {
+		window.setTitle("View of shows");
 		
 		List<String> notDisplay = new ArrayList<String>();
 	    notDisplay.add("password");
 		
-		Button addButton = new Button("Add Cashier");
+	    
+		Button addButton = new Button("Add show");
 		addButton.setOnAction(e -> {
-			RegisterView registerView = new RegisterView(cashierService);
-			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+			new AddShowView(showService);
+			loadData(notDisplay);
 		});
 		
-		Button updateButton = new Button("Update cashier");
+		
+		/*
+		Button updateButton = new Button("Update show");
 		updateButton.setOnAction(e -> {
 			ObservableList<ObservableList> selectedCashier;
 			selectedCashier = tableView.getSelectionModel().getSelectedItems();
 			CashierModel cashierModel = convertRowToModel(selectedCashier);
-			UpdateView updateView = new UpdateView(cashierService,cashierModel);
-			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+			new UpdateView(cashierService,cashierModel);
+			loadData(notDisplay);
 		});
 		
-		Button deleteButton = new Button("Delete cashier");
+		Button deleteButton = new Button("Delete show");
 		deleteButton.setOnAction(e -> {
 			ObservableList<ObservableList> selectedCashier;
 			selectedCashier = tableView.getSelectionModel().getSelectedItems();
 			CashierModel cashierModel = convertRowToModel(selectedCashier);
 			cashierService.deleteCashier(cashierModel);
-			GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+			loadData(notDisplay);
+		});
+		
+		*/
+		
+		Button backButton = new Button("Back");
+		backButton.setOnAction(e -> {
+			new AdminMenuView(window);
+		});
+		
+		Button logoutButton = new Button("Logout");
+		logoutButton.setOnAction(e -> {
+			new LoginView(window);
 		});
 		
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10,10,10,10));
 		vBox.setSpacing(15);
-		vBox.getChildren().addAll(addButton, updateButton, deleteButton);
+		//vBox.getChildren().addAll(addButton, updateButton, deleteButton, backButton, logoutButton);
+		vBox.getChildren().addAll(addButton, backButton, logoutButton);
 		
         tableView = new TableView<>();
 		
@@ -80,23 +86,33 @@ public class AdminView {
         hBox.setSpacing(10);
         hBox.getChildren().addAll(vBox,tableView);
         
-        GenericTableView.createColumns(tableView,cashierService.findAll(),notDisplay);
-        
-        GenericTableView.createRows(tableView, cashierService.findAll(), notDisplay);
+        initData(notDisplay);
 		
-		Scene scene = new Scene(hBox,500,450);
+		Scene scene = new Scene(hBox,700,450);
 		window.setScene(scene);
 		window.show();
 	}
 	
-	private CashierModel convertRowToModel(ObservableList<ObservableList> list) {
-		CashierModel cashierModel = new CashierModel();
+	private void loadData(List<String> notDisplay) {
+		List<ShowModel> shows = showService.findAll();
+        GenericTableView.createRows(tableView, shows, notDisplay);
+	}
+	
+	private void initData(List<String> notDisplay) {
+		List<ShowModel> shows = showService.findAll();
+	    GenericTableView.createColumns(tableView,shows,notDisplay);
+        GenericTableView.createRows(tableView, shows, notDisplay);
+	}
+	
+	private ShowModel convertRowToModel(@SuppressWarnings("rawtypes") ObservableList<ObservableList> list) {
+		ShowModel showModel = new ShowModel();
+		/*
 		cashierModel.setId(Integer.parseInt((String)list.get(0).get(0)));
 		cashierModel.setFirstName((String)list.get(0).get(2));
 		cashierModel.setLastName((String)list.get(0).get(3));
 		cashierModel.setUsername((String)list.get(0).get(1));
-		return cashierModel;
+		*/
+		return showModel;
 	}
-	
 
 }

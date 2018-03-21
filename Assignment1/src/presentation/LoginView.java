@@ -17,6 +17,7 @@ public class LoginView {
 	public LoginView(Stage window) {
 		this.window = window;
 		this.adminService = new AdminService();
+		display();
 	}
 	
 	public void display() {
@@ -43,7 +44,7 @@ public class LoginView {
 		GridPane.setConstraints(loginButton, 1, 2);
 		loginButton.setOnAction(e -> {
 			if(adminService.checkPassword(nameInput.getText(), passInput.getText())) {
-					AdminView adminView = new AdminView(window);
+					new AdminMenuView(window);
 			}
 			else {
 				AlertBox.display("Login failed","Wrong username or password!");

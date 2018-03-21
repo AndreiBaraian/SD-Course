@@ -20,9 +20,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		LoginView loginView = new LoginView(primaryStage);
-		loginView.display();
-		
+		new LoginView(primaryStage);
 	}
 
 }

@@ -1,0 +1,70 @@
+package business.model;
+
+public class ShowModel {
+	
+	private int id;
+	private String genre;
+	private String title;
+	private String distributionList;
+	private String dateOfShow;
+	private int numberOfTickets;
+	
+	public ShowModel() {}
+	
+	public ShowModel(String genre, String title, String distributionList, String dateOfShow, int numberOfTickets) {
+		this.genre = genre;
+		this.title = title;
+		this.distributionList = distributionList;
+		this.dateOfShow = dateOfShow;
+		this.numberOfTickets = numberOfTickets;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDistributionList() {
+		return distributionList;
+	}
+
+	public void setDistributionList(String distributionList) {
+		this.distributionList = distributionList;
+	}
+
+	public String getDateOfShow() {
+		return dateOfShow;
+	}
+
+	public void setDateOfShow(String dateOfShow) {
+		this.dateOfShow = dateOfShow;
+	}
+
+	public int getNumberOfTickets() {
+		return numberOfTickets;
+	}
+
+	public void setNumberOfTickets(int numberOfTickets) {
+		this.numberOfTickets = numberOfTickets;
+	}
+
+}
