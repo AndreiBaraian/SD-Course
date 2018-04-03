@@ -62,5 +62,10 @@ public class TicketService {
 		Ticket ticketDB = ticketRepo.findById(ticketModel.getId());
 		ticketRepo.delete(ticketDB);
 	}
+	
+	public void updateTicket(TicketModel ticketModel) {
+		Ticket ticketDB = modelMapper.map(ticketModel, Ticket.class);
+		ticketRepo.update(ticketDB);
+	}
 
 }

@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -40,7 +41,7 @@ public class LoginView {
 		Label passLabel = new Label("Password");
 		GridPane.setConstraints(passLabel,0,1);
 		
-		TextField passInput = new TextField();
+		PasswordField passInput = new PasswordField();
 		GridPane.setConstraints(passInput, 1, 1);
 		
 		Button loginButton = new Button("Login");

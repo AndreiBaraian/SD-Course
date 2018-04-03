@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 
 import business.model.ShowModel;
+import business.model.TicketModel;
 import exceptions.InsertException;
 import repository.AbstractRepo;
 import repository.ShowRepo;
@@ -57,6 +58,11 @@ public class ShowService {
 	public void incrementTickets(ShowModel showModel) {
 		showModel.setRemainingTickets(showModel.getRemainingTickets() + 1);
 		updateShow(showModel);
+	}
+	
+	public void exportTickets(int showId, List<TicketModel> tickets) {
+		Exporter exporter = ExporterFactory.getExporter(Integer.toString(showId));
+		exporter.export(tickets);
 	}
 
 }

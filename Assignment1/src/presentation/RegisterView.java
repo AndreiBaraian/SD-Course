@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -51,7 +52,7 @@ public class RegisterView {
 		TextField usernameInput = new TextField();
 		GridPane.setConstraints(usernameInput, 1, 2);
 		
-		TextField passInput = new TextField();
+		PasswordField passInput = new PasswordField();
 		GridPane.setConstraints(passInput, 1, 3);
 		
 		Button submitBtn = new Button("Submit");

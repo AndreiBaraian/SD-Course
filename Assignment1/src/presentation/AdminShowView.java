@@ -3,9 +3,9 @@ package presentation;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.model.CashierModel;
 import business.model.ShowModel;
 import business.services.ShowService;
+import business.services.TicketService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -65,6 +65,16 @@ public class AdminShowView {
 		});
 		
 		
+		Button exportTickets = new Button("Export tickets");
+		exportTickets.setOnAction(e -> {
+			ObservableList<ObservableList> selectedShow;
+			selectedShow = tableView.getSelectionModel().getSelectedItems();
+			ShowModel showModel = convertRowToModel(selectedShow);
+			TicketService ticketService = new TicketService();
+			showService.exportTickets(showModel.getId(),ticketService.findTicketsForShow(showModel.getId()));
+			loadData(notDisplay);
+		});
+		
 		
 		Button backButton = new Button("Back");
 		backButton.setOnAction(e -> {
@@ -79,8 +89,7 @@ public class AdminShowView {
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10,10,10,10));
 		vBox.setSpacing(15);
-		//vBox.getChildren().addAll(addButton, updateButton, deleteButton, backButton, logoutButton);
-		vBox.getChildren().addAll(addButton, updateButton, deleteButton, backButton, logoutButton);
+		vBox.getChildren().addAll(addButton, updateButton, deleteButton, exportTickets, backButton, logoutButton);
 		
         tableView = new TableView<>();
 		

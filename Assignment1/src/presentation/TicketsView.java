@@ -32,7 +32,7 @@ public class TicketsView {
 		display();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -45,6 +45,10 @@ public class TicketsView {
 		
 		Button editBtn = new Button("Edit Ticket");
 		editBtn.setOnAction(e -> {
+			ObservableList<ObservableList> selectedTicket;
+			selectedTicket = tableView.getSelectionModel().getSelectedItems();
+			TicketModel ticketModel = convertRowToModel(selectedTicket);
+			new EditTicketView(ticketService, ticketModel, showModel.getId());
 			window.close();
 		});
 		
