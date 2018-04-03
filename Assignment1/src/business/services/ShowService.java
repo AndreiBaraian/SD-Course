@@ -35,5 +35,28 @@ public class ShowService {
 		else
 			throw new InsertException("Show already on schedule for that day!");
 	}
+	
+	public void updateShow(ShowModel showModel) {
+		Show showDB = modelMapper.map(showModel, Show.class);
+		showRepo.update(showDB);
+	}
+	
+	public void deleteShow(ShowModel showModel) {
+		Show showDB = showRepo.findById(showModel.getId());
+		showRepo.delete(showDB);
+	}
+	
+	public boolean decrementTickets(ShowModel showModel) {
+		showModel.setRemainingTickets(showModel.getRemainingTickets() - 1);
+		updateShow(showModel);
+		if(showModel.getRemainingTickets()!=0)
+			return true;
+		return false;
+	}
+	
+	public void incrementTickets(ShowModel showModel) {
+		showModel.setRemainingTickets(showModel.getRemainingTickets() + 1);
+		updateShow(showModel);
+	}
 
 }

@@ -1,15 +1,15 @@
-package repository.dbmodel;
+package business.model;
 
-public class Ticket {
+public class TicketModel {
 	
 	private int id;
 	private int seatRow;
 	private int seatCol;
 	private int showId;
 	
-	public Ticket() {}
+	public TicketModel() {}
 	
-	public Ticket(int id, int seatRow, int seatCol, int showId) {
+	public TicketModel(int id, int seatRow, int seatCol, int showId) {
 		this.id = id;
 		this.seatRow = seatRow;
 		this.seatCol = seatCol;

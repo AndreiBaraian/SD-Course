@@ -66,7 +66,6 @@ public class CashierService {
 		Cashier cashierDB = cashierRepo.findByField("username", username);
 		if(cashierDB == null)
 			return false;
-		//ModelMapper modelMapper = new ModelMapper();
 		CashierModel cashierModel = modelMapper.map(cashierDB, CashierModel.class);
 		String passwordDB = computeHash(password);
 		if(passwordDB.equals(cashierModel.getPassword()))

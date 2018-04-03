@@ -15,61 +15,59 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class AdminShowView {
+public class CashierMenuView {
 	
 	private Stage window;
+	private ShowService showService;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
-	private ShowService showService;
 	
-	public AdminShowView(Stage window) {
+	public CashierMenuView(Stage window) {
 		this.window = window;
 		this.showService = new ShowService();
-		display();
+		initialize();
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void display() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void initialize() {
 		window.setTitle("View of shows");
 		
 		List<String> notDisplay = new ArrayList<String>();
-	    notDisplay.add("password");
+	    notDisplay.add("");
 		
 	    
-		Button addButton = new Button("Add show");
-		addButton.setOnAction(e -> {
-			new AddShowView(showService);
-			loadData(notDisplay);
-		});
-		
-		
-		
-		Button updateButton = new Button("Update show");
-		updateButton.setOnAction(e -> {
+		Button sellButton = new Button("Sell Ticket");
+		sellButton.setOnAction(e -> {
 			ObservableList<ObservableList> selectedShow;
 			selectedShow = tableView.getSelectionModel().getSelectedItems();
 			ShowModel showModel = convertRowToModel(selectedShow);
-			new UpdateShowView(showService,showModel);
+			new AvailableTicketView(showService, showModel);
 			loadData(notDisplay);
 		});
 		
 		
 		
-		Button deleteButton = new Button("Delete show");
+		Button seeTicketsBtn = new Button("See tickets");
+		seeTicketsBtn.setOnAction(e -> {
+			ObservableList<ObservableList> selectedShow;
+			selectedShow = tableView.getSelectionModel().getSelectedItems();
+			ShowModel showModel = convertRowToModel(selectedShow);
+			new TicketsView(showService,showModel);
+			loadData(notDisplay);
+		});
+		
+		/*
+		
+		Button deleteButton = new Button("Delete cashier");
 		deleteButton.setOnAction(e -> {
-			ObservableList<ObservableList> selectedShow;
-			selectedShow = tableView.getSelectionModel().getSelectedItems();
-			ShowModel showModel = convertRowToModel(selectedShow);
-			showService.deleteShow(showModel);
+			ObservableList<ObservableList> selectedCashier;
+			selectedCashier = tableView.getSelectionModel().getSelectedItems();
+			CashierModel cashierModel = convertRowToModel(selectedCashier);
+			cashierService.deleteCashier(cashierModel);
 			loadData(notDisplay);
 		});
 		
-		
-		
-		Button backButton = new Button("Back");
-		backButton.setOnAction(e -> {
-			new AdminMenuView(window);
-		});
+		*/
 		
 		Button logoutButton = new Button("Logout");
 		logoutButton.setOnAction(e -> {
@@ -79,8 +77,7 @@ public class AdminShowView {
 		VBox vBox = new VBox();
 		vBox.setPadding(new Insets(10,10,10,10));
 		vBox.setSpacing(15);
-		//vBox.getChildren().addAll(addButton, updateButton, deleteButton, backButton, logoutButton);
-		vBox.getChildren().addAll(addButton, updateButton, deleteButton, backButton, logoutButton);
+		vBox.getChildren().addAll(sellButton, seeTicketsBtn, logoutButton);
 		
         tableView = new TableView<>();
 		
@@ -91,7 +88,7 @@ public class AdminShowView {
         
         initData(notDisplay);
 		
-		Scene scene = new Scene(hBox,700,450);
+		Scene scene = new Scene(hBox,800,450);
 		window.setScene(scene);
 		window.show();
 	}
@@ -115,6 +112,7 @@ public class AdminShowView {
 		showModel.setDistributionList((String)list.get(0).get(3));
 		showModel.setDateOfShow((String)list.get(0).get(4));
 		showModel.setNumberOfTickets(Integer.parseInt((String)list.get(0).get(5)));
+		showModel.setRemainingTickets(Integer.parseInt((String)list.get(0).get(6)));
 		return showModel;
 	}
 

@@ -61,11 +61,7 @@ public class UpdateView {
 		GridPane.setConstraints(submitBtn, 0, 4);
 		
 		submitBtn.setOnAction(e -> {
-			cashierModel.setFirstName(firstNameInput.getText());
-			cashierModel.setLastName(lastNameInput.getText());
-			cashierModel.setUsername(usernameInput.getText());
-			if(passInput.getText() != "")
-				cashierModel.setPassword(passInput.getText());
+			updateCashier(firstNameInput.getText(),lastNameInput.getText(),usernameInput.getText(),passInput.getText());
 			cashierService.updateCashier(cashierModel);
 			window.close();
 		});
@@ -74,6 +70,14 @@ public class UpdateView {
 		Scene scene = new Scene(grid,300,250);
 		window.setScene(scene);
 		window.showAndWait();
+	}
+	
+	private void updateCashier(String fName, String lName, String username, String pass) {
+		cashierModel.setFirstName(fName);
+		cashierModel.setLastName(lName);
+		cashierModel.setUsername(username);
+		if(!pass.equals(""))
+			cashierModel.setPassword(pass);
 	}
 	
 }

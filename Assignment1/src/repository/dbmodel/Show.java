@@ -8,6 +8,7 @@ public class Show {
 	private String distributionList;
 	private String dateOfShow;
 	private int numberOfTickets;
+	private int remainingTickets;
 	
 	public Show() {}
 	
@@ -17,6 +18,7 @@ public class Show {
 		this.distributionList = distributionList;
 		this.dateOfShow = dateOfShow;
 		this.numberOfTickets = numberOfTickets;
+		this.setRemainingTickets(numberOfTickets); 
 	}
 
 	public int getId() {
@@ -65,6 +67,14 @@ public class Show {
 
 	public void setNumberOfTickets(int numberOfTickets) {
 		this.numberOfTickets = numberOfTickets;
+	}
+
+	public int getRemainingTickets() {
+		return remainingTickets;
+	}
+
+	public void setRemainingTickets(int remainingTickets) {
+		this.remainingTickets = remainingTickets;
 	}
 	
 }

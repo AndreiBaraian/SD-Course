@@ -1,6 +1,7 @@
 package presentation;
 
 import business.services.AdminService;
+import business.services.CashierService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,10 +14,12 @@ public class LoginView {
 	
 	private Stage window;
 	private AdminService adminService;
+	private CashierService cashierService;
 	
 	public LoginView(Stage window) {
 		this.window = window;
 		this.adminService = new AdminService();
+		this.cashierService = new CashierService();
 		display();
 	}
 	
@@ -45,6 +48,9 @@ public class LoginView {
 		loginButton.setOnAction(e -> {
 			if(adminService.checkPassword(nameInput.getText(), passInput.getText())) {
 					new AdminMenuView(window);
+			}
+			else if(cashierService.checkPassword(nameInput.getText(), passInput.getText())) {
+				new CashierMenuView(window);
 			}
 			else {
 				AlertBox.display("Login failed","Wrong username or password!");
