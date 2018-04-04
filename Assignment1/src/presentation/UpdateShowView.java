@@ -48,26 +48,25 @@ public class UpdateShowView {
 		Label numberOfTicketsLabel = new Label("Tickets");
 		GridPane.setConstraints(numberOfTicketsLabel, 0, 4);
 		
-		TextField genreInput = new TextField();
+		TextField genreInput = new TextField(showModel.getGenre());
 		GridPane.setConstraints(genreInput, 1, 0);
 		
-		TextField titleInput = new TextField();
+		TextField titleInput = new TextField(showModel.getTitle());
 		GridPane.setConstraints(titleInput, 1, 1);
 		
-		TextField distributionInput = new TextField();
+		TextField distributionInput = new TextField(showModel.getDistributionList());
 		GridPane.setConstraints(distributionInput, 1, 2);
 		
-		TextField dateInput = new TextField();
+		TextField dateInput = new TextField(showModel.getDateOfShow());
 		GridPane.setConstraints(dateInput, 1, 3);
 		
-		TextField ticketsInput = new TextField();
+		TextField ticketsInput = new TextField(Integer.toString(showModel.getNumberOfTickets()));
 		GridPane.setConstraints(ticketsInput, 1, 4);
 		
 		Button submitBtn = new Button("Submit");
 		GridPane.setConstraints(submitBtn, 0, 5);
 		
 		submitBtn.setOnAction(e -> {
-				//showService.addShow(genreInput.getText(), titleInput.getText(), distributionInput.getText(), dateInput.getText(), Integer.parseInt(ticketsInput.getText()));
 				updateShow( genreInput.getText(), titleInput.getText(), distributionInput.getText(), dateInput.getText(), Integer.parseInt(ticketsInput.getText()));
 				showService.updateShow(showModel);
 				window.close();
