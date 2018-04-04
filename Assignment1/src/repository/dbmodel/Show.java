@@ -1,6 +1,6 @@
 package repository.dbmodel;
 
-public class Show {
+public class Show implements DBRecord {
 	
 	private int id;
 	private String genre;

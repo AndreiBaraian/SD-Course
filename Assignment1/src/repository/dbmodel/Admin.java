@@ -1,6 +1,6 @@
 package repository.dbmodel;
 
-public class Admin {
+public class Admin implements DBRecord{
 	
 	 private int id;
 	 private String username;

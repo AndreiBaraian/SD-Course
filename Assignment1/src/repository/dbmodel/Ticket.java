@@ -1,6 +1,6 @@
 package repository.dbmodel;
 
-public class Ticket {
+public class Ticket implements DBRecord {
 	
 	private int id;
 	private int seatRow;

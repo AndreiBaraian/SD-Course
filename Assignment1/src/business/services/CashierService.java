@@ -1,10 +1,7 @@
 package business.services;
 
-import java.security.MessageDigest;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.modelmapper.ModelMapper;
 
@@ -12,13 +9,13 @@ import business.model.CashierModel;
 import exceptions.InsertException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import repository.AbstractRepo;
 import repository.CashierRepo;
+import repository.IAbstractRepo;
 import repository.dbmodel.Cashier;
 
-public class CashierService {
+public class CashierService implements ICashierService {
 	
-	private AbstractRepo<Cashier> cashierRepo;
+	private IAbstractRepo<Cashier> cashierRepo;
 	private ModelMapper modelMapper;
 	
 	public CashierService() {
@@ -27,7 +24,7 @@ public class CashierService {
 	}
 	
 	public void addCashier(String firstName, String lastName, String username, String password) throws InsertException {
-		String hashPass = computeHash(password);
+		String hashPass = PasswordEncryptor.computeHash(password);
 		CashierModel cashierModel = new CashierModel(username,hashPass,firstName,lastName);
 		Cashier cashierDB = modelMapper.map(cashierModel, Cashier.class);
 		if(findAll().parallelStream().filter(r -> r.getUsername().equals(username)).count() == 0)
@@ -52,8 +49,8 @@ public class CashierService {
 		cashierDB.setFirstName(cashierModel.getFirstName());
 		cashierDB.setLastName(cashierModel.getLastName());
 		cashierDB.setUsername(cashierModel.getUsername());
-		if(cashierModel.getPassword() != "")
-			cashierDB.setPassword(computeHash(cashierModel.getPassword()));
+		if(cashierModel.getPassword() != null)
+			cashierDB.setPassword(PasswordEncryptor.computeHash(cashierModel.getPassword()));
 		cashierRepo.update(cashierDB);
 	}
 	
@@ -67,21 +64,10 @@ public class CashierService {
 		if(cashierDB == null)
 			return false;
 		CashierModel cashierModel = modelMapper.map(cashierDB, CashierModel.class);
-		String passwordDB = computeHash(password);
+		String passwordDB = PasswordEncryptor.computeHash(password);
 		if(passwordDB.equals(cashierModel.getPassword()))
 			return true;
 		return false;
-	}
-	
-	private String computeHash(String password) {
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(password.getBytes("UTF-8"));
-			return DatatypeConverter.printHexBinary(hash);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 }

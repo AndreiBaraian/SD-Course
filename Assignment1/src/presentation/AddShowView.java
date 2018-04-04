@@ -1,6 +1,6 @@
 package presentation;
 
-import business.services.ShowService;
+import business.services.IShowService;
 import exceptions.InsertException;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -13,9 +13,9 @@ import javafx.stage.Stage;
 
 public class AddShowView {
 	
-	private ShowService showService;
+	private IShowService showService;
 	
-	public AddShowView(ShowService showService) {
+	public AddShowView(IShowService showService) {
 		this.showService = showService;
 		display();
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.model.ShowModel;
+import business.services.IShowService;
 import business.services.ShowService;
 import business.services.TicketService;
 import javafx.collections.ObservableList;
@@ -20,7 +21,7 @@ public class AdminShowView {
 	private Stage window;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
-	private ShowService showService;
+	private IShowService showService;
 	
 	public AdminShowView(Stage window) {
 		this.window = window;
@@ -28,7 +29,7 @@ public class AdminShowView {
 		display();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void display() {
 		window.setTitle("View of shows");
 		

@@ -1,6 +1,6 @@
 package repository.dbmodel;
 
-public class Cashier {
+public class Cashier implements DBRecord {
 	
 	 private int id;
 	 private String username;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import business.model.CashierModel;
 import business.services.CashierService;
+import business.services.ICashierService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -17,7 +18,7 @@ import javafx.stage.Stage;
 public class AdminCashierView {
 	
 	private Stage window;
-	private CashierService cashierService;
+	private ICashierService cashierService;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
 	
@@ -45,7 +46,7 @@ public class AdminCashierView {
 			ObservableList<ObservableList> selectedCashier;
 			selectedCashier = tableView.getSelectionModel().getSelectedItems();
 			CashierModel cashierModel = convertRowToModel(selectedCashier);
-			new UpdateView(cashierService,cashierModel);
+			new UpdateCashierView(cashierService,cashierModel);
 			loadData(notDisplay);
 		});
 		

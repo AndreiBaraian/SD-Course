@@ -5,7 +5,7 @@ import java.util.List;
 
 import business.model.ShowModel;
 import business.model.TicketModel;
-import business.services.ShowService;
+import business.services.IShowService;
 import business.services.TicketService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,19 +19,19 @@ import javafx.stage.Stage;
 public class AvailableTicketView {
 	
 	private TicketService ticketService;
-	private ShowService showService;
+	private IShowService showService;
 	private ShowModel showModel;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
 	
-	public AvailableTicketView(ShowService showService, ShowModel showModel) {
+	public AvailableTicketView(IShowService showService, ShowModel showModel) {
 		this.ticketService = new TicketService();
 		this.showService = showService;
 		this.showModel = showModel;
 		display();
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -68,14 +68,6 @@ public class AvailableTicketView {
 		window.setScene(scene);
 		window.showAndWait();
 	}
-	
-	/*
-	private void loadData(List<String> notDisplay) {
-		List<TicketModel> tickets = ticketService.findAvailableTickets(showModel);
-		System.out.println(tickets.size());
-        GenericTableView.createRows(tableView, tickets, notDisplay);
-	}
-	*/
 	
 	private void initData(List<String> notDisplay) {
 		List<TicketModel> tickets = ticketService.findAvailableTickets(showModel);

@@ -1,6 +1,6 @@
 package presentation;
 
-import business.services.CashierService;
+import business.services.ICashierService;
 import exceptions.InsertException;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -14,9 +14,9 @@ import javafx.stage.Stage;
 
 public class RegisterView {
 	
-	private CashierService cashierService;
+	private ICashierService cashierService;
 	
-	public RegisterView(CashierService cashierService) {
+	public RegisterView(ICashierService cashierService) {
 		this.cashierService = cashierService;
 		display();
 	}

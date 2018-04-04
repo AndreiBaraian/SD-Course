@@ -3,8 +3,8 @@ package presentation;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.model.CashierModel;
 import business.model.ShowModel;
+import business.services.IShowService;
 import business.services.ShowService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 public class CashierMenuView {
 	
 	private Stage window;
-	private ShowService showService;
+	private IShowService showService;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
 	
@@ -41,8 +41,12 @@ public class CashierMenuView {
 			ObservableList<ObservableList> selectedShow;
 			selectedShow = tableView.getSelectionModel().getSelectedItems();
 			ShowModel showModel = convertRowToModel(selectedShow);
-			new AvailableTicketView(showService, showModel);
-			loadData(notDisplay);
+			if(showModel.getRemainingTickets() == 0)
+				AlertBox.display("Error", "There are no more tickets for this show!");
+			else {
+				new AvailableTicketView(showService, showModel);
+				loadData(notDisplay);
+			}
 		});
 		
 		
@@ -55,19 +59,6 @@ public class CashierMenuView {
 			new TicketsView(showService,showModel);
 			loadData(notDisplay);
 		});
-		
-		/*
-		
-		Button deleteButton = new Button("Delete cashier");
-		deleteButton.setOnAction(e -> {
-			ObservableList<ObservableList> selectedCashier;
-			selectedCashier = tableView.getSelectionModel().getSelectedItems();
-			CashierModel cashierModel = convertRowToModel(selectedCashier);
-			cashierService.deleteCashier(cashierModel);
-			loadData(notDisplay);
-		});
-		
-		*/
 		
 		Button logoutButton = new Button("Logout");
 		logoutButton.setOnAction(e -> {

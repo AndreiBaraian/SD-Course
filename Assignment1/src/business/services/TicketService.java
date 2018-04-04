@@ -9,13 +9,13 @@ import org.modelmapper.ModelMapper;
 import business.model.ShowModel;
 import business.model.TicketModel;
 import main.SeatMap;
-import repository.AbstractRepo;
+import repository.IAbstractRepo;
 import repository.TicketRepo;
 import repository.dbmodel.Ticket;
 
-public class TicketService {
+public class TicketService implements ITicketService {
 	
-	private AbstractRepo<Ticket> ticketRepo;
+	private IAbstractRepo<Ticket> ticketRepo;
 	private ModelMapper modelMapper;
 	
 	public TicketService() {

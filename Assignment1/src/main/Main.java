@@ -13,6 +13,7 @@ public class Main extends Application {
 	Button button;
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException{
+		
 		launch(args);
 		
 	}

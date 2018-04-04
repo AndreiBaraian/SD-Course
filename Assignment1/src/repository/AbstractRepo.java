@@ -17,9 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import connection.ConnectionFactory;
-import repository.dbmodel.Admin;
+import repository.dbmodel.DBRecord;
 
-public class AbstractRepo<T> {
+public abstract class AbstractRepo<T extends DBRecord> implements IAbstractRepo<T> {
 
 	protected final Class<T> type;
 	protected static final Logger LOGGER = Logger.getLogger(AbstractRepo.class.getName());

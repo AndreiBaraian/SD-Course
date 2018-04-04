@@ -2,6 +2,8 @@ package presentation;
 
 import business.services.AdminService;
 import business.services.CashierService;
+import business.services.IAdminService;
+import business.services.ICashierService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,8 +16,8 @@ import javafx.stage.Stage;
 public class LoginView {
 	
 	private Stage window;
-	private AdminService adminService;
-	private CashierService cashierService;
+	private IAdminService adminService;
+	private ICashierService cashierService;
 	
 	public LoginView(Stage window) {
 		this.window = window;

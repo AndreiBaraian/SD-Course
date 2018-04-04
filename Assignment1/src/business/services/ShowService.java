@@ -8,13 +8,13 @@ import org.modelmapper.ModelMapper;
 import business.model.ShowModel;
 import business.model.TicketModel;
 import exceptions.InsertException;
-import repository.AbstractRepo;
+import repository.IAbstractRepo;
 import repository.ShowRepo;
 import repository.dbmodel.Show;
 
-public class ShowService {
+public class ShowService implements IShowService {
 	
-	private AbstractRepo<Show> showRepo;
+	private IAbstractRepo<Show> showRepo;
 	private ModelMapper modelMapper;
 	
 	public ShowService() {
@@ -48,11 +48,11 @@ public class ShowService {
 	}
 	
 	public boolean decrementTickets(ShowModel showModel) {
+		if(showModel.getRemainingTickets() == 0)
+			return false;
 		showModel.setRemainingTickets(showModel.getRemainingTickets() - 1);
 		updateShow(showModel);
-		if(showModel.getRemainingTickets()!=0)
-			return true;
-		return false;
+		return true;
 	}
 	
 	public void incrementTickets(ShowModel showModel) {

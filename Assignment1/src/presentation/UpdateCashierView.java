@@ -1,23 +1,23 @@
 package presentation;
 
 import business.model.CashierModel;
-import business.services.CashierService;
-import exceptions.InsertException;
+import business.services.ICashierService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class UpdateView {
+public class UpdateCashierView {
 
-	private CashierService cashierService;
+	private ICashierService cashierService;
 	private CashierModel cashierModel;
 	
-	public UpdateView(CashierService cashierService, CashierModel cashierModel) {
+	public UpdateCashierView(ICashierService cashierService, CashierModel cashierModel) {
 		this.cashierService = cashierService;
 		this.cashierModel = cashierModel;
 		display();
@@ -54,7 +54,7 @@ public class UpdateView {
 		TextField usernameInput = new TextField(cashierModel.getUsername());
 		GridPane.setConstraints(usernameInput, 1, 2);
 		
-		TextField passInput = new TextField();
+		PasswordField passInput = new PasswordField();
 		GridPane.setConstraints(passInput, 1, 3);
 		
 		Button submitBtn = new Button("Submit");

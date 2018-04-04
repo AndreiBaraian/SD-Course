@@ -3,7 +3,7 @@ package presentation;
 import java.util.stream.Collectors;
 
 import business.model.TicketModel;
-import business.services.TicketService;
+import business.services.ITicketService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,11 +15,11 @@ import javafx.stage.Stage;
 
 public class EditTicketView {
 	
-	private TicketService ticketService;
+	private ITicketService ticketService;
 	private TicketModel ticketModel;
 	private int showId;
 	
-	public EditTicketView(TicketService ticketService, TicketModel ticketModel, int showId) {
+	public EditTicketView(ITicketService ticketService, TicketModel ticketModel, int showId) {
 		this.ticketService = ticketService;
 		this.ticketModel = ticketModel;
 		this.showId = showId;

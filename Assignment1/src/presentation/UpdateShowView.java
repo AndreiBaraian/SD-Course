@@ -1,8 +1,7 @@
 package presentation;
 
 import business.model.ShowModel;
-import business.services.ShowService;
-import exceptions.InsertException;
+import business.services.IShowService;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,10 +13,10 @@ import javafx.stage.Stage;
 
 public class UpdateShowView {
 
-	private ShowService showService;
+	private IShowService showService;
 	private ShowModel showModel;
 	
-	public UpdateShowView(ShowService showService, ShowModel showModel) {
+	public UpdateShowView(IShowService showService, ShowModel showModel) {
 		this.showModel = showModel;
 		this.showService = showService;
 		display();

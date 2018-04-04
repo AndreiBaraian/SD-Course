@@ -5,7 +5,8 @@ import java.util.List;
 
 import business.model.ShowModel;
 import business.model.TicketModel;
-import business.services.ShowService;
+import business.services.IShowService;
+import business.services.ITicketService;
 import business.services.TicketService;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,13 +20,13 @@ import javafx.stage.Stage;
 
 public class TicketsView {
 	
-	private TicketService ticketService;
+	private ITicketService ticketService;
 	private ShowModel showModel;
-	private ShowService showService;
+	private IShowService showService;
 	@SuppressWarnings("rawtypes")
 	private TableView tableView;
 	
-	public TicketsView(ShowService showService, ShowModel showModel) {
+	public TicketsView(IShowService showService, ShowModel showModel) {
 		this.ticketService = new TicketService();
 		this.showModel = showModel;
 		this.showService = showService;
