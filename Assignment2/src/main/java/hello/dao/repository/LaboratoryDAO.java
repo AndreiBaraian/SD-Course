@@ -2,16 +2,15 @@ package hello.dao.repository;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import hello.dao.dbModel.LaboratoryDTO;
-
-import org.springframework.data.jpa.repository.JpaRepository;
+import hello.dao.dbModel.LaboratoryDB;
 
 @Repository
 @Transactional
-public interface LaboratoryDAO extends JpaRepository<LaboratoryDTO,Integer>{
+public interface LaboratoryDAO extends JpaRepository<LaboratoryDB,Integer>{
 	
-	LaboratoryDTO findByLabNumber(int labNumber);
+	LaboratoryDB findByLabNumber(int labNumber);
 
 }

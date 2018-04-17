@@ -1,17 +1,23 @@
 package hello.dao.dbModel;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "laboratories")
-public class LaboratoryDTO {
+public class LaboratoryDB {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +27,9 @@ public class LaboratoryDTO {
 	@Column(name = "labNumber")
 	private int labNumber;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@Column(name = "dateOfLab")
-	private Timestamp date;
+	private LocalDateTime date;
 	
 	@Column(name = "title")
 	private String title;
@@ -30,7 +37,12 @@ public class LaboratoryDTO {
 	@Column(name = "curricula")
 	private String curricula;
 	
-	public LaboratoryDTO() {}
+	@JsonIgnore
+	@JsonBackReference
+	@OneToMany(mappedBy="laboratory")
+	private Set<AssignmentDBModel> assignments;
+	
+	public LaboratoryDB() {}
 	
 	
 	public int getId() {
@@ -45,10 +57,10 @@ public class LaboratoryDTO {
 	public void setLabNumber(int labNumber) {
 		this.labNumber = labNumber;
 	}
-	public Timestamp getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(Timestamp date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public String getTitle() {

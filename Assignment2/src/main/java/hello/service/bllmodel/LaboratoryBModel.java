@@ -1,14 +1,19 @@
 package hello.service.bllmodel;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LaboratoryBModel {
 	
 	private int id;
 	private int labNumber;
-	private Timestamp date;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime date;
 	private String title;
 	private String curricula;
+	private Set<AssignmentBModel> assignments;
 	
 	public LaboratoryBModel() {}
 	
@@ -18,10 +23,10 @@ public class LaboratoryBModel {
 	public void setLabNumber(int labNumber) {
 		this.labNumber = labNumber;
 	}
-	public Timestamp getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(Timestamp date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public String getTitle() {
@@ -43,6 +48,14 @@ public class LaboratoryBModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Set<AssignmentBModel> getAssignments() {
+		return assignments;
+	}
+
+	public void setAssignments(Set<AssignmentBModel> assignments) {
+		this.assignments = assignments;
 	}
 
 }

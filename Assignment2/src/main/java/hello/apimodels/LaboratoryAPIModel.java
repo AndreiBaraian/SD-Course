@@ -1,20 +1,18 @@
 package hello.apimodels;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LaboratoryAPIModel {
 	
+	//@JsonIgnore
 	private int id;
-	
 	private int labNumber;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
-	private Timestamp date;
-	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime date;
 	private String title;
-	
 	private String curricula;
 	
 	public LaboratoryAPIModel() {}
@@ -25,10 +23,10 @@ public class LaboratoryAPIModel {
 	public void setLabNumber(int labNumber) {
 		this.labNumber = labNumber;
 	}
-	public Timestamp getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
-	public void setDate(Timestamp date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 	public String getTitle() {
