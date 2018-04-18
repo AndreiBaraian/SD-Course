@@ -1,6 +1,7 @@
 package hello.service.implementation;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -33,8 +34,10 @@ public class LaboratoryService implements ILaboratoryService {
 
 	@Override
 	public LaboratoryBModel getById(int id) {
-		LaboratoryDB labDB = labDAO.getOne(id);
-		LaboratoryBModel lab = modelMapper.map(labDB, LaboratoryBModel.class);
+		Optional<LaboratoryDB> labDB =labDAO.findById(id);
+		if(!labDB.isPresent())
+			return null;
+		LaboratoryBModel lab = modelMapper.map(labDB.get(), LaboratoryBModel.class);
 		return lab;
 	}
 
@@ -52,8 +55,8 @@ public class LaboratoryService implements ILaboratoryService {
 	}
 
 	@Override
-	public boolean updateLaboratory(LaboratoryBModel lab) {
-		LaboratoryDB labDB = labDAO.getOne(lab.getId());
+	public boolean updateLaboratory(int labId,LaboratoryBModel lab) {
+		LaboratoryDB labDB = labDAO.getOne(labId);
 		if(labDB == null)
 			return false;
 		labDB.setCurricula(lab.getCurricula());
@@ -67,11 +70,12 @@ public class LaboratoryService implements ILaboratoryService {
 
 	@Override
 	public boolean deleteLaboratoryById(int id) {
-		LaboratoryDB labDB = labDAO.getOne(id);
-		if(labDB == null)
-			return false;
-		labDAO.delete(labDB);
-		return true;
+		Optional<LaboratoryDB> labDB = labDAO.findById(id);
+		if(labDB.isPresent()) {
+			labDAO.delete(labDB.get());
+			return true;
+		}
+		return false;
 	}
 
 }

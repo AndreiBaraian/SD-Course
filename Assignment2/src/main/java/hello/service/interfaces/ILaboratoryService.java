@@ -9,7 +9,7 @@ public interface ILaboratoryService {
 	List<LaboratoryBModel> getAllLaboratories();
 	LaboratoryBModel getById(int id);
 	boolean addLaboratory(LaboratoryBModel lab);
-	boolean updateLaboratory(LaboratoryBModel lab);
+	boolean updateLaboratory(int labId, LaboratoryBModel lab);
 	boolean deleteLaboratoryById(int id);
 
 }

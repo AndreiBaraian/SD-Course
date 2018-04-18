@@ -1,6 +1,9 @@
 package hello.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.apimodels.LaboratoryAPIModel;
@@ -33,29 +37,33 @@ public class LaboratoryController {
 	}
 	
 	@RequestMapping(method = GET, value = "/{labId}")
-	public LaboratoryAPIModel getLabById(@PathVariable Integer labId) {
-		LaboratoryAPIModel lab = new ModelMapper().map(labService.getById(labId),LaboratoryAPIModel.class);
-		return lab;
+	public ResponseEntity<LaboratoryAPIModel> getLabById(@PathVariable Integer labId) {
+		LaboratoryBModel labB = labService.getById(labId);
+		if(labB == null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		LaboratoryAPIModel lab = new ModelMapper().map(labB,LaboratoryAPIModel.class);
+		return ResponseEntity.status(HttpStatus.OK).body(lab);
 	}
 	
 	@RequestMapping(method = POST)
-	public ResponseEntity<String> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
+	public ResponseEntity<LaboratoryAPIModel> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
 		if(labService.addLaboratory(new ModelMapper().map(labAPIModel, LaboratoryBModel.class)))
-			return ResponseEntity.status(HttpStatus.CREATED).build();
+			return ResponseEntity.status(HttpStatus.CREATED).body(labAPIModel);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
 	@RequestMapping(method = PUT)
-	public ResponseEntity<String> updateLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
-		if(labService.updateLaboratory(new ModelMapper().map(labAPIModel, LaboratoryBModel.class)))
-			return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+	public ResponseEntity<LaboratoryAPIModel> updateLaboratory(@RequestParam int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
+		if(labService.updateLaboratory(labId,new ModelMapper().map(labAPIModel, LaboratoryBModel.class)))
+			return ResponseEntity.status(HttpStatus.OK).body(labAPIModel);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
 	@RequestMapping(method = DELETE, value = "/{labId}")
-	public ResponseEntity<String> deleteLaboratory(@PathVariable Integer labId) {
-		labService.deleteLaboratoryById(labId);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	public ResponseEntity<LaboratoryAPIModel> deleteLaboratory(@PathVariable Integer labId) {
+		if(labService.deleteLaboratoryById(labId))
+			return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 }

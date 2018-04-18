@@ -3,10 +3,11 @@ package hello.apimodels;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class LaboratoryAPIModel {
 	
-	//@JsonIgnore
+	@JsonIgnore
 	private int id;
 	private int labNumber;
 	
