@@ -2,10 +2,10 @@ package hello.dao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import hello.dao.dbModel.AssignmentDBModel;
+import hello.dao.dbModel.AssignmentDB;
 
-public interface AssignmentDAO extends JpaRepository<AssignmentDBModel,Integer> {
+public interface AssignmentDAO extends JpaRepository<AssignmentDB,Integer> {
 
-	AssignmentDBModel findByName(String name); 
+	AssignmentDB findByName(String name); 
 	
 }

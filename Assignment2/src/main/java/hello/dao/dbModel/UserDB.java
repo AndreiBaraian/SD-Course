@@ -30,6 +30,9 @@ public class UserDB {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "set_password")
+	private boolean isPasswordSet;
+	
 	public UserDB() {}
 
 	public int getId() {
@@ -62,6 +65,14 @@ public class UserDB {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isPasswordSet() {
+		return isPasswordSet;
+	}
+
+	public void setPasswordSet(boolean isPasswordSet) {
+		this.isPasswordSet = isPasswordSet;
 	}
 	
 }

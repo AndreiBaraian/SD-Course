@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "assignments")
-public class AssignmentDBModel {
+public class AssignmentDB {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class AssignmentDBModel {
 	@JoinColumn(name = "lab_id")
 	private LaboratoryDB laboratory;
 	
-	public AssignmentDBModel() {}
+	public AssignmentDB() {}
 
 	public int getId() {
 		return id;

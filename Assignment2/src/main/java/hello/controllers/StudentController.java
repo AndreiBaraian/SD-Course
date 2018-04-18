@@ -25,7 +25,7 @@ public class StudentController {
 	public ResponseEntity<String> addStudent(@RequestBody StudentAPIModel student) {
 		if(studentService.addStudent(new ModelMapper().map(student,StudentBModel.class)) != null)
 			return ResponseEntity.status(HttpStatus.CREATED).build();
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Student already in the database");
 	}
 
 }

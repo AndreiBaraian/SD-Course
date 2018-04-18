@@ -16,7 +16,7 @@ import hello.service.interfaces.ILaboratoryService;
 @Service
 public class LaboratoryService implements ILaboratoryService {
 	
-	private final LaboratoryDAO labDAO;
+	private LaboratoryDAO labDAO;
 	private ModelMapper modelMapper;
 	
 	@Autowired
@@ -34,7 +34,7 @@ public class LaboratoryService implements ILaboratoryService {
 
 	@Override
 	public LaboratoryBModel getById(int id) {
-		Optional<LaboratoryDB> labDB =labDAO.findById(id);
+		Optional<LaboratoryDB> labDB = labDAO.findById(id);
 		if(!labDB.isPresent())
 			return null;
 		LaboratoryBModel lab = modelMapper.map(labDB.get(), LaboratoryBModel.class);

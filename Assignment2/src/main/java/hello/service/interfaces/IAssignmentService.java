@@ -6,10 +6,10 @@ import hello.service.bllmodel.AssignmentBModel;
 
 public interface IAssignmentService {
 	
-	List<AssignmentBModel> getAllAssignment();
-	AssignmentBModel getById(AssignmentBModel assignment);
-	boolean addAssignment(AssignmentBModel assignment);
-	boolean updateAssignment(AssignmentBModel assignment);
-	boolean deleteAssignmentById(AssignmentBModel assignment);
+	List<AssignmentBModel> getAllAssignments();
+	AssignmentBModel getById(int id);
+	boolean addAssignment(int labId, AssignmentBModel assignment);
+	boolean updateAssignment(int id,AssignmentBModel assignment);
+	boolean deleteAssignmentById(int id);
 
 }

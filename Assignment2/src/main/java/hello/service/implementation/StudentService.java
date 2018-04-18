@@ -26,10 +26,11 @@ public class StudentService implements IStudentService {
 	 * returns the 128-character token
 	 */
 	public String addStudent(StudentBModel student) {
-		StudentDB studentDB = modelMapper.map(student, StudentDB.class);
-		studentDB.setPassword(Utils.computeHash(student.getPassword()));
-		studentDB.setToken(Utils.generateToken());
 		if(studentDAO.findByEmail(student.getEmail()) == null) {
+			StudentDB studentDB = modelMapper.map(student, StudentDB.class);
+			studentDB.setPassword(Utils.computeHash(student.getPassword()));
+			studentDB.setToken(Utils.generateToken());
+			studentDB.setPasswordSet(false);
 			studentDAO.save(studentDB);
 			return studentDB.getToken();
 		}

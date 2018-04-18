@@ -6,22 +6,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AssignmentBModel {
 	
-	private int id;
 	private String name;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
 	private LocalDateTime deadline;
 	private String description;
-	private LaboratoryBModel laboratory;
 	
 	public AssignmentBModel() {}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -45,14 +35,6 @@ public class AssignmentBModel {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public LaboratoryBModel getLaboratory() {
-		return laboratory;
-	}
-
-	public void setLaboratory(LaboratoryBModel laboratory) {
-		this.laboratory = laboratory;
 	}
 	
 }

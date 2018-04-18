@@ -3,6 +3,7 @@ package hello.dao.dbModel;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "laboratories")
@@ -37,11 +37,10 @@ public class LaboratoryDB {
 	@Column(name = "curricula")
 	private String curricula;
 	
-	@JsonIgnore
 	@JsonBackReference
-	@OneToMany(mappedBy="laboratory")
-	private Set<AssignmentDBModel> assignments;
-	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="laboratory")
+	private Set<AssignmentDB> assignments;
+
 	public LaboratoryDB() {}
 	
 	
@@ -74,6 +73,15 @@ public class LaboratoryDB {
 	}
 	public void setCurricula(String curricula) {
 		this.curricula = curricula;
+	}
+	
+	public Set<AssignmentDB> getAssignments() {
+		return assignments;
+	}
+
+
+	public void setAssignments(Set<AssignmentDB> assignments) {
+		this.assignments = assignments;
 	}
 	
 }
