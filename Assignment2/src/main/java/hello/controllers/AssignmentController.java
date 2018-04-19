@@ -28,9 +28,12 @@ public class AssignmentController {
 	@Autowired
 	private IAssignmentService assignmentService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	@RequestMapping(method = POST)
 	public ResponseEntity<AssignmentAPIModel> addAssignment(@RequestParam int labId,@RequestBody AssignmentAPIModel assignmentAPIModel) {
-		if(assignmentService.addAssignment(labId, new ModelMapper().map(assignmentAPIModel,AssignmentBModel.class)))
+		if(assignmentService.addAssignment(labId, modelMapper.map(assignmentAPIModel,AssignmentBModel.class)))
 			return ResponseEntity.status(HttpStatus.CREATED).body(assignmentAPIModel);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
@@ -44,7 +47,7 @@ public class AssignmentController {
 	
 	@RequestMapping(method = PUT)
 	public ResponseEntity<AssignmentAPIModel> updateAssignment(@RequestParam int assignmentId,@RequestBody AssignmentAPIModel assignmentAPIModel){
-		if(assignmentService.updateAssignment(assignmentId, new ModelMapper().map(assignmentAPIModel, AssignmentBModel.class)))
+		if(assignmentService.updateAssignment(assignmentId, modelMapper.map(assignmentAPIModel, AssignmentBModel.class)))
 			return ResponseEntity.status(HttpStatus.OK).body(assignmentAPIModel);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
@@ -54,7 +57,7 @@ public class AssignmentController {
 		AssignmentBModel assignmentBModel = assignmentService.getById(id);
 		if(assignmentBModel == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		AssignmentAPIModel assignmentAPIModel = new ModelMapper().map(assignmentBModel, AssignmentAPIModel.class);
+		AssignmentAPIModel assignmentAPIModel = modelMapper.map(assignmentBModel, AssignmentAPIModel.class);
 		return ResponseEntity.status(HttpStatus.OK).body(assignmentAPIModel);
 	}
 	

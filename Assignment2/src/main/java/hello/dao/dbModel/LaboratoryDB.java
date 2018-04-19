@@ -40,6 +40,10 @@ public class LaboratoryDB {
 	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="laboratory")
 	private Set<AssignmentDB> assignments;
+	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="laboratory")
+	private Set<AttendanceDB> attendances;
 
 	public LaboratoryDB() {}
 	
@@ -84,4 +88,13 @@ public class LaboratoryDB {
 		this.assignments = assignments;
 	}
 	
+	public Set<AttendanceDB> getAttendances() {
+		return attendances;
+	}
+
+
+	public void setAttendances(Set<AttendanceDB> attendances) {
+		this.attendances = attendances;
+	}
+
 }

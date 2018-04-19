@@ -18,16 +18,14 @@ import hello.service.interfaces.IAssignmentService;
 @Service
 public class AssignmentService implements IAssignmentService {
 
+	@Autowired
 	private AssignmentDAO assignmentDAO;
-	private LaboratoryDAO labDAO;
-	private ModelMapper modelMapper;
 	
 	@Autowired
-	public AssignmentService(AssignmentDAO assignmentDAO, LaboratoryDAO labDAO) {
-		this.assignmentDAO = assignmentDAO;
-		this.labDAO = labDAO;
-		this.modelMapper = new ModelMapper();
-	}
+	private LaboratoryDAO labDAO;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Override
 	public List<AssignmentBModel> getAllAssignments() {
@@ -76,7 +74,6 @@ public class AssignmentService implements IAssignmentService {
 	@Override
 	public boolean deleteAssignmentById(int id) {
 		Optional<AssignmentDB> assignmentDB = assignmentDAO.findById(id);
-		System.out.println("this is id" + id);
 		if(assignmentDB.isPresent()) {
 			assignmentDAO.delete(assignmentDB.get());
 			return true;

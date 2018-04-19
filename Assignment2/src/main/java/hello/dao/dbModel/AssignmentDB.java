@@ -1,7 +1,9 @@
 package hello.dao.dbModel;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -36,6 +40,10 @@ public class AssignmentDB {
 	@JoinColumn(name = "lab_id")
 	private LaboratoryDB laboratory;
 	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="assignment")
+	private Set<SubmissionDB> submissions;
+
 	public AssignmentDB() {}
 
 	public int getId() {
@@ -76,6 +84,14 @@ public class AssignmentDB {
 
 	public void setLaboratory(LaboratoryDB laboratory) {
 		this.laboratory = laboratory;
+	}
+	
+	public Set<SubmissionDB> getSubmissions() {
+		return submissions;
+	}
+
+	public void setSubmissions(Set<SubmissionDB> submissions) {
+		this.submissions = submissions;
 	}
 
 }

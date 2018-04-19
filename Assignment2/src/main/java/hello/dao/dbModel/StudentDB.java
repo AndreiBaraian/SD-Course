@@ -1,8 +1,14 @@
 package hello.dao.dbModel;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @DiscriminatorValue("student")
@@ -16,6 +22,10 @@ public class StudentDB extends UserDB {
 	
 	@Column(name = "token")
 	private String token;
+	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="student")
+	private Set<AttendanceDB> attendances;
 	
 	public StudentDB() {}
 	
@@ -41,6 +51,14 @@ public class StudentDB extends UserDB {
 
 	public void setHobby(String hobby) {
 		this.hobby = hobby;
+	}
+
+	public Set<AttendanceDB> getAttendances() {
+		return attendances;
+	}
+
+	public void setAttendances(Set<AttendanceDB> attendances) {
+		this.attendances = attendances;
 	}
 	
 }

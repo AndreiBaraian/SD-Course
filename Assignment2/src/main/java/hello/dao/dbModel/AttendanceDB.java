@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "attendances")
-public class AttendaceDB {
+public class AttendanceDB {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,14 +19,14 @@ public class AttendaceDB {
 	private int id;
 	
 	@ManyToOne
+	@JoinColumn(name = "lab_id")
+	private LaboratoryDB laboratory;
+	
+	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private StudentDB student;
 	
-	@ManyToOne
-	@JoinColumn(name = "lab_id")
-	private LaboratoryDB lab;
-	
-	public AttendaceDB() {}
+	public AttendanceDB() {}
 
 	public int getId() {
 		return id;
@@ -36,20 +36,20 @@ public class AttendaceDB {
 		this.id = id;
 	}
 
+	public LaboratoryDB getLaboratory() {
+		return laboratory;
+	}
+
+	public void setLaboratory(LaboratoryDB laboratory) {
+		this.laboratory = laboratory;
+	}
+
 	public StudentDB getStudent() {
 		return student;
 	}
 
 	public void setStudent(StudentDB student) {
 		this.student = student;
-	}
-
-	public LaboratoryDB getLab() {
-		return lab;
-	}
-
-	public void setLab(LaboratoryDB lab) {
-		this.lab = lab;
 	}
 	
 }

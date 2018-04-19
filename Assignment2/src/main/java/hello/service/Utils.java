@@ -1,7 +1,7 @@
 package hello.service;
 
 import java.security.MessageDigest;
-import java.security.SecureRandom;
+import java.util.UUID;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -19,10 +19,14 @@ public class Utils {
 	}
 	
 	public static String generateToken() {
-		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[128];
-		random.nextBytes(bytes);
-		return bytes.toString();
+		UUID uuid = null;
+		StringBuilder token = new StringBuilder();
+		for(int i=0;i<4;i++)
+		{
+			uuid = UUID.randomUUID();
+			token.append(uuid.toString());
+		}
+		return token.substring(0,128);
 	}
 	
 }

@@ -28,6 +28,8 @@ public class LaboratoryController {
 	@Autowired
 	private ILaboratoryService labService;
 	
+	//TODO Autowire the modelMapper
+	
 	@RequestMapping(method = GET)
 	public List<LaboratoryAPIModel> getAllLaboratories() {
 		List<LaboratoryBModel> list = labService.getAllLaboratories();

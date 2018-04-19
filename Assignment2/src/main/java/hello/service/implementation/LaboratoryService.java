@@ -16,14 +16,12 @@ import hello.service.interfaces.ILaboratoryService;
 @Service
 public class LaboratoryService implements ILaboratoryService {
 	
+	@Autowired
 	private LaboratoryDAO labDAO;
-	private ModelMapper modelMapper;
 	
 	@Autowired
-	public LaboratoryService(LaboratoryDAO labDAO) {
-		this.labDAO = labDAO;
-		this.modelMapper = new ModelMapper();
-	}
+	private ModelMapper modelMapper;
+	
 
 	@Override
 	public List<LaboratoryBModel> getAllLaboratories() {
