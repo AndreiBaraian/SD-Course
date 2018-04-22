@@ -30,9 +30,16 @@ public class SubmissionDB {
 	@Column(name = "grade")
 	private int grade;
 	
+	@Column(name = "was_deleted")
+	private boolean wasDeleted;
+	
 	@ManyToOne
 	@JoinColumn(name = "assignment_id")
 	private AssignmentDB assignment;
+	
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	private StudentDB student;
 
 	public SubmissionDB() {}
 
@@ -82,6 +89,22 @@ public class SubmissionDB {
 
 	public void setAssignment(AssignmentDB assignment) {
 		this.assignment = assignment;
+	}
+
+	public boolean getWasDeleted() {
+		return wasDeleted;
+	}
+
+	public void setWasDeleted(boolean wasDeleted) {
+		this.wasDeleted = wasDeleted;
+	}
+
+	public StudentDB getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDB student) {
+		this.student = student;
 	}
 
 }

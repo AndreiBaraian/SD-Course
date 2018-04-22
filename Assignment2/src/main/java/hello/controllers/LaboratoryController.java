@@ -28,12 +28,15 @@ public class LaboratoryController {
 	@Autowired
 	private ILaboratoryService labService;
 	
+	@Autowired
+	private ModelMapper mapper;
+	
 	//TODO Autowire the modelMapper
 	
 	@RequestMapping(method = GET)
 	public List<LaboratoryAPIModel> getAllLaboratories() {
 		List<LaboratoryBModel> list = labService.getAllLaboratories();
-		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> new ModelMapper().map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
+		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
 		return resultList;
 	}
 	
@@ -42,20 +45,20 @@ public class LaboratoryController {
 		LaboratoryBModel labB = labService.getById(labId);
 		if(labB == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		LaboratoryAPIModel lab = new ModelMapper().map(labB,LaboratoryAPIModel.class);
+		LaboratoryAPIModel lab = mapper.map(labB,LaboratoryAPIModel.class);
 		return ResponseEntity.status(HttpStatus.OK).body(lab);
 	}
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<LaboratoryAPIModel> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
-		if(labService.addLaboratory(new ModelMapper().map(labAPIModel, LaboratoryBModel.class)))
+		if(labService.addLaboratory(mapper.map(labAPIModel, LaboratoryBModel.class)))
 			return ResponseEntity.status(HttpStatus.CREATED).body(labAPIModel);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
 	@RequestMapping(method = PUT)
 	public ResponseEntity<LaboratoryAPIModel> updateLaboratory(@RequestParam int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
-		if(labService.updateLaboratory(labId,new ModelMapper().map(labAPIModel, LaboratoryBModel.class)))
+		if(labService.updateLaboratory(labId,mapper.map(labAPIModel, LaboratoryBModel.class)))
 			return ResponseEntity.status(HttpStatus.OK).body(labAPIModel);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}

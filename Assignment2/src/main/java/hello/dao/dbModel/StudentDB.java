@@ -27,6 +27,10 @@ public class StudentDB extends UserDB {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="student")
 	private Set<AttendanceDB> attendances;
 	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="student")
+	private Set<SubmissionDB> submissions;
+	
 	public StudentDB() {}
 	
 	public String getToken() {
@@ -59,6 +63,14 @@ public class StudentDB extends UserDB {
 
 	public void setAttendances(Set<AttendanceDB> attendances) {
 		this.attendances = attendances;
+	}
+
+	public Set<SubmissionDB> getSubmissions() {
+		return submissions;
+	}
+
+	public void setSubmissions(Set<SubmissionDB> submissions) {
+		this.submissions = submissions;
 	}
 	
 }

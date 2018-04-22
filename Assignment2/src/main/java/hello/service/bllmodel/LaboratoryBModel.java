@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LaboratoryBModel {
 	
+	private int id;
 	private int labNumber;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime date;
@@ -47,6 +48,14 @@ public class LaboratoryBModel {
 
 	public void setAssignments(Set<AssignmentBModel> assignments) {
 		this.assignments = assignments;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
