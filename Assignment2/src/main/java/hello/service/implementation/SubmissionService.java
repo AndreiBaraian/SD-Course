@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import hello.dao.dbModel.AssignmentDB;
 import hello.dao.dbModel.StudentDB;
@@ -17,6 +18,7 @@ import hello.dao.repository.SubmissionDAO;
 import hello.service.bllmodel.SubmissionBModel;
 import hello.service.interfaces.ISubmissionService;
 
+@Service
 public class SubmissionService implements ISubmissionService {
 	
 	private static final int MAX_NUMBER_SUBMISSIONS = 3; 
@@ -34,8 +36,8 @@ public class SubmissionService implements ISubmissionService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public List<SubmissionBModel> getAllAssignments() {
-		List<SubmissionDB> list = submissionDAO.findAll();
+	public List<SubmissionBModel> getAllSubmissions() {
+		List<SubmissionDB> list = submissionDAO.findAll().parallelStream().filter(x -> !x.getWasDeleted()).collect(Collectors.toList());
 		List<SubmissionBModel> resultList = list.parallelStream().map(x-> modelMapper.map(x, SubmissionBModel.class)).collect(Collectors.toList());
 		return resultList;
 	}
@@ -43,7 +45,7 @@ public class SubmissionService implements ISubmissionService {
 	@Override
 	public SubmissionBModel getById(int id) {
 		Optional<SubmissionDB> submissionDB = submissionDAO.findById(id);
-		if(submissionDB.isPresent()){
+		if(submissionDB.isPresent() && (!submissionDB.get().getWasDeleted())){
 			return modelMapper.map(submissionDB, SubmissionBModel.class);
 		}
 		return null;
@@ -68,12 +70,15 @@ public class SubmissionService implements ISubmissionService {
 			return true;
 		}
 		// there was a previous submission, but it was deleted
-		else if (submissionDB.getWasDeleted() && submissionDB.getNumberOfSubmissions() <= MAX_NUMBER_SUBMISSIONS){
-			SubmissionDB sub = modelMapper.map(submission, SubmissionDB.class);
-			sub.setAssignment(assignmentDB);
-			sub.setStudent(studentDB);
-			sub.setNumberOfSubmissions(submissionDB.getNumberOfSubmissions() + 1);
-			submissionDAO.save(sub);
+		else if (submissionDB.getWasDeleted() && submissionDB.getNumberOfSubmissions() < MAX_NUMBER_SUBMISSIONS){
+			//SubmissionDB sub = modelMapper.map(submission, SubmissionDB.class);
+			//sub.setAssignment(assignmentDB);
+			//sub.setStudent(studentDB);
+			submissionDB.setGitRepositoryLink(submission.getGitRepositoryLink());
+			submissionDB.setRemark(submission.getRemark());
+			submissionDB.setNumberOfSubmissions(submissionDB.getNumberOfSubmissions() + 1);
+			submissionDB.setWasDeleted(false);
+			submissionDAO.save(submissionDB);
 			return true;
 		}
 		else
@@ -83,21 +88,37 @@ public class SubmissionService implements ISubmissionService {
 	
 	@Override
 	public boolean updateSubmission(int id, SubmissionBModel submission) {
-		Optional<SubmissionDB> submissionDB = submissionDAO.findById(id);
-		if(submissionDB.isPresent()){
-			SubmissionDB subDB = submissionDB.get();
-			if(subDB.getNumberOfSubmissions() <= MAX_NUMBER_SUBMISSIONS){
-				subDB.setGitRepositoryLink(submission.getGitRepositoryLink());
-				subDB.setRemark(submission.getRemark());
-				subDB.setNumberOfSubmissions(subDB.getNumberOfSubmissions() + 1);
-				submissionDAO.save(subDB);
-				return true;
-			}
-			return false;
+		SubmissionDB subDB = submissionDAO.getOne(id);
+		if(subDB.getNumberOfSubmissions() < MAX_NUMBER_SUBMISSIONS){
+			subDB.setGitRepositoryLink(submission.getGitRepositoryLink());
+			subDB.setRemark(submission.getRemark());
+			subDB.setNumberOfSubmissions(subDB.getNumberOfSubmissions() + 1);
+			submissionDAO.save(subDB);
+			return true;
 		}
 		return false;
 	}
 	
+	@Override
+	public boolean gradeSubmission(int id, int grade) {
+		Optional<SubmissionDB> subDB = submissionDAO.findById(id);
+		if(subDB.isPresent()){
+			SubmissionDB sub = subDB.get();
+			sub.setGrade(grade);
+			submissionDAO.save(sub);
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean exists(int id){
+		Optional<SubmissionDB> submissionDB = submissionDAO.findById(id);
+		if(submissionDB.isPresent()){
+			return true;
+		}
+		return false;
+	}
 
 	
 	@Override

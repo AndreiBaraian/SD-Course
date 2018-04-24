@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +30,11 @@ public class AssignmentController {
 	private IAssignmentService assignmentService;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private ModelMapper mapper;
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<AssignmentAPIModel> addAssignment(@RequestParam int labId,@RequestBody AssignmentAPIModel assignmentAPIModel) {
-		if(assignmentService.addAssignment(labId, modelMapper.map(assignmentAPIModel,AssignmentBModel.class)))
+		if(assignmentService.addAssignment(labId, mapper.map(assignmentAPIModel,AssignmentBModel.class)))
 			return ResponseEntity.status(HttpStatus.CREATED).body(assignmentAPIModel);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
@@ -47,7 +48,7 @@ public class AssignmentController {
 	
 	@RequestMapping(method = PUT)
 	public ResponseEntity<AssignmentAPIModel> updateAssignment(@RequestParam int assignmentId,@RequestBody AssignmentAPIModel assignmentAPIModel){
-		if(assignmentService.updateAssignment(assignmentId, modelMapper.map(assignmentAPIModel, AssignmentBModel.class)))
+		if(assignmentService.updateAssignment(assignmentId, mapper.map(assignmentAPIModel, AssignmentBModel.class)))
 			return ResponseEntity.status(HttpStatus.OK).body(assignmentAPIModel);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
@@ -57,13 +58,29 @@ public class AssignmentController {
 		AssignmentBModel assignmentBModel = assignmentService.getById(id);
 		if(assignmentBModel == null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		AssignmentAPIModel assignmentAPIModel = modelMapper.map(assignmentBModel, AssignmentAPIModel.class);
+		AssignmentAPIModel assignmentAPIModel = mapper.map(assignmentBModel, AssignmentAPIModel.class);
 		return ResponseEntity.status(HttpStatus.OK).body(assignmentAPIModel);
+	}
+	
+	@RequestMapping(method = GET, value = "/{labId")
+	public ResponseEntity<List<AssignmentAPIModel>> getAssignmentsByLab(@RequestParam int labId){
+		List<AssignmentAPIModel> assignments = assignmentService.getAssignmentsByLab(labId).parallelStream()
+												.map(x -> mapper.map(x, AssignmentAPIModel.class))
+												.collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(assignments);
+	}
+	
+	@RequestMapping(method = GET, value = "/{assignmentId}")
+	public ResponseEntity<HashMap<String,Integer>> getGrades(@RequestParam int assignmentId){
+		HashMap<String,Integer> resultList = assignmentService.getGradesForAssignment(assignmentId);
+		if(resultList != null)
+			return ResponseEntity.status(HttpStatus.OK).body(resultList);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 	@RequestMapping(method = GET)
 	public ResponseEntity<List<AssignmentAPIModel>> getAllAssignments(){
-		List<AssignmentAPIModel> assignments = assignmentService.getAllAssignments().parallelStream().map(x -> new ModelMapper().map(x, AssignmentAPIModel.class)).collect(Collectors.toList());
+		List<AssignmentAPIModel> assignments = assignmentService.getAllAssignments().parallelStream().map(x -> mapper.map(x, AssignmentAPIModel.class)).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(assignments);
 	}
 

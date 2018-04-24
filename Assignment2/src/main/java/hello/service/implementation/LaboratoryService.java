@@ -20,13 +20,13 @@ public class LaboratoryService implements ILaboratoryService {
 	private LaboratoryDAO labDAO;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private ModelMapper mapper;
 	
 
 	@Override
 	public List<LaboratoryBModel> getAllLaboratories() {
 		List<LaboratoryDB> list = labDAO.findAll();
-		List<LaboratoryBModel> resultList = list.parallelStream().map(x -> modelMapper.map(x, LaboratoryBModel.class)).collect(Collectors.toList());
+		List<LaboratoryBModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryBModel.class)).collect(Collectors.toList());
 		return resultList;
 	}
 
@@ -35,7 +35,7 @@ public class LaboratoryService implements ILaboratoryService {
 		Optional<LaboratoryDB> labDB = labDAO.findById(id);
 		if(!labDB.isPresent())
 			return null;
-		LaboratoryBModel lab = modelMapper.map(labDB.get(), LaboratoryBModel.class);
+		LaboratoryBModel lab = mapper.map(labDB.get(), LaboratoryBModel.class);
 		return lab;
 	}
 
@@ -43,7 +43,7 @@ public class LaboratoryService implements ILaboratoryService {
 	public boolean addLaboratory(LaboratoryBModel lab) {
 		if(lab.getLabNumber() < 1 || lab.getLabNumber() > 14)
 			return false;
-		LaboratoryDB labDB = modelMapper.map(lab, LaboratoryDB.class);
+		LaboratoryDB labDB = mapper.map(lab, LaboratoryDB.class);
 		if(labDAO.findByLabNumber(labDB.getLabNumber()) == null) {
 			labDAO.save(labDB);
 			return true;
@@ -74,6 +74,17 @@ public class LaboratoryService implements ILaboratoryService {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<LaboratoryBModel> getLabsByKeyword(String keyword) {
+		List<LaboratoryDB> list = labDAO.findAll().parallelStream()
+				.filter(x -> x.getDescription().contains(keyword) || x.getCurricula().contains(keyword))
+				.collect(Collectors.toList());
+		List<LaboratoryBModel> resultList = list.parallelStream()
+				.map(x -> mapper.map(x, LaboratoryBModel.class))
+				.collect(Collectors.toList());
+		return resultList;
 	}
 
 }

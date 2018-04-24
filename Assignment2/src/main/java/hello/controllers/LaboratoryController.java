@@ -31,8 +31,6 @@ public class LaboratoryController {
 	@Autowired
 	private ModelMapper mapper;
 	
-	//TODO Autowire the modelMapper
-	
 	@RequestMapping(method = GET)
 	public List<LaboratoryAPIModel> getAllLaboratories() {
 		List<LaboratoryBModel> list = labService.getAllLaboratories();
@@ -47,6 +45,14 @@ public class LaboratoryController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		LaboratoryAPIModel lab = mapper.map(labB,LaboratoryAPIModel.class);
 		return ResponseEntity.status(HttpStatus.OK).body(lab);
+	}
+	
+	@RequestMapping(method = GET, value = "/{keyword}")
+	public ResponseEntity<List<LaboratoryAPIModel>> getLabByKeyword(@RequestParam String keyword){
+		List<LaboratoryAPIModel> list = labService.getLabsByKeyword(keyword).parallelStream()
+				.map(x -> mapper.map(x, LaboratoryAPIModel.class))
+				.collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	@RequestMapping(method = POST)

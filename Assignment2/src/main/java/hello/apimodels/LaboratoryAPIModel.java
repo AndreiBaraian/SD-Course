@@ -15,6 +15,7 @@ public class LaboratoryAPIModel {
 	private LocalDateTime date;
 	private String title;
 	private String curricula;
+	private String description;
 	
 	public LaboratoryAPIModel() {}
 	
@@ -49,6 +50,14 @@ public class LaboratoryAPIModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -6,10 +6,11 @@ import hello.service.bllmodel.LaboratoryBModel;
 
 public interface ILaboratoryService {
 	
-	List<LaboratoryBModel> getAllLaboratories();
-	LaboratoryBModel getById(int id);
-	boolean addLaboratory(LaboratoryBModel lab);
-	boolean updateLaboratory(int labId, LaboratoryBModel lab);
-	boolean deleteLaboratoryById(int id);
+	public List<LaboratoryBModel> getAllLaboratories();
+	public List<LaboratoryBModel> getLabsByKeyword(String keyword);
+	public LaboratoryBModel getById(int id);
+	public boolean addLaboratory(LaboratoryBModel lab);
+	public boolean updateLaboratory(int labId, LaboratoryBModel lab);
+	public boolean deleteLaboratoryById(int id);
 
 }

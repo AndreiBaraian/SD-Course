@@ -37,6 +37,9 @@ public class LaboratoryDB {
 	@Column(name = "curricula")
 	private String curricula;
 	
+	@Column(name = "description")
+	private String description;
+	
 	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="laboratory")
 	private Set<AssignmentDB> assignments;
@@ -95,6 +98,16 @@ public class LaboratoryDB {
 
 	public void setAttendances(Set<AttendanceDB> attendances) {
 		this.attendances = attendances;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

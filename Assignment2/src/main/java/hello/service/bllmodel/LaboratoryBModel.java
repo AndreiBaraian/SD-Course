@@ -13,6 +13,7 @@ public class LaboratoryBModel {
 	private LocalDateTime date;
 	private String title;
 	private String curricula;
+	private String description;
 	private Set<AssignmentBModel> assignments;
 	
 	public LaboratoryBModel() {}
@@ -56,6 +57,14 @@ public class LaboratoryBModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

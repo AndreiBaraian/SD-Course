@@ -1,10 +1,16 @@
 package hello.apimodels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SubmissionAPIModel {
 	
 	private String gitRepositoryLink;
 	private String remark;
+	
+	@JsonIgnore
 	private int numberOfSubmissions;
+	
+	@JsonIgnore
 	private int grade;
 	
 	public SubmissionAPIModel() {}
