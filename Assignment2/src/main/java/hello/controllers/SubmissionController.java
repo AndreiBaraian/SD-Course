@@ -62,6 +62,13 @@ public class SubmissionController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The maximum number of submissions has been reached!");
 	}
 	
+	@RequestMapping(method = PUT, value = "/{grade}")
+	public ResponseEntity<String> gradeSubmission(@RequestParam int subId, @RequestParam int grade){
+		if(subService.gradeSubmission(subId, grade))
+			return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
 	@RequestMapping(method = DELETE)
 	public ResponseEntity<SubmissionAPIModel> deleteSubmission(@RequestParam int id){
 		if(subService.deleteSubmissionById(id))
