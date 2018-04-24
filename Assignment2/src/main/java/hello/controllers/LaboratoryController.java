@@ -47,6 +47,7 @@ public class LaboratoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(lab);
 	}
 	
+	
 	@RequestMapping(method = GET, value = "/{keyword}")
 	public ResponseEntity<List<LaboratoryAPIModel>> getLabByKeyword(@RequestParam String keyword){
 		List<LaboratoryAPIModel> list = labService.getLabsByKeyword(keyword).parallelStream()
@@ -54,6 +55,7 @@ public class LaboratoryController {
 				.collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
+	
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<LaboratoryAPIModel> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {

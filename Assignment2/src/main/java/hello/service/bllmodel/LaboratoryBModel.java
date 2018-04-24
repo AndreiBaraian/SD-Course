@@ -6,7 +6,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LaboratoryBModel {
-	
+
 	private int id;
 	private int labNumber;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
@@ -17,6 +17,15 @@ public class LaboratoryBModel {
 	private Set<AssignmentBModel> assignments;
 	
 	public LaboratoryBModel() {}
+	
+	public LaboratoryBModel(int labNumber, LocalDateTime date, String title, String curricula, String description) {
+		super();
+		this.labNumber = labNumber;
+		this.date = date;
+		this.title = title;
+		this.curricula = curricula;
+		this.description = description;
+	}
 	
 	public int getLabNumber() {
 		return labNumber;
