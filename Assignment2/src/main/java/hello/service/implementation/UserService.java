@@ -3,6 +3,7 @@ package hello.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hello.dao.dbModel.Role;
 import hello.dao.dbModel.StudentDB;
 import hello.dao.dbModel.UserDB;
 import hello.dao.repository.StudentDAO;
@@ -20,7 +21,7 @@ public class UserService implements IUserService {
 	@Autowired
 	private StudentDAO studentDAO;
 	
-	public boolean login(String email, String password) throws LoginException{
+	public Role login(String email, String password) throws LoginException{
 		UserDB userDB = userDAO.findUserByEmail(email);
 		if(userDB == null)
 			throw new LoginException("User not found!");
@@ -28,8 +29,8 @@ public class UserService implements IUserService {
 			throw new LoginException("Password not set, please register first!");
 		String hashPassword = Utils.computeHash(password);
 		if(hashPassword.equals(userDB.getPassword()))
-			return true;
-		return false;
+			return userDB.getRole();
+		return null;
 	}
 	
 	public void register(String email, String password, String token) throws LoginException{

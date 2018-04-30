@@ -57,19 +57,7 @@ public class LaboratoryControllerTest {
 		
 	}
 	
-	/*
-	@Test
-	public void testGetLabById() throws Exception{
-		LaboratoryBModel lab1 = new LaboratoryBModel(1,LocalDateTime.now(),"Lab1","A curricula","A description");
-		
-		given(labService.getById(1)).willReturn(lab1);
-		
-		mvc.perform(get("/lab/1")
-				.contentType(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.title",is("Lab1")));
-	}
-	*/
+	
 	
 	@Test
 	public void testAddLab() throws Exception {
@@ -102,6 +90,20 @@ public class LaboratoryControllerTest {
 				.contentType(MediaType.APPLICATION_JSON))
 		.andExpect(status().isCreated());
 	}
+	
+	/*
+	@Test
+	public void testGetLabById() throws Exception{
+		LaboratoryBModel lab1 = new LaboratoryBModel(1,LocalDateTime.now(),"Lab1","A curricula","A description");
+		
+		given(labService.getById(1)).willReturn(lab1);
+		
+		mvc.perform(get("/lab/1")
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk())
+		.andExpect(jsonPath("$.title",is("Lab1")));
+	}
+	*/
 	
 	
 }

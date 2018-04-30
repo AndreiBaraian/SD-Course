@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hello.dao.dbModel.Role;
 import hello.dao.dbModel.StudentDB;
 import hello.dao.repository.StudentDAO;
 import hello.service.Utils;
@@ -29,6 +30,7 @@ public class StudentService implements IStudentService {
 	public String addStudent(StudentBModel student) {
 		if(studentDAO.findByEmail(student.getEmail()) == null) {
 			StudentDB studentDB = modelMapper.map(student, StudentDB.class);
+			studentDB.setRole(Role.STUDENT);
 			studentDB.setToken(Utils.generateToken());
 			studentDB.setPasswordSet(false);
 			studentDAO.save(studentDB);

@@ -3,6 +3,8 @@ package hello.dao.dbModel;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,10 @@ public class UserDB {
 	
 	@Column(name = "set_password")
 	private boolean isPasswordSet;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
+	private Role role;
 	
 	public UserDB() {}
 
@@ -73,6 +79,14 @@ public class UserDB {
 
 	public void setPasswordSet(boolean isPasswordSet) {
 		this.isPasswordSet = isPasswordSet;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 }
