@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+jar {
+    baseName = 'gs-securing-web'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("junit:junit")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.security:spring-security-test")
+	compile('org.springframework.boot:spring-boot-starter-web','org.apache.tomcat.embed:tomcat-embed-jasper'
+	 ,'javax.servlet:jstl')
+	compile 'javax.servlet:javax.servlet-api:3.1.0'
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile('org.modelmapper:modelmapper:1.1.0')
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'mysql:mysql-connector-java:5.1.31'
+	compile 'org.hibernate:hibernate-core:5.2.16.Final'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.0.1.RELEASE'
+}

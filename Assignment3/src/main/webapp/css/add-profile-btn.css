@@ -1,0 +1,38 @@
+/*
+ * @Author: Dan Mitrea
+ */
+
+.addProfileBtn {
+	background-color: #555753;
+	display: block;
+	width: 130px;
+	margin: auto;
+	padding: 7px 24px;
+	border: 2px solid #555555;
+	border-radius: 10px;
+	box-shadow: 0 9px #999;
+	text-align: center;
+	font-size: 16px;
+	font-family: 'Arial', sans-serif;
+	color: #ffffff;
+	white-space: nowrap;
+	box-sizing: border-box;
+	transition-duration: 0.2s;
+	cursor: pointer;
+}
+
+.addProfileBtn:hover {
+	width: 130px;
+	background-color: #2e3436;
+}
+
+.addProfileBtn:active {
+	background-color: #000000;
+	box-shadow: 0 5px #666;
+	transform: translateY(4px);
+}
+
+}
+.one a {
+	text-decoration: none;
+}

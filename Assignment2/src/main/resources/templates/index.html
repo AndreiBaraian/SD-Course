@@ -1,17 +1,11 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Index</title>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/html" href="/../../css/main.css">
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag">
     <h1>Hello to Fake Moodle</h1>
-    <p>This is the start page</p>
-    <ul>
-        <li>Go to the <a href="/login" th:href="@{/user}">login</a></li>
-    </ul>
-</div>
 </body>
 </html>

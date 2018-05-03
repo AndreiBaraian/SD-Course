@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hello.exceptions.LoginException;
 import hello.service.interfaces.IUserService;
 
-@RestController
-@RequestMapping("dt")
+//@RestController
+//@RequestMapping("dt")
 public class LoginController {
 	
 	@Autowired 
@@ -27,6 +27,7 @@ public class LoginController {
 		return mv;
 	}*/
 
+	/*
 	@RequestMapping(method = POST)
 	public ResponseEntity<?> logIn(@RequestParam String email, @RequestParam String password){
 		try {
@@ -36,6 +37,6 @@ public class LoginController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect email/password");
-	}
+	}*/
 	
 }

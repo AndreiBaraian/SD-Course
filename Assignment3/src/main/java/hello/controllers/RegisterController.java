@@ -8,34 +8,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import hello.exceptions.LoginException;
 import hello.service.interfaces.IUserService;
 
 @RestController
-@RequestMapping("dt")
-public class LoginController {
+@RequestMapping("/register")
+public class RegisterController {
 	
-	@Autowired 
+	@Autowired
 	private IUserService userService;
 	
-	/*
-	@RequestMapping(value = "/login")
-	public ModelAndView loginView() {
-		ModelAndView mv = new ModelAndView("login");
-		return mv;
-	}*/
-
 	@RequestMapping(method = POST)
-	public ResponseEntity<?> logIn(@RequestParam String email, @RequestParam String password){
+	public ResponseEntity<String> register(@RequestParam String email, @RequestParam String password, @RequestParam String token) {
 		try {
-			if(userService.login(email,password) != null)
-				return ResponseEntity.status(HttpStatus.OK).build();
+			userService.register(email, password, token);
 		} catch (LoginException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect email/password");
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
-	
+
 }
