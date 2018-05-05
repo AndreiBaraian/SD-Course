@@ -1,31 +1,27 @@
-/**
- * @Author: Dan Mitrea,
- * @author Varadi Robert
- */
 
-function approveDataBtn(buttonId, relativeURL) {
+
+function sendFormData(buttonId, relativeURL, form) {
 	jQuery(buttonId).on("click", function() {
 		
-		var myLab = new Object();
-		myLab.labNumber = "2";
-		myLab.date="2018-08-09 12:12";
-		myLab.title="title";
-		myLab.curricula="my curricula";
-		myLab.description="description";
+		var myData = $(form).serializeArray().reduce(function(obj, item) {
+		    obj[item.name] = item.value;
+		    return obj;
+		}, {});
 		
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
 			url : "http://localhost:8080/" + relativeURL,
-			data : JSON.stringify(myLab),
+			data : JSON.stringify(myData),
 			dataType : 'html',
 			timeout : 100000,
 			success : function(response) {
 				$("#root").html(response);
 				console.log("SUCCESS: ", response);
 			},
-			error : function(e) {
+			error : function(xhr, e) {
 				console.log("ERROR: ", e);
+				console.log("Status: ",xhr.status);
 			},
 			done : function(e) {
 				console.log("DONE");

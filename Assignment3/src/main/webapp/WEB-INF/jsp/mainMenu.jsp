@@ -67,6 +67,11 @@
 			<span>Add Laboratory</span>
 			</a>
 		</ul>
+		<ul class="sidebar-submenu">
+			<li><a href="/deleteLabView" target="page">
+			<span>Delete Laboratory</span>
+			</a>
+		</ul>
 		</li>
 		<li><a href="#">
 			<i class="glyphicon glyphicon-envelope"></i><span> Mailbox</span>

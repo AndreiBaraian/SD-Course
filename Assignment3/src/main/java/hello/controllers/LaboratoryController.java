@@ -11,11 +11,10 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +25,7 @@ import hello.service.bllmodel.LaboratoryBModel;
 import hello.service.interfaces.ILaboratoryService;
 
 @RestController
+@RequestMapping("/lab")
 public class LaboratoryController {
 
 	@Autowired
@@ -43,7 +43,7 @@ public class LaboratoryController {
 	}
 	*/
 	
-	@RequestMapping(value = "/lab",method = GET)
+	@RequestMapping(method = GET)
 	public ModelAndView getAllLaboratories() {
 		List<LaboratoryBModel> list = labService.getAllLaboratories();
 		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class LaboratoryController {
 		return mv;
 	}
 	
-	@RequestMapping(method = GET, value = "/lab/{labId}")
+	@RequestMapping(method = GET, value = "/{labId}")
 	public ResponseEntity<LaboratoryAPIModel> getLabById(@RequestParam int labId) {
 		LaboratoryBModel labB = labService.getById(labId);
 		if(labB == null)
@@ -62,7 +62,7 @@ public class LaboratoryController {
 	}
 	
 	
-	@RequestMapping(method = GET, value = "/lab/{keyword}")
+	@RequestMapping(method = GET, value = "/{keyword}")
 	public ResponseEntity<List<LaboratoryAPIModel>> getLabByKeyword(@RequestParam String keyword){
 		List<LaboratoryAPIModel> list = labService.getLabsByKeyword(keyword).parallelStream()
 				.map(x -> mapper.map(x, LaboratoryAPIModel.class))
@@ -70,24 +70,7 @@ public class LaboratoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
-	/*
 	@RequestMapping(method = POST)
-	public ResponseEntity<LaboratoryAPIModel> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
-		if(labService.addLaboratory(mapper.map(labAPIModel, LaboratoryBModel.class)))
-			return ResponseEntity.status(HttpStatus.CREATED).body(labAPIModel);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-	}
-	*/
-	/*
-	@RequestMapping(value = "/lab",method = RequestMethod.POST)
-	public RedirectView addLaboratory(@RequestBody String[] list) {
-		RedirectView rv = new RedirectView("/hello");
-		System.out.println(list[0]);
-		return rv;
-	}
-	*/
-	
-	@RequestMapping(value = "/lab",method = POST)
 	public RedirectView addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
 		RedirectView rv = new RedirectView("hello");
 		if(labService.addLaboratory(mapper.map(labAPIModel, LaboratoryBModel.class)))
@@ -95,29 +78,19 @@ public class LaboratoryController {
 		return rv;
 	}
 	
-	
-	/*
-	@RequestMapping(value = "/lab",method = POST)
-	public RedirectView addLaboratory(HttpServletRequest request) {
-		RedirectView rv = new RedirectView("/hello");
-		String l = request.getParameter("labNumber");
-		System.out.println(l);
-		return rv;
-	}
-	*/
-	
-	@RequestMapping(value = "/lab",method = PUT)
+	@RequestMapping(method = PUT)
 	public ResponseEntity<LaboratoryAPIModel> updateLaboratory(@RequestParam int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
 		if(labService.updateLaboratory(labId,mapper.map(labAPIModel, LaboratoryBModel.class)))
 			return ResponseEntity.status(HttpStatus.OK).body(labAPIModel);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
-	@RequestMapping(method = DELETE, value = "/lab/{labId}")
-	public ResponseEntity<LaboratoryAPIModel> deleteLaboratory(@RequestParam int labId) {
+	@RequestMapping(method = DELETE, value = "/{labId}")
+	public RedirectView deleteLaboratory(@PathVariable("labId") int labId) {
+		RedirectView rv = new RedirectView("hello");
 		if(labService.deleteLaboratoryById(labId))
-			return ResponseEntity.status(HttpStatus.OK).build();
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			System.out.println("OK");
+		return rv;
 	}
 	
 }

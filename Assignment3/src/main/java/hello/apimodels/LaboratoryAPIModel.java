@@ -11,7 +11,7 @@ public class LaboratoryAPIModel implements Serializable{
 	
 	@JsonIgnore
 	private static final long serialVersionUID = 1L;
-	@JsonIgnore
+	//@JsonIgnore
 	private int id;
 	private int labNumber;
 	
