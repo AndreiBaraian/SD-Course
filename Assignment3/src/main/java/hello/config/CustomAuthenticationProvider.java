@@ -27,6 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 		String email = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		
+				
 		try {
 			Role role = userService.login(email, password);
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();

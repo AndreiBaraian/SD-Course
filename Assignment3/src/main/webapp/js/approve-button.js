@@ -5,20 +5,19 @@
 
 function approveDataBtn(buttonId, relativeURL) {
 	jQuery(buttonId).on("click", function() {
-		var checkedItems = [];
-		$('input[type=checkbox]').each(function() {
-			if(this.checked) {
-				checkedItems.push($(this).val());
-			}
-		});
-		console.log(JSON.stringify({
-			paramName : checkedItems
-		}));
+		
+		var myLab = new Object();
+		myLab.labNumber = "2";
+		myLab.date="2018-08-09 12:12";
+		myLab.title="title";
+		myLab.curricula="my curricula";
+		myLab.description="description";
+		
 		$.ajax({
 			type : "POST",
 			contentType : "application/json",
 			url : "http://localhost:8080/" + relativeURL,
-			data : JSON.stringify(checkedItems),
+			data : JSON.stringify(myLab),
 			dataType : 'html',
 			timeout : 100000,
 			success : function(response) {

@@ -63,7 +63,7 @@
 			</a>
 		</ul>
 		<ul class="sidebar-submenu">
-			<li><a href="/hello" target="page">
+			<li><a href="/addLab" target="page">
 			<span>Add Laboratory</span>
 			</a>
 		</ul>

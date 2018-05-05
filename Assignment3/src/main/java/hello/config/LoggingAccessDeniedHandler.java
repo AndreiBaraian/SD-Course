@@ -24,6 +24,7 @@ public class LoggingAccessDeniedHandler implements AccessDeniedHandler {
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(accessDeniedException.getMessage());
 
         if (auth != null) {
             log.info(auth.getName()

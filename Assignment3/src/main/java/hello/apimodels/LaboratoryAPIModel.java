@@ -1,12 +1,16 @@
 package hello.apimodels;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class LaboratoryAPIModel {
+public class LaboratoryAPIModel implements Serializable{
 	
+	@JsonIgnore
+	private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	private int id;
 	private int labNumber;
@@ -41,6 +45,18 @@ public class LaboratoryAPIModel {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+
+	@Override
+	public String toString() {
+		return "LaboratoryAPIModel [id=" + id + ", labNumber=" + labNumber + ", date=" + date + ", title=" + title
+				+ ", curricula=" + curricula + ", description=" + description + "]";
+	}
+
+	/*
+	public void setDate(String date) {
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		this.date = LocalDateTime.parse(date, formatter);
+	}*/
 	public String getTitle() {
 		return title;
 	}

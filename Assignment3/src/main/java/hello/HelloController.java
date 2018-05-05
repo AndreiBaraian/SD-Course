@@ -30,5 +30,17 @@ public class HelloController {
 		 ModelAndView mv = new ModelAndView("hello");
 		 return mv;
 	 }
+	 
+	 @RequestMapping("/addLab")
+	 public ModelAndView addLab() {
+		 ModelAndView mv = new ModelAndView("addLab");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("/access-denied")
+	 public ModelAndView access_denied() {
+		 ModelAndView mv = new ModelAndView("access-denied");
+		 return mv;
+	 }
 
 }
