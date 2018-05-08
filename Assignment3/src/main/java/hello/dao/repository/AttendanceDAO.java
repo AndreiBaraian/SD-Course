@@ -14,5 +14,6 @@ import hello.dao.dbModel.AttendanceDB;
 public interface AttendanceDAO extends JpaRepository<AttendanceDB,Integer> {
 
 	public List<AttendanceDB> findAttendanceByLaboratoryId(int labId);
+	public AttendanceDB getAttendanceByLaboratoryIdAndStudentId(int labId, int studentId);
 	
 }

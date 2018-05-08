@@ -1,10 +1,8 @@
 package hello.apimodels;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class AttendanceAPIModel {
 	
-	@JsonIgnore
+	private int id;
 	private LaboratoryAPIModel laboratory;
 	private StudentAPIModel student;
 	
@@ -24,6 +22,14 @@ public class AttendanceAPIModel {
 
 	public void setStudent(StudentAPIModel student) {
 		this.student = student;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

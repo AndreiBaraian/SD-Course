@@ -1,22 +1,31 @@
 package hello.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import hello.apimodels.LaboratoryAPIModel;
 import hello.apimodels.StudentAPIModel;
+import hello.service.bllmodel.LaboratoryBModel;
 import hello.service.bllmodel.StudentBModel;
+import hello.service.interfaces.ILaboratoryService;
 import hello.service.interfaces.IStudentService;
 
 @RestController
@@ -26,13 +35,16 @@ public class StudentController {
 	@Autowired
 	private IStudentService studentService;
 	
+	@Autowired
+	private ILaboratoryService laboratoryService;
+	
 	@Autowired 
-	private ModelMapper modelMapper;
+	private ModelMapper mapper;
 	
 	@RequestMapping(method = POST)
 	public ResponseEntity<HashMap<String,String>> addStudent(@RequestBody StudentAPIModel student) {
 		HashMap<String,String> response = new HashMap<>();
-		String token = studentService.addStudent(modelMapper.map(student,StudentBModel.class));
+		String token = studentService.addStudent(mapper.map(student,StudentBModel.class));
 		if(token != null) {
 			response.put("token", token);
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -42,34 +54,48 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method = GET, value = "/{studentId}")
-	public ResponseEntity<StudentAPIModel> getStudentById(@RequestParam int id) {
+	public ModelAndView getStudentById(@PathVariable("studentId") int id) {
+		ModelAndView mv = new ModelAndView("modifyStudentForm");
 		StudentBModel studentBModel = studentService.getById(id);
 		if(studentBModel == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			System.out.println("NOT FOUND");
 		}
-		StudentAPIModel studentAPIModel = modelMapper.map(studentBModel, StudentAPIModel.class);
-		return ResponseEntity.status(HttpStatus.CREATED).body(studentAPIModel);
+		StudentAPIModel studentAPIModel = mapper.map(studentBModel, StudentAPIModel.class);
+		mv.addObject("student",studentAPIModel);
+		return mv;
 	}
 	
 	@RequestMapping(method = GET)
-	public List<StudentAPIModel> getAllStudents() {
+	public ModelAndView getAllStudents() {
+		ModelAndView mv = new ModelAndView("listStudents");
 		List<StudentBModel> list = studentService.getAllStudents();
-		List<StudentAPIModel> resultList = list.parallelStream().map(x -> modelMapper.map(x, StudentAPIModel.class)).collect(Collectors.toList());
-		return resultList;
+		List<StudentAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, StudentAPIModel.class)).collect(Collectors.toList());
+		mv.addObject("students",resultList);
+		return mv;
 	}
 	
-	@RequestMapping(method = PUT)
-	public ResponseEntity<StudentAPIModel> updateStudent(@RequestParam int id,@RequestBody StudentAPIModel student) {
-		if(studentService.updateStudent(id, modelMapper.map(student, StudentBModel.class)))
+	@RequestMapping(method = PUT, value="/{studentId}")
+	public ResponseEntity<StudentAPIModel> updateStudent(@PathVariable("studentId") int id,@RequestBody StudentAPIModel student) {
+		if(studentService.updateStudent(id, mapper.map(student, StudentBModel.class)))
 				return ResponseEntity.status(HttpStatus.OK).body(student);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@RequestMapping(method = DELETE, value = "/{studentId}")
-	public ResponseEntity<StudentAPIModel> deleteStudent(@RequestParam int studentId) {
+	public ResponseEntity<StudentAPIModel> deleteStudent(@PathVariable("studentId") int studentId) {
 		if(studentService.deleteStudentById(studentId))
 				return ResponseEntity.status(HttpStatus.OK).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@RequestMapping(method = GET, value = "/labs")
+	public ModelAndView viewLabs(HttpServletRequest request) {
+		System.out.println("id is " + request.getParameter("studentId"));
+		ModelAndView mv = new ModelAndView("listAttendanceLabs");
+		List<LaboratoryBModel> list = laboratoryService.getAllLaboratories();
+		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
+		mv.addObject("laboratories",resultList);
+		return mv;
 	}
 
 }

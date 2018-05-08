@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bank Application</title>
+<title>Awesome Moodle</title>
 </head>
 	<frameset cols="250px, *">
 		<frame src="/mainMenu" name="mainMenu" noresize="noresize">

@@ -6,6 +6,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="/css/submit-reset-btn.css">
+		<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Login Here</title>
 	</head>
@@ -30,6 +31,7 @@
 				<tr>
 					<td><input type = "submit" class="submitResetBtn" value = "Login" /></td>
 					<td><input type = "reset" class="submitResetBtn" value = "Reset" /></td>
+					<td><input type = "button" class="submitResetBtn" value = "Register" id="registerButton" /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -37,6 +39,14 @@
 		<input type="hidden" name="${_csrf.parameterName}"
 			value="${_csrf.token}" />
 	</form>
+	
+	<script>
+	jQuery("#registerButton").on('click', function() {
+		
+		window.location.assign("http://localhost:8080/registerView");
+		
+	});
+	</script>
 	
 </body>
 </html>

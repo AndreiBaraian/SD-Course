@@ -1,8 +1,8 @@
 package hello.controllers;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.List;
@@ -12,14 +12,22 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import hello.apimodels.AttendanceAPIModel;
+import hello.apimodels.LaboratoryAPIModel;
+import hello.apimodels.StudentAPIModel;
 import hello.exceptions.GetException;
 import hello.service.bllmodel.AttendanceBModel;
+import hello.service.bllmodel.LaboratoryBModel;
+import hello.service.bllmodel.StudentBModel;
 import hello.service.interfaces.IAttendanceService;
+import hello.service.interfaces.ILaboratoryService;
+import hello.service.interfaces.IStudentService;
 
 @RestController
 @RequestMapping("/attendance")
@@ -28,18 +36,26 @@ public class AttendanceController {
 	@Autowired 
 	private IAttendanceService attService;
 	
+	@Autowired 
+	private IStudentService studentService;
+	
+	@Autowired
+	private ILaboratoryService labService;
+	
 	@Autowired
 	private ModelMapper mapper;
 	
 	@RequestMapping(method = GET)
-	public List<AttendanceAPIModel> getAllAttendancesByLab(@RequestParam int labId){
+	public ModelAndView getAllAttendancesByLab(@RequestParam("labId") int labId){
+		ModelAndView mv = new ModelAndView("listAttendances");
 		List<AttendanceBModel> list = attService.getAllAttendancesByLab(labId);
 		List<AttendanceAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, AttendanceAPIModel.class)).collect(Collectors.toList());
-		return resultList;
+		mv.addObject("attendances",resultList);
+		return mv;
 	}
 	
 	@RequestMapping(method = POST)
-	public ResponseEntity<AttendanceAPIModel> addAttendance(@RequestParam int labId,@RequestParam int studentId){
+	public ResponseEntity<AttendanceAPIModel> addAttendance(@RequestParam("labId") int labId,@RequestParam("studentId") int studentId){
 		AttendanceAPIModel attendance = null;
 		try {
 			attendance = mapper.map(attService.addAttendance(labId, studentId), AttendanceAPIModel.class);
@@ -73,6 +89,25 @@ public class AttendanceController {
 			return ResponseEntity.status(HttpStatus.OK).body(attendance);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@RequestMapping(value = "/student/{labId}")
+	public ModelAndView getStudents(@PathVariable("labId") int labId) {
+		ModelAndView mv = new ModelAndView("listAttendanceStudents");
+		List<StudentBModel> list = studentService.getAllStudents();
+		List<StudentAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, StudentAPIModel.class)).collect(Collectors.toList());
+		mv.addObject("students",resultList);
+		mv.addObject("labId",labId);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/labsDisplay")
+	public ModelAndView getLabs() {
+		List<LaboratoryBModel> list = labService.getAllLaboratories();
+		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
+		ModelAndView mv = new ModelAndView("listAttendanceLabs");
+		mv.addObject("laboratories",resultList);
+		return mv;
 	}
 	
 }

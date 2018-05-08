@@ -39,6 +39,12 @@ public class HelloController {
 		 return mv;
 	 }
 	 
+	 @RequestMapping("/addStudentView")
+	 public ModelAndView addStudent() {
+		 ModelAndView mv = new ModelAndView("addStudent");
+		 return mv;
+	 }
+	 
 	 @RequestMapping("/addAssignmentView")
 	 public ModelAndView addAssignment(HttpServletRequest request) {
 		 ModelAndView mv = new ModelAndView("addAssignment");
@@ -55,6 +61,12 @@ public class HelloController {
 	 @RequestMapping("/access-denied")
 	 public ModelAndView access_denied() {
 		 ModelAndView mv = new ModelAndView("access-denied");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("registerView")
+	 public ModelAndView registrationView() {
+		 ModelAndView mv = new ModelAndView("registration");
 		 return mv;
 	 }
 

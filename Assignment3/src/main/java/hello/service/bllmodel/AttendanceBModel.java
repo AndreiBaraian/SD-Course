@@ -2,6 +2,7 @@ package hello.service.bllmodel;
 
 public class AttendanceBModel {
 	
+	private int id;
 	private LaboratoryBModel laboratory;
 	private StudentBModel student;
 	
@@ -22,7 +23,13 @@ public class AttendanceBModel {
 	public void setStudent(StudentBModel student) {
 		this.student = student;
 	}
-	
-	
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }

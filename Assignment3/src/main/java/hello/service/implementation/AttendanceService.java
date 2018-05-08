@@ -57,8 +57,11 @@ public class AttendanceService implements IAttendanceService {
 		Optional<StudentDB> studentDB = studentDAO.findById(studentId);
 		if(!studentDB.isPresent())
 			throw new GetException("Student not found!");
-		StudentDB student = studentDB.get();
 		AttendanceDB attendanceDB = new AttendanceDB();
+		AttendanceDB att = attendanceDAO.getAttendanceByLaboratoryIdAndStudentId(labId, studentId);
+		if(att != null)
+			attendanceDB.setId(att.getId());
+		StudentDB student = studentDB.get();
 		attendanceDB.setLaboratory(lab);
 		attendanceDB.setStudent(student);
 		return modelMapper.map(attendanceDAO.save(attendanceDB), AttendanceBModel.class);

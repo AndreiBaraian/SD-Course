@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/modify-btn.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="/js/sendUpdateData.js"></script>
-<title>Modify Laboratory</title>
+<title>Modify Student</title>
 </head>
 <body>
 
@@ -24,38 +24,32 @@
 					<tr>
 						<td></td>
 						<td><input type="hidden" name=labId id="labId"
-							value="${laboratory.id}" />
+							value="${student.id}" />
 						</td>
 					</tr>
 					<tr>
-						<td>Laboratory Number</td>
-						<td><input name=labNumber id="labNumber"
-							value="${laboratory.labNumber}" />
+						<td>Name</td>
+						<td><input name=name id="name"
+							value="${student.name}" />
 						</td>
 					</tr>
 					<tr>
-						<td>Title</td>
-						<td><input name="title" id="title"
-							value="${laboratory.title}" />
+						<td>Email</td>
+						<td><input name="email" id="email"
+							value="${student.email}" />
 						</td>
 					</tr>
 					<tr>
-						<td>Date</td>
-						<td><input name="date" id="date"
-							value="${laboratory.date}" />
+						<td>Group</td>
+						<td><input name="group" id="group"
+							value="${student.group}" />
 						</td>
 
 					</tr>
 					<tr>
-						<td>Curricula</td>
-						<td><input name="curricula" id="curricula"
-							value="${laboratory.curricula}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Description</td>
-						<td><input name="description" id="description"
-							value="${laboratory.description}" />
+						<td>Hobby</td>
+						<td><input name="hobby" id="hobby"
+							value="${student.hobby}" />
 						</td>
 					</tr>
 					<tr>
@@ -69,7 +63,7 @@
 	
 	<script>
 	var id = $('#labId').val();
-	sendUpdateData("#modify-btn","lab/"+id,"#myForm");
+	sendUpdateData("#modify-btn","student/"+id,"#myForm");
 	</script>
 </body>
 </html>

@@ -2,6 +2,7 @@ package hello.apimodels;
 
 public class UserAPIModel {
 	
+	private int id;
 	private String name;
 	private String email;
 	
@@ -18,6 +19,14 @@ public class UserAPIModel {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
