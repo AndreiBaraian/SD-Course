@@ -17,36 +17,39 @@
 <link rel="stylesheet" href="/css/modify-btn.css">
 <link rel="stylesheet" href="/css/checkbox-style.css">
 <link rel="stylesheet" href="/css/delete-btn.css">
+<link rel="stylesheet" href="/css/approve-btn.css">
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Laboratories</title>
+<title>List Assignments</title>
 </head>
 <body>
+<form id="form" method="post" action="/addAssignmentView">
+	<input type="hidden" name="labId" id="labId" value="${labId }">
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
 				<th>Select</th>
-				<th>Laboratory Number</th>
-				<th>Title</th>
-				<th>Date</th>
-				<th>Curricula</th>
+				<th>Name</th>
+				<th>Deadline</th>
 				<th>Description</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${laboratories}" var="lab">
+			<c:forEach items="${assignments}" var="assignment">
 				<tr>
-					<td><input type="checkbox" value="${lab.id}"></td>
-					<td><c:out value="${lab.labNumber}" /></td>
-					<td><c:out value="${lab.title}" /></td>
-					<td><c:out value="${lab.date}" /></td>
-					<td><c:out value="${lab.curricula}" /></td>
-					<td><c:out value="${laboratory.description}" /></td>
+					<td><input type="checkbox" value="${assignment.id}"></td>
+					<td><c:out value="${assignment.name}" /></td>
+					<td><c:out value="${assignment.deadline}" /></td>
+					<td><c:out value="${assignment.description}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<button type="button" class="approveBtn" id="approve-btn"
+			style="width: 300px; position: relative; right: 400px;padding: 20px" >Add</button>
+</form>
 	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
@@ -56,6 +59,8 @@
 	
 	<button type="button" class="modifyBtn" id="modify-btn"
 			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify</button>
+			
+	
 					
 	
 	<script>
@@ -75,10 +80,11 @@
 			$.ajax({
 				type : "DELETE",
 				contentType : "application/json",
-				url : "http://localhost:8080/lab/" + id,
-				dataType : 'json',
+				url : "http://localhost:8080/assignment/" + id,
+				dataType : 'html',
 				timeout : 100000,
 				success : function(response) {
+					$("#root").html(response);
 					console.log("SUCCESS: ", response);
 				},
 				error : function(e) {
@@ -89,6 +95,10 @@
 				}
 			});
 		});
+
+		document.getElementById("approve-btn").onclick = function () {
+			$("#form").submit();
+		}
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
@@ -101,7 +111,7 @@
 				}
 			});
 			console.log(id);
-			window.location.assign("http://localhost:8080/lab/" + id);
+			window.location.assign("http://localhost:8080/assignment/" + id);
 		});
 		
 		

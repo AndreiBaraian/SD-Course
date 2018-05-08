@@ -1,6 +1,6 @@
 
 
-function sendFormData(buttonId, relativeURL, form) {
+function sendUpdateData(buttonId, relativeURL, form) {
 	jQuery(buttonId).on("click", function() {
 		
 		var myData = $(form).serializeArray().reduce(function(obj, item) {
@@ -8,11 +8,12 @@ function sendFormData(buttonId, relativeURL, form) {
 		    return obj;
 		}, {});
 		
-		console.log(JSON.stringify(myData));
+		console.log(myData);
+		console.log(relativeURL);
 		
 		
 		$.ajax({
-			type : "POST",
+			type : "PUT",
 			contentType : "application/json",
 			url : "http://localhost:8080/" + relativeURL,
 			data : JSON.stringify(myData),
@@ -32,5 +33,4 @@ function sendFormData(buttonId, relativeURL, form) {
 		});
 		
 	}); 
-	
 }

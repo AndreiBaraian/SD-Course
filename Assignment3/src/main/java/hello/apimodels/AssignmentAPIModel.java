@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AssignmentAPIModel {
 	
+	private int id;
 	private String name;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime deadline;
@@ -35,6 +36,20 @@ public class AssignmentAPIModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return "AssignmentAPIModel [id=" + id + ", name=" + name + ", deadline=" + deadline + ", description="
+				+ description + "]";
 	}
 
 }

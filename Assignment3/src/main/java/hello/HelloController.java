@@ -1,5 +1,7 @@
 package hello;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,7 +39,14 @@ public class HelloController {
 		 return mv;
 	 }
 	 
-	 @RequestMapping("/deleteLab")
+	 @RequestMapping("/addAssignmentView")
+	 public ModelAndView addAssignment(HttpServletRequest request) {
+		 ModelAndView mv = new ModelAndView("addAssignment");
+		 mv.addObject("labId",Integer.parseInt(request.getParameter("labId")));
+		 return mv;
+	}
+	 
+	 @RequestMapping("/deleteLabView")
 	 public ModelAndView deleteLab() {
 		 ModelAndView mv = new ModelAndView("deleteLab");
 		 return mv;

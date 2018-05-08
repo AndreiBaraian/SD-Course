@@ -10,18 +10,18 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import hello.apimodels.AssignmentAPIModel;
 import hello.apimodels.LaboratoryAPIModel;
 import hello.service.bllmodel.LaboratoryBModel;
+import hello.service.interfaces.IAssignmentService;
 import hello.service.interfaces.ILaboratoryService;
 
 @RestController
@@ -32,16 +32,10 @@ public class LaboratoryController {
 	private ILaboratoryService labService;
 	
 	@Autowired
-	private ModelMapper mapper;
+	private IAssignmentService assignmentService;
 	
-	/*
-	@RequestMapping(method = GET)
-	public List<LaboratoryAPIModel> getAllLaboratories() {
-		List<LaboratoryBModel> list = labService.getAllLaboratories();
-		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
-		return resultList;
-	}
-	*/
+	@Autowired
+	private ModelMapper mapper;
 	
 	@RequestMapping(method = GET)
 	public ModelAndView getAllLaboratories() {
@@ -53,15 +47,17 @@ public class LaboratoryController {
 	}
 	
 	@RequestMapping(method = GET, value = "/{labId}")
-	public ResponseEntity<LaboratoryAPIModel> getLabById(@RequestParam int labId) {
+	public ModelAndView getLabById(@PathVariable("labId") int labId) {
+		ModelAndView mv = new ModelAndView("modifyLaboratoryForm");
 		LaboratoryBModel labB = labService.getById(labId);
 		if(labB == null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			System.out.println("NOT OK");
 		LaboratoryAPIModel lab = mapper.map(labB,LaboratoryAPIModel.class);
-		return ResponseEntity.status(HttpStatus.OK).body(lab);
+		mv.addObject("laboratory",lab);
+		return mv;
 	}
 	
-	
+	/*
 	@RequestMapping(method = GET, value = "/{keyword}")
 	public ResponseEntity<List<LaboratoryAPIModel>> getLabByKeyword(@RequestParam String keyword){
 		List<LaboratoryAPIModel> list = labService.getLabsByKeyword(keyword).parallelStream()
@@ -69,7 +65,7 @@ public class LaboratoryController {
 				.collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
-	
+	*/
 	@RequestMapping(method = POST)
 	public RedirectView addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
 		RedirectView rv = new RedirectView("hello");
@@ -78,19 +74,44 @@ public class LaboratoryController {
 		return rv;
 	}
 	
-	@RequestMapping(method = PUT)
-	public ResponseEntity<LaboratoryAPIModel> updateLaboratory(@RequestParam int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
+	@ResponseBody
+	@RequestMapping(method = PUT, value="/{labId}")
+	public ModelAndView updateLaboratory(@PathVariable("labId") int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
+		ModelAndView mv = new ModelAndView("hello");
 		if(labService.updateLaboratory(labId,mapper.map(labAPIModel, LaboratoryBModel.class)))
-			return ResponseEntity.status(HttpStatus.OK).body(labAPIModel);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			System.out.println("OK");
+		return mv;
 	}
 	
 	@RequestMapping(method = DELETE, value = "/{labId}")
 	public RedirectView deleteLaboratory(@PathVariable("labId") int labId) {
-		RedirectView rv = new RedirectView("hello");
+		RedirectView rv = new RedirectView("/lab");
+		System.out.println("yaaay");
 		if(labService.deleteLaboratoryById(labId))
 			System.out.println("OK");
 		return rv;
+	}
+	
+	@RequestMapping(method = GET,value="/assignmentLabs")
+	public ModelAndView getAllLabs() {
+		List<LaboratoryBModel> list = labService.getAllLaboratories();
+		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
+		ModelAndView mv = new ModelAndView("listLabs");
+		mv.addObject("laboratories",resultList);
+		return mv;
+	}
+	
+	@RequestMapping(method = GET, value="/assignments/{labId}")
+	public ModelAndView getAssignmentsByLab(@PathVariable("labId") int labId){
+		ModelAndView mv = new ModelAndView("listAssignments");
+		List<AssignmentAPIModel> assignments = assignmentService.getAssignmentsByLab(labId).parallelStream()
+												.map(x -> mapper.map(x, AssignmentAPIModel.class))
+												.collect(Collectors.toList());
+		for(AssignmentAPIModel ass: assignments)
+			System.out.println(ass.toString());
+		mv.addObject("assignments",assignments);
+		mv.addObject("labId",labId);
+		return mv;
 	}
 	
 }

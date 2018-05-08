@@ -23,6 +23,9 @@
 <title>List Laboratories</title>
 </head>
 <body>
+<form id="form">
+	<!-- <input type="hidden" name="labId" id="labId"> -->
+	
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
@@ -36,7 +39,8 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${laboratories}" var="lab">
-				<tr>
+				<tr class="row-which-triggers-popup"
+						onclick="redirectToAccountDetails('${lab.id}')">
 					<td><input type="checkbox" value="${lab.id}"></td>
 					<td><c:out value="${lab.labNumber}" /></td>
 					<td><c:out value="${lab.title}" /></td>
@@ -47,68 +51,20 @@
 			</c:forEach>
 		</tbody>
 	</table>
+</form>
 	
-	<button type="button" class="deleteBtn" id="delete-btn"
-				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Selected
-				Accounts
-	</button>
-	
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify</button>
-					
+	<div id="dialog" title="Assignment Details" style="display: none">
+		<p>TEST</p>
+		<c:out value="Hello" />
+		<c:out value="Hi" />
+		<c:out value="Salut" />
+	</div>
 	
 	<script>
-		jQuery("#delete-btn").on('click', function() {
-			var id;
-			$('input[type=checkbox]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			console.log(id);
-			
-			
-			$.ajax({
-				type : "DELETE",
-				contentType : "application/json",
-				url : "http://localhost:8080/lab/" + id,
-				dataType : 'json',
-				timeout : 100000,
-				success : function(response) {
-					console.log("SUCCESS: ", response);
-				},
-				error : function(e) {
-					console.log("ERROR: ", e);
-				},
-				done : function(e) {
-					console.log("DONE");
-				}
-			});
-		});
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=checkbox]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			console.log(id);
-			window.location.assign("http://localhost:8080/lab/" + id);
-		});
-		
-		
-		$('input[type="checkbox"]').on('change', function() {
-			   $('input[type="checkbox"]').not(this).prop('checked', false);
-			});
+		function redirectToAccountDetails(id) {
+			window.location.assign("http://localhost:8080/lab/assignments/" + id);
+		}
+	</script>	
 	
-	</script>
 </body>
 </html>

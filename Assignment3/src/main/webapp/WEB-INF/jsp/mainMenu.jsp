@@ -74,6 +74,15 @@
 		</ul>
 		</li>
 		<li><a href="#">
+			<i class="glyphicon glyphicon-calendar"></i><span> Assignments </span>
+		</a>
+		<ul class="sidebar-submenu">
+			<li><a href="/lab/assignmentLabs" target="page">
+			<span>View Assignments</span>
+			</a>
+		</ul>
+		</li>
+		<li><a href="#">
 			<i class="glyphicon glyphicon-envelope"></i><span> Mailbox</span>
 		</a>
 		</li>
