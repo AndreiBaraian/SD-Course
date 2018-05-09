@@ -58,18 +58,13 @@
 			<i class="glyphicon glyphicon-calendar"></i><span> Laboratories </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/lab" target="page">
+			<li><a href="/listLaboratories" target="page">
 			<span>View Laboratories</span>
 			</a>
 		</ul>
 		<ul class="sidebar-submenu">
-			<li><a href="/addLab" target="page">
+			<li><a href="/addLabView" target="page">
 			<span>Add Laboratory</span>
-			</a>
-		</ul>
-		<ul class="sidebar-submenu">
-			<li><a href="/deleteLabView" target="page">
-			<span>Delete Laboratory</span>
 			</a>
 		</ul>
 		</li>

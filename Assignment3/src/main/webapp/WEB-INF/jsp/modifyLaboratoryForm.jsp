@@ -21,43 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td><input type="hidden" name=labId id="labId"
-							value="${laboratory.id}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Laboratory Number</td>
-						<td><input name=labNumber id="labNumber"
-							value="${laboratory.labNumber}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Title</td>
-						<td><input name="title" id="title"
-							value="${laboratory.title}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Date</td>
-						<td><input name="date" id="date"
-							value="${laboratory.date}" />
-						</td>
-
-					</tr>
-					<tr>
-						<td>Curricula</td>
-						<td><input name="curricula" id="curricula"
-							value="${laboratory.curricula}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Description</td>
-						<td><input name="description" id="description"
-							value="${laboratory.description}" />
-						</td>
-					</tr>
+					<tr id="lab"></tr>
 					<tr>
 						<td><button type="button" class="modifyBtn" id="modify-btn"
 								style="width: 100%; padding: 20px" value="Submit">Modify</button></td>
@@ -67,8 +31,41 @@
 		</center>
 	</form>
 	
+					
 	<script>
-	var id = $('#labId').val();
+	
+	$(document).ready(function(){
+		
+		var id = <c:out value="${labId}"/>;
+		console.log(id);
+		
+        $.ajax({
+
+            url: 'http://localhost:8080/lab/' + id,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(data){
+            	
+            	console.log(data);
+                 
+               	$('#lab').append('<tr><td>Laboratory Number</td><td><input name=labNumber id=labNumber value="' +
+             			data.labNumber + '"/></td></tr><tr><td>Title</td><td><input name="title" id="title" value="' +
+             			data.title + '"/></td></tr><tr><td>Date</td><td><input name="date" id="date" value="' + 
+             			data.date + '"/></td></tr><tr><td>Curricula</td><td><input name="curricula" id="curricula" value="' +
+             			data.curricula + '"/></td></tr><tr><td>Description</td><td><input name="description" id="description" value="' +
+             			data.description + '"');
+                
+
+            },
+            error: function(e){
+                console.log("ERROR: " + e);
+            }
+
+        });
+    });
+	
+               
+	var id = <c:out value="${labId}"/>;
 	sendUpdateData("#modify-btn","lab/"+id,"#myForm");
 	</script>
 </body>

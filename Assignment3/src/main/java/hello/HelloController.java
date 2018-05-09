@@ -15,27 +15,21 @@ public class HelloController {
 		 return mv;
 	 }
 	 
-	 @RequestMapping("/mainPage")
+	 @RequestMapping("/mainAdminPage")
 	 public ModelAndView mainPage() {
-		 ModelAndView mv = new ModelAndView("mainPage");
+		 ModelAndView mv = new ModelAndView("mainAdminPage");
 		 return mv;
 	 }
 	 
-	 @RequestMapping("/mainMenu")
+	 @RequestMapping("/mainAdminMenu")
 	 public ModelAndView mainMenu() {
-		 ModelAndView mv = new ModelAndView("mainMenu");
+		 ModelAndView mv = new ModelAndView("mainAdminMenu");
 		 return mv;
 	 }
 	 
 	 @RequestMapping("/hello")
 	 public ModelAndView hello() {
 		 ModelAndView mv = new ModelAndView("hello");
-		 return mv;
-	 }
-	 
-	 @RequestMapping("/addLab")
-	 public ModelAndView addLab() {
-		 ModelAndView mv = new ModelAndView("addLab");
 		 return mv;
 	 }
 	 
@@ -52,12 +46,6 @@ public class HelloController {
 		 return mv;
 	}
 	 
-	 @RequestMapping("/deleteLabView")
-	 public ModelAndView deleteLab() {
-		 ModelAndView mv = new ModelAndView("deleteLab");
-		 return mv;
-	 }
-	 
 	 @RequestMapping("/access-denied")
 	 public ModelAndView access_denied() {
 		 ModelAndView mv = new ModelAndView("access-denied");
@@ -67,6 +55,30 @@ public class HelloController {
 	 @RequestMapping("registerView")
 	 public ModelAndView registrationView() {
 		 ModelAndView mv = new ModelAndView("registration");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("/mainStudentMenu")
+	 public ModelAndView mainStudentMenu() {
+		 ModelAndView mv = new ModelAndView("mainStudentMenu");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("/mainStudentPage")
+	 public ModelAndView mainStudentPage() {
+		 ModelAndView mv = new ModelAndView("mainStudentPage");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("/viewLabsStudent")
+	 public ModelAndView viewLabsStudent() {
+		 ModelAndView mv = new ModelAndView("listLaboratoriesStudents");
+		 return mv;
+	 }
+	 
+	 @RequestMapping("/listAssignmentsStudents")
+	 public ModelAndView listAssignmentStudents() {
+		 ModelAndView mv = new ModelAndView("listAssignmentsStudents");
 		 return mv;
 	 }
 

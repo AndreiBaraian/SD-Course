@@ -61,6 +61,7 @@ public class LaboratoryService implements ILaboratoryService {
 		labDB.setDate(lab.getDate());
 		labDB.setLabNumber(lab.getLabNumber());
 		labDB.setTitle(lab.getTitle());
+		labDB.setDescription(lab.getDescription());
 		if(labDAO.save(labDB) != null)
 			return true;
 		return false;

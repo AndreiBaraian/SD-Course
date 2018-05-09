@@ -4,9 +4,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
-<%@ page import="hello.controllers.LaboratoryController"%>
-<%@ page import="java.util.List"%>
-<%@ page import="hello.apimodels.LaboratoryAPIModel"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -34,24 +31,13 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${laboratories}" var="lab">
-				<tr>
-					<td><input type="checkbox" value="${lab.id}"></td>
-					<td><c:out value="${lab.labNumber}" /></td>
-					<td><c:out value="${lab.title}" /></td>
-					<td><c:out value="${lab.date}" /></td>
-					<td><c:out value="${lab.curricula}" /></td>
-					<td><c:out value="${laboratory.description}" /></td>
-				</tr>
-			</c:forEach>
+		<tbody id = "lab">
 		</tbody>
 	</table>
 	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Selected
-				Accounts
+				<span class="glyphicon glyphicon-trash"></span> Delete Laboratory
 	</button>
 	
 	<button type="button" class="modifyBtn" id="modify-btn"
@@ -59,9 +45,29 @@
 					
 	
 	<script>
+	
+	 $(document).ready(function(){
+	        $.ajax({
+
+	            url: 'http://localhost:8080/lab',
+	            type: 'GET',
+	            dataType: 'JSON',
+	            success: function(data){
+	                $(data).each(function(){ 
+	                    $('#lab').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>') + '<div id="myDropdown" class="dropdown-content">';
+	                });
+
+	            },
+	            error: function(data){
+	                alert("4");
+	            }
+
+	        });
+	    });
+	
 		jQuery("#delete-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -69,8 +75,6 @@
 					
 				}
 			});
-			console.log(id);
-			
 			
 			$.ajax({
 				type : "DELETE",
@@ -92,7 +96,7 @@
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -100,8 +104,8 @@
 					
 				}
 			});
-			console.log(id);
-			window.location.assign("http://localhost:8080/lab/" + id);
+			//console.log(id);
+			window.location.assign("http://localhost:8080/modifyLaboratory/" + id);
 		});
 		
 		

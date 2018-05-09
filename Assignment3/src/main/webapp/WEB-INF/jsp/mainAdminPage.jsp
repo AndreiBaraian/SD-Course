@@ -7,7 +7,7 @@
 <title>Awesome Moodle</title>
 </head>
 	<frameset cols="250px, *">
-		<frame src="/mainMenu" name="mainMenu" noresize="noresize">
+		<frame src="/mainAdminMenu" name="mainAdminMenu" noresize="noresize">
 		<frame src="/hello" name="page" noresize="noresize">
 	</frameset>
 </html>

@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import hello.apimodels.AssignmentAPIModel;
 import hello.apimodels.LaboratoryAPIModel;
@@ -38,23 +38,19 @@ public class LaboratoryController {
 	private ModelMapper mapper;
 	
 	@RequestMapping(method = GET)
-	public ModelAndView getAllLaboratories() {
+	public ResponseEntity<List<LaboratoryAPIModel>> getAllLaboratories() {
 		List<LaboratoryBModel> list = labService.getAllLaboratories();
 		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
-		ModelAndView mv = new ModelAndView("listLaboratories");
-		mv.addObject("laboratories",resultList);
-		return mv;
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
 	}
 	
 	@RequestMapping(method = GET, value = "/{labId}")
-	public ModelAndView getLabById(@PathVariable("labId") int labId) {
-		ModelAndView mv = new ModelAndView("modifyLaboratoryForm");
+	public ResponseEntity<LaboratoryAPIModel> getLabById(@PathVariable("labId") int labId) {
 		LaboratoryBModel labB = labService.getById(labId);
 		if(labB == null)
-			System.out.println("NOT OK");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		LaboratoryAPIModel lab = mapper.map(labB,LaboratoryAPIModel.class);
-		mv.addObject("laboratory",lab);
-		return mv;
+		return ResponseEntity.status(HttpStatus.OK).body(lab);
 	}
 	
 	/*
@@ -66,30 +62,27 @@ public class LaboratoryController {
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	*/
+	
 	@RequestMapping(method = POST)
-	public RedirectView addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
-		RedirectView rv = new RedirectView("hello");
+	public ResponseEntity<LaboratoryAPIModel> addLaboratory(@RequestBody LaboratoryAPIModel labAPIModel) {
 		if(labService.addLaboratory(mapper.map(labAPIModel, LaboratoryBModel.class)))
-			System.out.println("ok");
-		return rv;
+			return ResponseEntity.status(HttpStatus.CREATED).body(labAPIModel);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
-	@ResponseBody
-	@RequestMapping(method = PUT, value="/{labId}")
-	public ModelAndView updateLaboratory(@PathVariable("labId") int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
-		ModelAndView mv = new ModelAndView("hello");
+	
+	@RequestMapping(method = PUT, value = "/{labId}")
+	public ResponseEntity<LaboratoryAPIModel> updateLaboratory(@PathVariable("labId") int labId,@RequestBody LaboratoryAPIModel labAPIModel) {
 		if(labService.updateLaboratory(labId,mapper.map(labAPIModel, LaboratoryBModel.class)))
-			System.out.println("OK");
-		return mv;
+			return ResponseEntity.status(HttpStatus.OK).body(labAPIModel);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	
 	@RequestMapping(method = DELETE, value = "/{labId}")
-	public RedirectView deleteLaboratory(@PathVariable("labId") int labId) {
-		RedirectView rv = new RedirectView("/lab");
-		System.out.println("yaaay");
+	public ResponseEntity<LaboratoryAPIModel> deleteLaboratory(@PathVariable("labId") int labId) {
 		if(labService.deleteLaboratoryById(labId))
-			System.out.println("OK");
-		return rv;
+			return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@RequestMapping(method = GET,value="/assignmentLabs")
