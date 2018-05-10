@@ -101,15 +101,6 @@ public class AttendanceController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/labsDisplay")
-	public ModelAndView getLabs() {
-		List<LaboratoryBModel> list = labService.getAllLaboratories();
-		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
-		ModelAndView mv = new ModelAndView("listAttendanceLabs");
-		mv.addObject("laboratories",resultList);
-		return mv;
-	}
-	
 }
 
 

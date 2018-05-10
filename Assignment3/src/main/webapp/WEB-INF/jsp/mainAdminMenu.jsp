@@ -82,7 +82,7 @@
 			<i class="glyphicon glyphicon-calendar"></i><span> Students </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/student" target="page">
+			<li><a href="/listStudents" target="page">
 			<span>View Students</span>
 			</a>
 		</ul>

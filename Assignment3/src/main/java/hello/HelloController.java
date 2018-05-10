@@ -31,12 +31,6 @@ public class HelloController {
 		 return mv;
 	 }
 	 
-	 @RequestMapping("/addStudentView")
-	 public ModelAndView addStudent() {
-		 ModelAndView mv = new ModelAndView("addStudent");
-		 return mv;
-	 }
-	 
 	 @RequestMapping("/access-denied")
 	 public ModelAndView access_denied() {
 		 ModelAndView mv = new ModelAndView("access-denied");

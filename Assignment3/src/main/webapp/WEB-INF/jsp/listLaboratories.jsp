@@ -54,7 +54,7 @@
 	            dataType: 'JSON',
 	            success: function(data){
 	                $(data).each(function(){ 
-	                    $('#lab').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>') + '<div id="myDropdown" class="dropdown-content">';
+	                    $('#lab').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>');
 	                });
 
 	            },

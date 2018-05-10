@@ -53,9 +53,31 @@
 					
 	
 	<script>
+	
+	
+	 $(document).ready(function(){
+	        $.ajax({
+
+	            url: 'http://localhost:8080/lab',
+	            type: 'GET',
+	            dataType: 'JSON',
+	            success: function(data){
+	                $(data).each(function(){ 
+	                    $('#lab').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td></tr>');
+	                });
+
+	            },
+	            error: function(e){
+	                console.log("EROOR: " + e);
+	            }
+
+	        });
+	    });
+	
+	
 		jQuery("#approve-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -65,13 +87,13 @@
 			});
 			console.log(id);
 			
-			window.location.assign("http://localhost:8080/attendance/student/" + id)
+			window.location.assign("http://localhost:8080/addAttendanceView/" + id)
 
 		});
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;

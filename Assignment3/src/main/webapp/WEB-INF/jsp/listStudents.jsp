@@ -36,16 +36,7 @@
 				<th>Hobby</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${students}" var="student">
-				<tr>
-					<td><input type="checkbox" value="${student.id}"></td>
-					<td><c:out value="${student.name}" /></td>
-					<td><c:out value="${student.email}" /></td>
-					<td><c:out value="${student.group}" /></td>
-					<td><c:out value="${student.hobby}" /></td>
-				</tr>
-			</c:forEach>
+		<tbody id="student">
 		</tbody>
 	</table>
 	
@@ -54,8 +45,7 @@
 	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Selected
-				Accounts
+				<span class="glyphicon glyphicon-trash"></span> Delete Student
 	</button>
 	
 	<button type="button" class="modifyBtn" id="modify-btn"
@@ -63,9 +53,29 @@
 					
 	
 	<script>
+	
+	$(document).ready(function(){
+        $.ajax({
+
+            url: 'http://localhost:8080/student',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(data){
+                $(data).each(function(){ 
+                    $('#student').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.email + '</td><td>' + this.group + '</td><td>' + this.hobby + '</td></tr>');
+                });
+
+            },
+            error: function(e){
+                console.log("EROOR: " + e);
+            }
+
+        });
+    });
+	
 		jQuery("#delete-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -96,7 +106,7 @@
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -105,7 +115,7 @@
 				}
 			});
 			console.log(id);
-			window.location.assign("http://localhost:8080/student/lab/" + id);
+			window.location.assign("http://localhost:8080/modifyStudent/" + id);
 		});
 		
 		

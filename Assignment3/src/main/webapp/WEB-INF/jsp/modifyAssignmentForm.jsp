@@ -47,7 +47,7 @@
             	
             	console.log(data);
                  
-               	$('#assignment').append('<tr><td>Assignment Name</td><td><input name=name id=name value="' +
+               	$('#assignment').append('<tr><td>Assignment Name</td><td><input name="name" id="name" value="' +
              			data.name + '"/></td></tr><tr><td>Deadline</td><td><input name="deadline" id="deadline" value="' +
              			data.deadline + '"/></td></tr><tr><td>Description</td><td><input name="description" id="description" value="' + 
              			data.description + '"');

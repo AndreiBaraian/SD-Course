@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -54,24 +55,20 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method = GET, value = "/{studentId}")
-	public ModelAndView getStudentById(@PathVariable("studentId") int id) {
-		ModelAndView mv = new ModelAndView("modifyStudentForm");
+	public ResponseEntity<StudentAPIModel> getStudentById(@PathVariable("studentId") int id) {
 		StudentBModel studentBModel = studentService.getById(id);
 		if(studentBModel == null) {
-			System.out.println("NOT FOUND");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		StudentAPIModel studentAPIModel = mapper.map(studentBModel, StudentAPIModel.class);
-		mv.addObject("student",studentAPIModel);
-		return mv;
+		return ResponseEntity.status(HttpStatus.CREATED).body(studentAPIModel);
 	}
 	
 	@RequestMapping(method = GET)
-	public ModelAndView getAllStudents() {
-		ModelAndView mv = new ModelAndView("listStudents");
+	public List<StudentAPIModel> getAllStudents() {
 		List<StudentBModel> list = studentService.getAllStudents();
 		List<StudentAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, StudentAPIModel.class)).collect(Collectors.toList());
-		mv.addObject("students",resultList);
-		return mv;
+		return resultList;
 	}
 	
 	@RequestMapping(method = PUT, value="/{studentId}")

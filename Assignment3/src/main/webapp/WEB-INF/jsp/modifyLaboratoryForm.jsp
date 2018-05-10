@@ -48,7 +48,7 @@
             	
             	console.log(data);
                  
-               	$('#lab').append('<tr><td>Laboratory Number</td><td><input name=labNumber id=labNumber value="' +
+               	$('#lab').append('<tr><td>Laboratory Number</td><td><input name="labNumber" id="labNumber" value="' +
              			data.labNumber + '"/></td></tr><tr><td>Title</td><td><input name="title" id="title" value="' +
              			data.title + '"/></td></tr><tr><td>Date</td><td><input name="date" id="date" value="' + 
              			data.date + '"/></td></tr><tr><td>Curricula</td><td><input name="curricula" id="curricula" value="' +
