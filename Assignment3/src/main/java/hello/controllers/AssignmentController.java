@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import hello.apimodels.AssignmentAPIModel;
 import hello.service.bllmodel.AssignmentBModel;
@@ -34,20 +32,17 @@ public class AssignmentController {
 	private ModelMapper mapper;
 	
 	@RequestMapping(method = POST,value="/{labId}")
-	public ModelAndView addAssignment(@PathVariable("labId") int labId,@RequestBody AssignmentAPIModel assignmentAPIModel) {
-		ModelAndView mv = new ModelAndView("hello");
-		System.out.println(assignmentAPIModel.toString());
+	public ResponseEntity<AssignmentAPIModel> addAssignment(@PathVariable("labId") int labId,@RequestBody AssignmentAPIModel assignmentAPIModel) {
 		if(assignmentService.addAssignment(labId, mapper.map(assignmentAPIModel,AssignmentBModel.class)))
-			System.out.println("is ok");
-		return mv;
+			return ResponseEntity.status(HttpStatus.CREATED).body(assignmentAPIModel);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 	@RequestMapping(method = DELETE, value = "/{id}")
-	public RedirectView deleteAssignment(@PathVariable("id") int id){
-		RedirectView rv = new RedirectView("hello");
+	public ResponseEntity<String> deleteAssignment(@PathVariable("id") int id){
 		if(assignmentService.deleteAssignmentById(id))
-			System.out.println("is ok");
-		return rv;
+			return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@RequestMapping(method = PUT, value="/{assignmentId}")
@@ -59,14 +54,12 @@ public class AssignmentController {
 	
 	
 	@RequestMapping(method = GET, value = "/{id}")
-	public ModelAndView getAssignmentById(@PathVariable("id") int id){
-		ModelAndView mv = new ModelAndView("modifyAssignmentForm");
+	public ResponseEntity<AssignmentAPIModel> getAssignmentById(@PathVariable("id") int id){
 		AssignmentBModel assignmentBModel = assignmentService.getById(id);
 		if(assignmentBModel == null)
-			System.out.println("not ok");;
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		AssignmentAPIModel assignmentAPIModel = mapper.map(assignmentBModel, AssignmentAPIModel.class);
-		mv.addObject("assignment",assignmentAPIModel);
-		return mv;
+		return ResponseEntity.status(HttpStatus.OK).body(assignmentAPIModel);
 	}
 	
 	
@@ -83,11 +76,9 @@ public class AssignmentController {
 	
 	
 	@RequestMapping(method = GET)
-	public ModelAndView getAllAssignments(){
-		ModelAndView mv = new ModelAndView("listAssignments");
+	public ResponseEntity<List<AssignmentAPIModel>> getAllAssignments(){
 		List<AssignmentAPIModel> assignments = assignmentService.getAllAssignments().parallelStream().map(x -> mapper.map(x, AssignmentAPIModel.class)).collect(Collectors.toList());
-		mv.addObject("assignments",assignments);
-		return mv;
+		return ResponseEntity.status(HttpStatus.OK).body(assignments);
 	}
 
 }

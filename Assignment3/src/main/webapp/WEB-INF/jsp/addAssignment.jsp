@@ -78,6 +78,9 @@
 	</body>
 	
 	<script>
+	
+	
+	
 	sendFormData("#submitButton", "assignment/" + ${labId}, "#myForm");
 	</script>
 	

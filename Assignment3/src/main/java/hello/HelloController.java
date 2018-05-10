@@ -1,7 +1,5 @@
 package hello;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,13 +36,6 @@ public class HelloController {
 		 ModelAndView mv = new ModelAndView("addStudent");
 		 return mv;
 	 }
-	 
-	 @RequestMapping("/addAssignmentView")
-	 public ModelAndView addAssignment(HttpServletRequest request) {
-		 ModelAndView mv = new ModelAndView("addAssignment");
-		 mv.addObject("labId",Integer.parseInt(request.getParameter("labId")));
-		 return mv;
-	}
 	 
 	 @RequestMapping("/access-denied")
 	 public ModelAndView access_denied() {

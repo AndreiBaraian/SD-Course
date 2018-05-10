@@ -37,33 +37,37 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${laboratories}" var="lab">
-				<tr class="row-which-triggers-popup"
-						onclick="redirectToAccountDetails('${lab.id}')">
-					<td><input type="checkbox" value="${lab.id}"></td>
-					<td><c:out value="${lab.labNumber}" /></td>
-					<td><c:out value="${lab.title}" /></td>
-					<td><c:out value="${lab.date}" /></td>
-					<td><c:out value="${lab.curricula}" /></td>
-					<td><c:out value="${laboratory.description}" /></td>
-				</tr>
-			</c:forEach>
+		<tbody id="lab">
 		</tbody>
 	</table>
 </form>
 	
-	<div id="dialog" title="Assignment Details" style="display: none">
-		<p>TEST</p>
-		<c:out value="Hello" />
-		<c:out value="Hi" />
-		<c:out value="Salut" />
-	</div>
 	
 	<script>
-		function redirectToAccountDetails(id) {
-			window.location.assign("http://localhost:8080/lab/assignments/" + id);
-		}
+	
+	$(document).ready(function(){
+        $.ajax({
+
+            url: 'http://localhost:8080/lab',
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(data){
+                $(data).each(function(){ 
+                    $('#lab').append('<tr class="row-which-triggers-popup" onclick="goToAssignments(' + this.id + ')"><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>');
+                });
+
+            },
+            error: function(data){
+                alert("4");
+            }
+
+        });
+    });
+	
+	
+	function goToAssignments(id) {
+		window.location.assign("http://localhost:8080/lab/assignments/" + id);
+	}
 	</script>	
 	
 </body>

@@ -35,15 +35,7 @@
 				<th>Description</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${assignments}" var="assignment">
-				<tr>
-					<td><input type="checkbox" value="${assignment.id}"></td>
-					<td><c:out value="${assignment.name}" /></td>
-					<td><c:out value="${assignment.deadline}" /></td>
-					<td><c:out value="${assignment.description}" /></td>
-				</tr>
-			</c:forEach>
+		<tbody id = "assignments">
 		</tbody>
 	</table>
 	
@@ -53,8 +45,7 @@
 	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Selected
-				Accounts
+				<span class="glyphicon glyphicon-trash"></span> Delete Assignments
 	</button>
 	
 	<button type="button" class="modifyBtn" id="modify-btn"
@@ -64,9 +55,35 @@
 					
 	
 	<script>
+	
+		$(document).ready(function(){
+			
+			var id = <c:out value="${labId}"/>;
+			//console.log(id);
+			
+	        $.ajax({
+	
+	            url: 'http://localhost:8080/lab/' + id + '/assignments',
+	            type: 'GET',
+	            dataType: 'JSON',
+	            success: function(data){
+	                $(data).each(function(){ 
+	                    $('#assignments').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.deadline + '</td><td>' + this.description + '</td></tr>');
+	                });
+	
+	            },
+	            error: function(e){
+	                console.log("ERROR: "+ e);
+	            }
+	
+	        });
+	    });
+	
+	
+	
 		jQuery("#delete-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -74,7 +91,7 @@
 					
 				}
 			});
-			console.log(id);
+			//console.log(id);
 			
 			
 			$.ajax({
@@ -102,7 +119,7 @@
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
-			$('input[type=checkbox]').each(function() {
+			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
@@ -110,8 +127,8 @@
 					
 				}
 			});
-			console.log(id);
-			window.location.assign("http://localhost:8080/assignment/" + id);
+			//console.log(id);
+			window.location.assign("http://localhost:8080/modifyAssignment/" + id);
 		});
 		
 		

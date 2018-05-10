@@ -94,17 +94,12 @@ public class LaboratoryController {
 		return mv;
 	}
 	
-	@RequestMapping(method = GET, value="/assignments/{labId}")
-	public ModelAndView getAssignmentsByLab(@PathVariable("labId") int labId){
-		ModelAndView mv = new ModelAndView("listAssignments");
+	@RequestMapping(method = GET, value="/{labId}/assignments")
+	public ResponseEntity<List<AssignmentAPIModel>> getAssignmentsByLab(@PathVariable("labId") int labId){
 		List<AssignmentAPIModel> assignments = assignmentService.getAssignmentsByLab(labId).parallelStream()
 												.map(x -> mapper.map(x, AssignmentAPIModel.class))
 												.collect(Collectors.toList());
-		for(AssignmentAPIModel ass: assignments)
-			System.out.println(ass.toString());
-		mv.addObject("assignments",assignments);
-		mv.addObject("labId",labId);
-		return mv;
+		return ResponseEntity.status(HttpStatus.OK).body(assignments); 
 	}
 	
 }

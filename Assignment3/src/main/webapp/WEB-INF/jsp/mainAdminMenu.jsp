@@ -72,7 +72,7 @@
 			<i class="glyphicon glyphicon-calendar"></i><span> Assignments </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/lab/assignmentLabs" target="page">
+			<li><a href="/listLabsAssignments" target="page">
 			<span>View Assignments</span>
 			</a>
 		</ul>

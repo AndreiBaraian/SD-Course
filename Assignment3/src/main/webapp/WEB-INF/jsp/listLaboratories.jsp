@@ -58,8 +58,8 @@
 	                });
 
 	            },
-	            error: function(data){
-	                alert("4");
+	            error: function(e){
+	                console.log("EROOR: " + e);
 	            }
 
 	        });

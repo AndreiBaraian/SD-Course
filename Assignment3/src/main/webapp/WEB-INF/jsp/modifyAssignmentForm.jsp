@@ -21,30 +21,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td></td>
-						<td><input type="hidden" name=assignmentId id="assignmentId"
-							value="${assignment.id}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Assignment Name</td>
-						<td><input name=name id="name"
-							value="${assignment.name}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Deadline</td>
-						<td><input name="deadline" id="deadline"
-							value="${assignment.deadline}" />
-						</td>
-					</tr>
-					<tr>
-						<td>Description</td>
-						<td><input name="description" id="description"
-							value="${assignment.description}" />
-						</td>
-					</tr>
+					<tr id = "assignment"></tr>
 					<tr>
 						<td><button type="button" class="modifyBtn" id="modify-btn"
 								style="width: 100%; padding: 20px" value="Submit">Modify</button></td>
@@ -55,7 +32,36 @@
 	</form>
 	
 	<script>
-	var id = ${assignment.id};
+	
+	$(document).ready(function(){
+		
+		var id = <c:out value="${assignmentId}"/>;
+		console.log(id);
+		
+        $.ajax({
+
+            url: 'http://localhost:8080/assignment/' + id,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function(data){
+            	
+            	console.log(data);
+                 
+               	$('#assignment').append('<tr><td>Assignment Name</td><td><input name=name id=name value="' +
+             			data.name + '"/></td></tr><tr><td>Deadline</td><td><input name="deadline" id="deadline" value="' +
+             			data.deadline + '"/></td></tr><tr><td>Description</td><td><input name="description" id="description" value="' + 
+             			data.description + '"');
+                
+
+            },
+            error: function(e){
+                console.log("ERROR: " + e);
+            }
+
+        });
+    });
+	
+	var id = ${assignmentId};
 	sendUpdateData("#modify-btn","assignment/"+id,"#myForm");
 	</script>
 </body>
