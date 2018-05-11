@@ -2,12 +2,13 @@ package hello.viewcontrollers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 public class AssignmentViewController {
 
 	@RequestMapping("/listLabsAssignments")
@@ -34,6 +35,18 @@ public class AssignmentViewController {
 	 public ModelAndView modifyLaboratory(@PathVariable("assignmentId") int assignmentId) {
 		 ModelAndView mv = new ModelAndView("modifyAssignmentForm");
 		 mv.addObject("assignmentId",assignmentId);
+		 return mv;
+	 }
+	
+	@RequestMapping("/student/listLabsAssignments")
+	 public ModelAndView listLabAssignmentStudents() {
+		 ModelAndView mv = new ModelAndView("listAssignmentsStudents");
+		 return mv;
+	 }
+	
+	@RequestMapping("/assignment/students")
+	 public ModelAndView getAssignments(@RequestParam int labId) {
+		 ModelAndView mv = new ModelAndView("listAssignmentsStudents");
 		 return mv;
 	 }
 	

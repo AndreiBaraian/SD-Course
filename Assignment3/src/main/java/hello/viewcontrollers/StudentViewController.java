@@ -26,4 +26,11 @@ public class StudentViewController {
 		 mv.addObject("studentId", studentId);
 		 return mv;
 	 }
+	
+	@RequestMapping("/student/lab/assignments/{labId}")
+	 public ModelAndView addStudent(@PathVariable("labId") int labId) {
+		 ModelAndView mv = new ModelAndView("listAssignmentsStudents");
+		 mv.addObject("labId",labId);
+		 return mv;
+	 }
 }

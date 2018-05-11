@@ -3,6 +3,7 @@ package hello;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 public class HelloController {
@@ -55,16 +56,10 @@ public class HelloController {
 		 return mv;
 	 }
 	 
-	 @RequestMapping("/viewLabsStudent")
-	 public ModelAndView viewLabsStudent() {
-		 ModelAndView mv = new ModelAndView("listLaboratoriesStudents");
-		 return mv;
-	 }
-	 
-	 @RequestMapping("/listAssignmentsStudents")
-	 public ModelAndView listAssignmentStudents() {
-		 ModelAndView mv = new ModelAndView("listAssignmentsStudents");
-		 return mv;
-	 }
+	 @RequestMapping(value="/logout")
+	public RedirectView logout() {
+		RedirectView rv = new RedirectView("/");
+		return rv;
+	}
 
 }

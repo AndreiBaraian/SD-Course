@@ -33,15 +33,7 @@
 				<th>Date</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${laboratories}" var="lab">
-				<tr>
-					<td><input type="checkbox" value="${lab.id}"></td>
-					<td><c:out value="${lab.labNumber}" /></td>
-					<td><c:out value="${lab.title}" /></td>
-					<td><c:out value="${lab.date}" /></td>
-				</tr>
-			</c:forEach>
+		<tbody id="lab">
 		</tbody>
 	</table>
 	
@@ -101,11 +93,11 @@
 					
 				}
 			});
-			console.log(id);
+			//console.log(id);
 			
 			var queryParams = "?labId=" + id;
 			
-			window.location.assign("http://localhost:8080/attendance/" + queryParams);
+			window.location.assign("http://localhost:8080/viewAttendance/" + queryParams);
 
 		});
 		

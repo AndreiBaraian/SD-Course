@@ -32,5 +32,11 @@ public class LaboratoryViewController {
 		 ModelAndView mv = new ModelAndView("deleteLab");
 		 return mv;
 	 }
+	
+	@RequestMapping("/viewLabsStudent")
+	 public ModelAndView viewLabs() {
+		 ModelAndView mv = new ModelAndView("listLaboratoriesStudents");
+		 return mv;
+	 }
 
 }

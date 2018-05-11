@@ -1,16 +1,11 @@
 package hello.apimodels;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class SubmissionAPIModel {
 	
+	private int id;
 	private String gitRepositoryLink;
 	private String remark;
-	
-	@JsonIgnore
 	private int numberOfSubmissions;
-	
-	@JsonIgnore
 	private int grade;
 	
 	public SubmissionAPIModel() {}
@@ -45,6 +40,14 @@ public class SubmissionAPIModel {
 
 	public void setGrade(int grade) {
 		this.grade = grade;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

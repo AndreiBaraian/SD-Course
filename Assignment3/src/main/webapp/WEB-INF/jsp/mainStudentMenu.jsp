@@ -63,27 +63,6 @@
 			</a>
 		</ul>
 		
-		</li>
-		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Assignments </span>
-		</a>
-		<ul class="sidebar-submenu">
-			<li><a href="/listAssignmentsStudents" target="page">
-			<span>View Assignments</span>
-			</a>
-		</ul>
-		</li>
-		
-		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Attendance </span>
-		</a>
-		<ul class="sidebar-submenu">
-			<li><a href="/attendance/labsDisplay" target="page">
-			<span>View Attendace</span>
-			</a>
-		</ul>
-		</li>
-		
 		<li><a href="#">
 			<i class="glyphicon glyphicon-envelope"></i><span> Mailbox</span>
 		</a>

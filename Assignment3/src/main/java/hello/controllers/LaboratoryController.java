@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import hello.apimodels.AssignmentAPIModel;
 import hello.apimodels.LaboratoryAPIModel;
@@ -83,15 +82,6 @@ public class LaboratoryController {
 		if(labService.deleteLaboratoryById(labId))
 			return ResponseEntity.status(HttpStatus.OK).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	}
-	
-	@RequestMapping(method = GET,value="/assignmentLabs")
-	public ModelAndView getAllLabs() {
-		List<LaboratoryBModel> list = labService.getAllLaboratories();
-		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
-		ModelAndView mv = new ModelAndView("listLabs");
-		mv.addObject("laboratories",resultList);
-		return mv;
 	}
 	
 	@RequestMapping(method = GET, value="/{labId}/assignments")

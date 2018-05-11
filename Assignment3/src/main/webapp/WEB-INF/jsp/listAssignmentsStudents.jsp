@@ -17,70 +17,99 @@
 <link rel="stylesheet" href="/css/modify-btn.css">
 <link rel="stylesheet" href="/css/checkbox-style.css">
 <link rel="stylesheet" href="/css/delete-btn.css">
+<link rel="stylesheet" href="/css/approve-btn.css">
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Laboratories</title>
+<title>List Assignments</title>
 </head>
 <body>
-<form id="form">
-	<!-- <input type="hidden" name="labId" id="labId"> -->
-	
 	<table border="2" class="hoverTable">
-	
 		<thead>
 			<tr>
 				<th>Select</th>
-				<th>Laboratory Number</th>
-				<th>Title</th>
-				<th>Date</th>
-				<th>Curricula</th>
+				<th>Name</th>
+				<th>Deadline</th>
 				<th>Description</th>
 			</tr>
 		</thead>
-		
-		<tbody id="lab">
+		<tbody id = "assignments">
 		</tbody>
-		
 	</table>
-</form>
 	
-	<div id="dialog" title="Assignment Details" style="display: none">
-		<p>TEST</p>
-		<c:out value="Hello" />
-		<c:out value="Hi" />
-		<c:out value="Salut" />
-	</div>
+	<button type="button" class="approveBtn" id="approve-btn"
+			style="width: 300px; position: relative; right: 400px;padding: 20px" >Add Submission</button>
+
+	
+	<button type="button" class="modifyBtn" id="modify-btn"
+			style="width: 300px; position: relative; right: 400px;padding: 20px" >View Submission</button>
+			
+	
+					
 	
 	<script>
-
-    $(document).ready(function(){
-        $.ajax({
-
-            url: 'http://localhost:8080/lab',
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(data){
-                $(data).each(function(){ 
-                    $('#lab').append('<tr onclick="goToAssignment(' + this.id + ')"><td><input type="radio" onclick="dropDown(' + this.id +')" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>') + '<div id="myDropdown" class="dropdown-content">';
-                });
-
-            },
-            error: function(data){
-                alert("4");
-            }
-
-        });
-    });
-    
-    function goToAssignments(id){
-    	console.log(id);
-    	
-    }
-    
-    
-
-    </script>
 	
+		$(document).ready(function(){
+			
+			var id = <c:out value="${labId}"/>;
+			//console.log(id);
+			
+	        $.ajax({
+	
+	            url: 'http://localhost:8080/lab/' + id + '/assignments',
+	            type: 'GET',
+	            dataType: 'JSON',
+	            success: function(data){
+	                $(data).each(function(){ 
+	                    $('#assignments').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.deadline + '</td><td>' + this.description + '</td></tr>');
+	                });
+	
+	            },
+	            error: function(e){
+	                console.log("ERROR: "+ e);
+	            }
+	
+	        });
+	    });
+
+               jQuery("#approve-btn").on('click', function() {
+       			var id;
+       			$('input[type=radio]').each(function() {
+       				if (this.checked) {
+       					id = $(this).val();
+       					this.checked = false;
+       					this.disabled = true;
+       					
+       				}
+       			});
+       			//console.log(id);
+       			
+       			var relativeurl = "?assignmentId=" + id;
+       			//console.log(relativeurl);
+       			
+       			window.location.assign("http://localhost:8080/addSubmissionView/" + relativeurl);
+       			
+       		});
+		
+		jQuery("#modify-btn").on('click', function() {
+			var id;
+			$('input[type=radio]').each(function() {
+				if (this.checked) {
+					id = $(this).val();
+					this.checked = false;
+					this.disabled = true;
+					
+				}
+			});
+			//console.log(id);
+			window.location.assign("http://localhost:8080/modifyAssignment/" + id);
+		});
+		
+		
+		$('input[type="checkbox"]').on('change', function() {
+			   $('input[type="checkbox"]').not(this).prop('checked', false);
+			});
+	
+	</script>
 </body>
 </html>

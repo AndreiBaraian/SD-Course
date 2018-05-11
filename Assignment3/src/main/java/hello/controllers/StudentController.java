@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,15 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
-import hello.apimodels.LaboratoryAPIModel;
 import hello.apimodels.StudentAPIModel;
-import hello.service.bllmodel.LaboratoryBModel;
 import hello.service.bllmodel.StudentBModel;
-import hello.service.interfaces.ILaboratoryService;
 import hello.service.interfaces.IStudentService;
 
 @RestController
@@ -35,9 +28,6 @@ public class StudentController {
 	
 	@Autowired
 	private IStudentService studentService;
-	
-	@Autowired
-	private ILaboratoryService laboratoryService;
 	
 	@Autowired 
 	private ModelMapper mapper;
@@ -83,16 +73,6 @@ public class StudentController {
 		if(studentService.deleteStudentById(studentId))
 				return ResponseEntity.status(HttpStatus.OK).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	}
-	
-	@RequestMapping(method = GET, value = "/labs")
-	public ModelAndView viewLabs(HttpServletRequest request) {
-		System.out.println("id is " + request.getParameter("studentId"));
-		ModelAndView mv = new ModelAndView("listAttendanceLabs");
-		List<LaboratoryBModel> list = laboratoryService.getAllLaboratories();
-		List<LaboratoryAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, LaboratoryAPIModel.class)).collect(Collectors.toList());
-		mv.addObject("laboratories",resultList);
-		return mv;
 	}
 
 }

@@ -2,6 +2,7 @@ package hello.service.bllmodel;
 
 public class SubmissionBModel {
 	
+	private int id;
 	private String gitRepositoryLink;
 	private String remark;
 	private int numberOfSubmissions;
@@ -39,6 +40,14 @@ public class SubmissionBModel {
 
 	public void setGrade(int grade) {
 		this.grade = grade;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

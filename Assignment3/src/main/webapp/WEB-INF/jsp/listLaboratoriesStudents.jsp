@@ -23,10 +23,12 @@
 <title>List Laboratories</title>
 </head>
 <body>
+<form id="form">
+	<!-- <input type="hidden" name="labId" id="labId"> -->
+	
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
-				<th>Select</th>
 				<th>Laboratory Number</th>
 				<th>Title</th>
 				<th>Date</th>
@@ -37,15 +39,12 @@
 		<tbody id="lab">
 		</tbody>
 	</table>
+</form>
 	
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify</button>
-					
-					
 	
 	<script>
-
-    $(document).ready(function(){
+	
+	$(document).ready(function(){
         $.ajax({
 
             url: 'http://localhost:8080/lab',
@@ -53,7 +52,7 @@
             dataType: 'JSON',
             success: function(data){
                 $(data).each(function(){ 
-                    $('#lab').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>')
+                    $('#lab').append('<tr class="row-which-triggers-popup" onclick="goToAssignments(' + this.id + ')"><td>' + this.labNumber + '</td><td>' + this.title + '</td><td>' + this.date + '</td><td>' + this.curricula + '</td><td>' + this.description + '</td></tr>');
                 });
 
             },
@@ -63,24 +62,12 @@
 
         });
     });
-    
-    jQuery("#modify-btn").on('click', function() {
-		var id;
-		$('input[type=radio]').each(function() {
-			if (this.checked) {
-				id = $(this).val();
-				this.checked = false;
-				this.disabled = true;
-				
-			}
-		});
-		console.log(id);
-	});
-    
-    $('input[type="checkbox"]').on('change', function() {
-		   $('input[type="checkbox"]').not(this).prop('checked', false);
-		});
-
-    </script>
+	
+	
+	function goToAssignments(id) {
+		window.location.assign("http://localhost:8080/student/lab/assignments/" + id);
+	}
+	</script>	
+	
 </body>
 </html>
