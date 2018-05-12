@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,12 +39,11 @@ public class SubmissionController {
 		return ResponseEntity.status(HttpStatus.OK).body(resultList);
 	}
 	
-	@RequestMapping(method = GET, value = "/{submissionId")
-	public ResponseEntity<SubmissionAPIModel> getSubmissionById(@RequestParam int subId){
-		SubmissionAPIModel submission = mapper.map(subService.getById(subId), SubmissionAPIModel.class); 
-		if(submission != null)
-			return ResponseEntity.status(HttpStatus.OK).body(submission);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	@RequestMapping(method = GET, value = "/{assignmentId}")
+	public ResponseEntity<List<SubmissionAPIModel>> getSubmissionsByAssignmentId(@PathVariable("assignmentId") int assignmentId){
+		List<SubmissionBModel> list = subService.getByAssignmentId(assignmentId);
+		List<SubmissionAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, SubmissionAPIModel.class)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
 	}
 	
 	
@@ -54,6 +54,7 @@ public class SubmissionController {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
+	/*
 	@RequestMapping(method = PUT)
 	public ResponseEntity<?> updateSubmission(@RequestParam int subId, @RequestBody SubmissionAPIModel submission){
 		if(!subService.exists(subId))
@@ -61,9 +62,9 @@ public class SubmissionController {
 		if(subService.updateSubmission(subId, mapper.map(submission, SubmissionBModel.class)))
 			return ResponseEntity.status(HttpStatus.CREATED).body(submission);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The maximum number of submissions has been reached!");
-	}
+	}*/
 	
-	@RequestMapping(method = PUT, value = "/{grade}")
+	@RequestMapping(method = PUT)
 	public ResponseEntity<String> gradeSubmission(@RequestParam int subId, @RequestParam int grade){
 		if(subService.gradeSubmission(subId, grade))
 			return ResponseEntity.status(HttpStatus.OK).build();

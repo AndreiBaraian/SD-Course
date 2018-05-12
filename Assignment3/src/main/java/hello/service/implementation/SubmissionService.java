@@ -59,6 +59,15 @@ public class SubmissionService implements ISubmissionService {
 		}
 		return null;
 	}
+	
+	
+	@Override
+	public List<SubmissionBModel> getByAssignmentId(int assignmentId) {
+		List<SubmissionDB> list = submissionDAO.getSubmissionByAssignmentId(assignmentId);
+		List<SubmissionBModel> resultList = list.parallelStream().map(x-> modelMapper.map(x, SubmissionBModel.class)).collect(Collectors.toList());
+		return resultList;
+	}
+
 
 	@Override
 	public boolean addSubmission(int assignmentId, int studentId, SubmissionBModel submission) {

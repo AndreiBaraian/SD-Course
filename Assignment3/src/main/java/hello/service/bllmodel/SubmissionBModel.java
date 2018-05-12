@@ -7,6 +7,7 @@ public class SubmissionBModel {
 	private String remark;
 	private int numberOfSubmissions;
 	private int grade;
+	private StudentBModel student;
 	
 	public SubmissionBModel() {}
 
@@ -48,6 +49,14 @@ public class SubmissionBModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public StudentBModel getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentBModel student) {
+		this.student = student;
 	}
 
 }

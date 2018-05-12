@@ -16,8 +16,15 @@ public class SubmissionViewController {
 	 }
 	
 	@RequestMapping("/viewSubmission")
-	public ModelAndView listSubmissions(@RequestParam int assignmentId) {
+	public ModelAndView listSubmission(@RequestParam int assignmentId) {
 		 ModelAndView mv = new ModelAndView("viewSubmission");
+		 mv.addObject("assignmentId",assignmentId);
+		 return mv;
+	 }
+	
+	@RequestMapping("/viewSubmissions")
+	public ModelAndView listSubmissions(@RequestParam int assignmentId) {
+		 ModelAndView mv = new ModelAndView("viewSubmissions");
 		 mv.addObject("assignmentId",assignmentId);
 		 return mv;
 	 }

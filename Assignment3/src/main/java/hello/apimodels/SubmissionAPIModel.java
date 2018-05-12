@@ -1,18 +1,13 @@
 package hello.apimodels;
 
 public class SubmissionAPIModel {
-	
-	@Override
-	public String toString() {
-		return "SubmissionAPIModel [id=" + id + ", gitRepositoryLink=" + gitRepositoryLink + ", remark=" + remark
-				+ ", numberOfSubmissions=" + numberOfSubmissions + ", grade=" + grade + "]";
-	}
 
 	private int id;
 	private String gitRepositoryLink;
 	private String remark;
 	private int numberOfSubmissions;
 	private int grade;
+	private StudentAPIModel student;
 	
 	public SubmissionAPIModel() {}
 
@@ -54,6 +49,20 @@ public class SubmissionAPIModel {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return "SubmissionAPIModel [id=" + id + ", gitRepositoryLink=" + gitRepositoryLink + ", remark=" + remark
+				+ ", numberOfSubmissions=" + numberOfSubmissions + ", grade=" + grade + "]";
+	}
+
+	public StudentAPIModel getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentAPIModel student) {
+		this.student = student;
 	}
 
 }

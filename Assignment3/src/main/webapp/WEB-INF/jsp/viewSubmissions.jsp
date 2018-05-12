@@ -24,53 +24,45 @@
 <title>List Assignments</title>
 </head>
 <body>
-<form id="form" method="post" action="/addAssignmentView">
-	<input type="hidden" name="labId" id="labId" value="${labId }">
-	<table border="2" class="hoverTable">
+	<input type="hidden" name="assignmentId" id="assignmentId" value="${assignmentId }">
+	<input type="hidden" name="studentId" id="studentId" value="${sessionScope.userId }">
+	<table border="2" class="hoverTable" id="myTable">
 		<thead>
 			<tr>
 				<th>Select</th>
-				<th>Name</th>
-				<th>Deadline</th>
-				<th>Description</th>
+				<th>Student Name</th>
+				<th>Git Repository Link</th>
+				<th>Remark</th>
+				<th>Number Of Submissions</th>
+				<th>Grade</th>
 			</tr>
 		</thead>
-		<tbody id = "assignments">
+		<tbody id = "submission">
 		</tbody>
 	</table>
 	
 	<button type="button" class="approveBtn" id="approve-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Add</button>
-</form>
-	
-	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Assignments
+				 Submit Grade
 	</button>
-	
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify</button>
 			
 	
-	<button type="button" class="modifyBtn" id="view-sub"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >View Submissions</button>
-							
+					
 	
 	<script>
 	
 		$(document).ready(function(){
 			
-			var id = <c:out value="${labId}"/>;
-			//console.log(id);
+			var assignmentId = $("#assignmentId").val();
 			
 	        $.ajax({
 	
-	            url: 'http://localhost:8080/lab/' + id + '/assignments',
+	            url: 'http://localhost:8080/submission/' + assignmentId,
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){
 	                $(data).each(function(){ 
-	                    $('#assignments').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.deadline + '</td><td>' + this.description + '</td></tr>');
+	                    $('#submission').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.student.name + '</td><td>' + this.gitRepositoryLink + '</td><td>' + this.remark + '</td><td>' + this.numberOfSubmissions + '</td><td><input type="text" id="grade' + this.id + '" value="' + this.grade + '"></div></td></tr>');
 	                });
 	
 	            },
@@ -82,24 +74,29 @@
 	    });
 	
 	
-	
-		jQuery("#delete-btn").on('click', function() {
+		jQuery("#approve-btn").on('click', function() {
 			var id;
+			var cnt = 0;
 			$('input[type=radio]').each(function() {
 				if (this.checked) {
 					id = $(this).val();
 					this.checked = false;
 					this.disabled = true;
-					
+					cnt++;
 				}
 			});
-			//console.log(id);
+			console.log(cnt);
 			
 			
+			var grade = $("#grade"+id).val();
+			console.log(grade);
+			
+			var relativeURL = "?subId=" + id + "&grade=" + grade; 
+				
 			$.ajax({
-				type : "DELETE",
+				type : "PUT",
 				contentType : "application/json",
-				url : "http://localhost:8080/assignment/" + id,
+				url : "http://localhost:8080/submission/" + relativeURL,
 				dataType : 'html',
 				timeout : 100000,
 				success : function(response) {
@@ -113,40 +110,8 @@
 					console.log("DONE");
 				}
 			});
+			
 		});
-
-		document.getElementById("approve-btn").onclick = function () {
-			$("#form").submit();
-		}
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/modifyAssignment/" + id);
-		});
-		
-		jQuery("#view-sub").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/viewSubmissions/" +"?assignmentId=" + id);
-		});
-		
 	
 	</script>
 </body>
