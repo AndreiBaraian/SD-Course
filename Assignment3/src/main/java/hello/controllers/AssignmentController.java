@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.apimodels.AssignmentAPIModel;
+import hello.apimodels.SubmissionAPIModel;
 import hello.service.bllmodel.AssignmentBModel;
 import hello.service.interfaces.IAssignmentService;
+import hello.service.interfaces.ISubmissionService;
 
 @RestController
 @RequestMapping("/assignment")
@@ -27,6 +29,9 @@ public class AssignmentController {
 	
 	@Autowired
 	private IAssignmentService assignmentService;
+	
+	@Autowired
+	private ISubmissionService submissionService;
 	
 	@Autowired
 	private ModelMapper mapper;

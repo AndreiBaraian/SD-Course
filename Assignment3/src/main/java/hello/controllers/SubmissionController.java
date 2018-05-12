@@ -46,6 +46,7 @@ public class SubmissionController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
+	
 	@RequestMapping(method = POST)
 	public ResponseEntity<SubmissionAPIModel> addSubmission(@RequestParam int assignmentId, @RequestParam int studentId,@RequestBody SubmissionAPIModel submission){
 		if(subService.addSubmission(assignmentId, studentId, mapper.map(submission, SubmissionBModel.class)))
@@ -73,6 +74,16 @@ public class SubmissionController {
 	public ResponseEntity<SubmissionAPIModel> deleteSubmission(@RequestParam int id){
 		if(subService.deleteSubmissionById(id))
 			return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@RequestMapping(method = GET, value = "/sub")
+	public ResponseEntity<SubmissionAPIModel> getSubmissionByAssignmentAndStudent(@RequestParam int assignmentId,@RequestParam int studentId){
+		SubmissionBModel sub = subService.getByAssignmentAndStudent(assignmentId, studentId);
+		if(sub != null) {
+			SubmissionAPIModel submission = mapper.map(sub, SubmissionAPIModel.class); 
+			return ResponseEntity.status(HttpStatus.OK).body(submission);
+		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	

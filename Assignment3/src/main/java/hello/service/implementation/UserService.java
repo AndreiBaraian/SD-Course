@@ -44,4 +44,9 @@ public class UserService implements IUserService {
 		studentDAO.save(studentDB);
 	}
 	
+	public int getUserIdByEmail(String email) {
+		int id = userDAO.findUserByEmail(email).getId();
+		return id;
+	}
+	
 }

@@ -9,7 +9,7 @@ function sendFormData(buttonId, relativeURL, form) {
 		}, {});
 		
 		console.log(JSON.stringify(myData));
-		
+		//console.log(relativeURL);
 		
 		$.ajax({
 			type : "POST",

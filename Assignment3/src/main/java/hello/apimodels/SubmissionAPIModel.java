@@ -2,6 +2,12 @@ package hello.apimodels;
 
 public class SubmissionAPIModel {
 	
+	@Override
+	public String toString() {
+		return "SubmissionAPIModel [id=" + id + ", gitRepositoryLink=" + gitRepositoryLink + ", remark=" + remark
+				+ ", numberOfSubmissions=" + numberOfSubmissions + ", grade=" + grade + "]";
+	}
+
 	private int id;
 	private String gitRepositoryLink;
 	private String remark;

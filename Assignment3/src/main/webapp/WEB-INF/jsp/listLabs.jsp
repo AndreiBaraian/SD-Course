@@ -29,7 +29,6 @@
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
-				<th>Select</th>
 				<th>Laboratory Number</th>
 				<th>Title</th>
 				<th>Date</th>

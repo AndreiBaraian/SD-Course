@@ -20,40 +20,6 @@
 	<ul class="sidebar-menu">
 		<li class="sidebar-header">Andrei</li>
 
-		<!-- 
-		<c:forEach var="function" items="${filteredFunctions}">
-			<li><a href="#"> <i
-					class="${function.key.leftComponentStyle}"></i> <span>${function.key.title}</span>
-					<i class="${function.key.rightComponentStyle}"></i>
-			</a>
-				<ul class="sidebar-submenu">
-					<c:forEach var="option" items="${function.value}">
-						<li><a href="${option.href}" target="page"> <i
-								class="${option.leftComponentStyle}"></i> ${option.title} <c:if
-									test="${function.key.title == 'Approve'}">
-									<c:set var="val" scope="session" value="${0}" />
-									<c:if test="${option.title == 'Approve Users'}">
-										<c:set var="val" value="${pendingUsers}" />
-									</c:if>
-									<c:if test="${option.title == 'Approve Accounts'}">
-										<c:set var="val" value="${pendingAccounts}" />
-									</c:if>
-									<c:if test="${option.title == 'Approve Profiles'}">
-										<c:set var="val" value="${pendingProfiles}" />
-									</c:if>
-									<c:if test="${val > 0}">
-										<small class="label pull-right label-info"> <c:out
-												value="${val}" />
-										</small>
-									</c:if>
-								</c:if>
-						</a></li>
-					</c:forEach>
-				</ul>
-			</li>
-		</c:forEach>
-		
-		 -->
 		<li><a href="#">
 			<i class="glyphicon glyphicon-calendar"></i><span> Laboratories </span>
 		</a>

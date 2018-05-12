@@ -37,7 +37,7 @@ public class SubmissionService implements ISubmissionService {
 
 	@Override
 	public List<SubmissionBModel> getAllSubmissions() {
-		List<SubmissionDB> list = submissionDAO.findAll().parallelStream().filter(x -> !x.getWasDeleted()).collect(Collectors.toList());
+		List<SubmissionDB> list = submissionDAO.findAll().parallelStream().filter(x -> (x.getWasDeleted() == false)).collect(Collectors.toList());
 		List<SubmissionBModel> resultList = list.parallelStream().map(x-> modelMapper.map(x, SubmissionBModel.class)).collect(Collectors.toList());
 		return resultList;
 	}
@@ -46,6 +46,15 @@ public class SubmissionService implements ISubmissionService {
 	public SubmissionBModel getById(int id) {
 		Optional<SubmissionDB> submissionDB = submissionDAO.findById(id);
 		if(submissionDB.isPresent() && (!submissionDB.get().getWasDeleted())){
+			return modelMapper.map(submissionDB, SubmissionBModel.class);
+		}
+		return null;
+	}
+	
+	@Override
+	public SubmissionBModel getByAssignmentAndStudent(int assignmentId, int studentId) {
+		SubmissionDB submissionDB = submissionDAO.findSubmissionByAssignmentIdAndStudentId(assignmentId, studentId);
+		if(submissionDB != null && (!submissionDB.getWasDeleted())){
 			return modelMapper.map(submissionDB, SubmissionBModel.class);
 		}
 		return null;
@@ -67,6 +76,10 @@ public class SubmissionService implements ISubmissionService {
 			sub.setStudent(studentDB);
 			sub.setNumberOfSubmissions(1);
 			submissionDAO.save(sub);
+			return true;
+		}
+		else if((!submissionDB.getWasDeleted()) && submissionDB.getNumberOfSubmissions() < MAX_NUMBER_SUBMISSIONS) {
+			updateSubmission(submissionDB.getId(),submission);
 			return true;
 		}
 		// there was a previous submission, but it was deleted

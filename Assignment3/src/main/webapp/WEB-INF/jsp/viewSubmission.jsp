@@ -24,25 +24,28 @@
 <title>List Assignments</title>
 </head>
 <body>
+<form id="form" method="post" action="/addAssignmentView">
+	<input type="hidden" name="assignmentId" id="assignmentId" value="${assignmentId }">
+	<input type="hidden" name="studentId" id="studentId" value="${sessionScope.userId }">
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
 				<th>Select</th>
-				<th>Name</th>
-				<th>Deadline</th>
-				<th>Description</th>
+				<th>Git Repository Link</th>
+				<th>Remark</th>
+				<th>Number Of Submissions</th>
+				<th>Grade</th>
 			</tr>
 		</thead>
-		<tbody id = "assignments">
+		<tbody id = "submission">
 		</tbody>
 	</table>
+</form>
 	
-	<button type="button" class="approveBtn" id="approve-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Add Submission</button>
-
-	
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >View Submission</button>
+	<button type="button" class="deleteBtn" id="delete-btn"
+				style="width: 300px; position: relative; left: 20px;">
+				<span class="glyphicon glyphicon-trash"></span> Delete Assignments
+	</button>
 			
 	
 					
@@ -51,17 +54,19 @@
 	
 		$(document).ready(function(){
 			
-			var id = <c:out value="${labId}"/>;
-			//console.log(id);
+			var assignmentId = $("#assignmentId").val();
+			var studentId = $("#studentId").val();
+			
+			var relativeURL = "sub/" + "?assignmentId=" + $("#assignmentId").val() + "&studentId=" + $("#studentId").val();
 			
 	        $.ajax({
 	
-	            url: 'http://localhost:8080/lab/' + id + '/assignments',
+	            url: 'http://localhost:8080/submission/' + relativeURL,
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){
 	                $(data).each(function(){ 
-	                    $('#assignments').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.deadline + '</td><td>' + this.description + '</td></tr>');
+	                    $('#submission').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.gitRepositoryLink + '</td><td>' + this.remark + '</td><td>' + this.numberOfSubmissions + '</td><td>' + this.grade + '</td></tr>');
 	                });
 	
 	            },
@@ -71,27 +76,10 @@
 	
 	        });
 	    });
-
-               jQuery("#approve-btn").on('click', function() {
-       			var id;
-       			$('input[type=radio]').each(function() {
-       				if (this.checked) {
-       					id = $(this).val();
-       					this.checked = false;
-       					this.disabled = true;
-       					
-       				}
-       			});
-       			//console.log(id);
-       			
-       			var relativeurl = "?assignmentId=" + id;
-       			//console.log(relativeurl);
-       			
-       			window.location.assign("http://localhost:8080/addSubmissionView/" + relativeurl);
-       			
-       		});
-		
-		jQuery("#modify-btn").on('click', function() {
+	
+	
+	
+		jQuery("#delete-btn").on('click', function() {
 			var id;
 			$('input[type=radio]').each(function() {
 				if (this.checked) {
@@ -102,13 +90,26 @@
 				}
 			});
 			
-			window.location.assign("http://localhost:8080/viewSubmission/" + "?assignmentId=" + id);
-		});
-		
-		
-		$('input[type="checkbox"]').on('change', function() {
-			   $('input[type="checkbox"]').not(this).prop('checked', false);
+			
+			
+			$.ajax({
+				type : "DELETE",
+				contentType : "application/json",
+				url : "http://localhost:8080/submission/" + "?id=" + id,
+				dataType : 'html',
+				timeout : 100000,
+				success : function(response) {
+					$("#root").html(response);
+					console.log("SUCCESS: ", response);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				},
+				done : function(e) {
+					console.log("DONE");
+				}
 			});
+		});
 	
 	</script>
 </body>

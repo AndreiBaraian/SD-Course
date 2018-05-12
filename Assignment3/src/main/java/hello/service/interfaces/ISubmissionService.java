@@ -13,5 +13,6 @@ public interface ISubmissionService {
 	public boolean gradeSubmission(int id, int grade);
 	public boolean exists(int id);
 	boolean deleteSubmissionById(int id);
+	SubmissionBModel getByAssignmentAndStudent(int assignmentId, int studentId);
 
 }

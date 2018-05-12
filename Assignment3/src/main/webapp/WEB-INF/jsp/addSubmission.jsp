@@ -19,6 +19,7 @@
 	<body>
 		<form name = "myForm" id="myForm">
 			<input type="hidden" name="assignmentId" id="assignmentId" value="${assignmentId }">
+			<input type="hidden" name="studentId" id="studentId" value="${sessionScope.userId }">
 			<center>
 				<div class="popup">
 					<span class="poputext" id="invalidUserNamePopup" style="color: red;"></span>
@@ -73,10 +74,9 @@
 	</body>
 	
 	<script>
-	var name = ${pageContext.request.userPrincipal.id};
-	console.log(name);
-	var relativeURL = "submission/" + "?assignmentId=" + $("#assignmentId") + "?studentId=" + 
-	//sendFormData("#submitButton", "submission", "#myForm");
+	var relativeURL = "submission/" + "?assignmentId=" + $("#assignmentId").val() + "&studentId=" + $("#studentId").val();
+	//console.log(relativeURL);
+	sendFormData("#submitButton", relativeURL, "#myForm");
 	</script>
 	
 </html>
