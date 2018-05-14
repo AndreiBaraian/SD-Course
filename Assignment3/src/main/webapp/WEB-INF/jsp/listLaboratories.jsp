@@ -35,6 +35,8 @@
 		</tbody>
 	</table>
 	
+	<div>
+	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
 				<span class="glyphicon glyphicon-trash"></span> Delete Laboratory
@@ -43,6 +45,7 @@
 	<button type="button" class="modifyBtn" id="modify-btn"
 			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify</button>
 					
+	</div>
 	
 	<script>
 	

@@ -20,7 +20,7 @@ public class RegisterController {
 	private IUserService userService;
 	
 	@RequestMapping(method = POST)
-	public ResponseEntity<String> register(@RequestParam String email, @RequestParam String password, @RequestParam String token) {
+	public ResponseEntity<String> register(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("token") String token) {
 		try {
 			userService.register(email, password, token);
 		} catch (LoginException e) {

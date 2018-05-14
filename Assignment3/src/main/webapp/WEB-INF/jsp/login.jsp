@@ -13,7 +13,7 @@
 <body>
 	<form method="post" action="/app-login">
 		<center>
-		<table width = "30%" cellpadding = "7" frame="box" rules="none">
+		<table width = "auto" cellpadding = "7" frame="box" rules="none">
 			<thead>
 				<tr>
 					<th colspan = "2">Login Here</th>

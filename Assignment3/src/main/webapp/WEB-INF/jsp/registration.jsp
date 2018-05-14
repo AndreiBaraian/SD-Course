@@ -19,33 +19,6 @@
 	<body>
 		<form method="post" action="/registration">
 			<center>
-				<div class="popup">
-					<span class="poputext" id="invalidUserNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidPasswordPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidFullNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountryPopup" style="color:red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountyPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCityPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidStreetPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidNumberPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidEmailPopup" style="color: red;"></span>
-				</div>
 				<table width = "30%" cellpadding = "7" frame="box" rules="none">
 					<thead>
 						<tr>
@@ -80,7 +53,8 @@
 	jQuery("#submitButton").on('click', function() {
 
 		var queryParams = "?" + "email=" + $(email).val() + "&" + "password=" + $(pass).val() + "&" + "token=" + $(token).val();
-		
+
+		console.log("http://localhost:8080/register/" + queryParams);
 		
 		$.ajax({
 			type : "POST",

@@ -1,11 +1,11 @@
 package hello;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
+@Controller
 public class HelloController {
 	 
 	 @RequestMapping("/")
@@ -38,7 +38,7 @@ public class HelloController {
 		 return mv;
 	 }
 	 
-	 @RequestMapping("registerView")
+	 @RequestMapping("/registerView")
 	 public ModelAndView registrationView() {
 		 ModelAndView mv = new ModelAndView("registration");
 		 return mv;

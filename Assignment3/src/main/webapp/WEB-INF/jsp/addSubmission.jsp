@@ -21,33 +21,6 @@
 			<input type="hidden" name="assignmentId" id="assignmentId" value="${assignmentId }">
 			<input type="hidden" name="studentId" id="studentId" value="${sessionScope.userId }">
 			<center>
-				<div class="popup">
-					<span class="poputext" id="invalidUserNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidPasswordPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidFullNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountryPopup" style="color:red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountyPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCityPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidStreetPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidNumberPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidEmailPopup" style="color: red;"></span>
-				</div>
 				<table width = "30%" cellpadding = "7" frame="box" rules="none">
 					<thead>
 						<tr>
@@ -76,7 +49,39 @@
 	<script>
 	var relativeURL = "submission/" + "?assignmentId=" + $("#assignmentId").val() + "&studentId=" + $("#studentId").val();
 	//console.log(relativeURL);
-	sendFormData("#submitButton", relativeURL, "#myForm");
+	//sendFormData("#submitButton", relativeURL, "#myForm");
+	
+	jQuery("#submitButton").on("click", function() {
+		
+		var myData = $("#myForm").serializeArray().reduce(function(obj, item) {
+		    obj[item.name] = item.value;
+		    return obj;
+		}, {});
+		
+		console.log(JSON.stringify(myData));
+		//console.log(relativeURL);
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "http://localhost:8080/" + relativeURL,
+			data : JSON.stringify(myData),
+			dataType : 'html',
+			timeout : 100000,
+			success : function(response) {
+				$("#root").html(response);
+				console.log("SUCCESS: ", response);
+			},
+			error : function(xhr, status, error) {
+				alert("Maximum number of submissions has been reached!");
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+		
+	}); 
+	
 	</script>
 	
 </html>
