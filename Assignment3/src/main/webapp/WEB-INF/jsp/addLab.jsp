@@ -19,33 +19,6 @@
 	<body>
 		<form name = "myForm" id="myForm">
 			<center>
-				<div class="popup">
-					<span class="poputext" id="invalidUserNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidPasswordPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidFullNamePopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountryPopup" style="color:red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCountyPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidCityPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidStreetPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidNumberPopup" style="color: red;"></span>
-				</div>
-				<div class="popup">
-					<span class="popuptext" id="invalidEmailPopup" style="color: red;"></span>
-				</div>
 				<table width = "30%" cellpadding = "7" frame="box" rules="none">
 					<thead>
 						<tr>
@@ -84,6 +57,17 @@
 	</body>
 	
 	<script>
+	
+	$(document).ready(function () {
+		    
+		    $.validator.addMethod("dateTime", function (value, element) {
+		        var stamp = value.split(" ");
+		        var validDate = !/Invalid|NaN/.test(new Date(stamp[0]).toString());
+		        var validTime = /^(([0-1]?[0-9])|([2][0-3])):([0-5]?[0-9])(:([0-5]?[0-9]))?$/i.test(stamp[1]);
+		        return this.optional(element) || (validDate && validTime);
+		    }, "Please enter a valid date and time.");
+	});
+		
 	sendFormData("#submitButton", "lab", "#myForm");
 	</script>
 	

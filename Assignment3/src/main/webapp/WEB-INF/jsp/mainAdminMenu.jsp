@@ -74,7 +74,7 @@
 		</a>
 		</li>
 		<li><a href="#">
-			<i class="glyphicon glyphicon-sort"></i><span> Currency Converter</span>
+			<i class="glyphicon glyphicon-sort"></i><span> Messages</span>
 		</a>
 		</li>
 		<li><a href="#">
