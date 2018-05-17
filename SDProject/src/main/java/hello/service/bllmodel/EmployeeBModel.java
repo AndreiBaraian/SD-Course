@@ -1,20 +1,11 @@
-package hello.dao.dbModel;
+package hello.service.bllmodel;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+public class EmployeeBModel extends UserBModel {
 
-@Entity
-@DiscriminatorValue("employee")
-public class EmployeeDB extends UserDB {
-	
-	@Column(name = "token")
 	private String token;
-	
-	@Column(name = "contract_reference")
 	private String contractReference;
 	
-	public EmployeeDB() {}
+	public EmployeeBModel() {}
 
 	public String getToken() {
 		return token;
@@ -31,5 +22,7 @@ public class EmployeeDB extends UserDB {
 	public void setContractReference(String contractReference) {
 		this.contractReference = contractReference;
 	}
-
+	
+	
+	
 }

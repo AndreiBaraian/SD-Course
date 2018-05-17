@@ -1,56 +1,23 @@
-package hello.dao.dbModel;
+package hello.apimodel;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import hello.dao.dbModel.ReservationDB;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
+public class ActivityAPIModel {
 
-@Entity
-@Table(name = "activities")
-public class ActivityDB {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
 	private int id;
-	
-	@Column(name = "name")
 	private String name;
-	
-	@Column(name = "location")
 	private String location;
-	
-	@Column(name = "description")
 	private String description;
-	
-	@Column(name = "picture_link")
 	private String pictureLink;
-	
-	@Column(name = "price")
 	private float price;
-	
-	@Column(name = "max_persons")
 	private int maxPersons;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
-	@Column(name = "start_date")
-	private LocalDateTime startDateActivity;
-	
-	@JsonBackReference
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
+	private LocalDateTime startDate;
 	private Set<ReservationDB> reservations;
 	
-	public ActivityDB() {}
+	public ActivityAPIModel() {}
 
 	public int getId() {
 		return id;
@@ -100,20 +67,20 @@ public class ActivityDB {
 		this.price = price;
 	}
 
-	public LocalDateTime getStartDateActivity() {
-		return startDateActivity;
-	}
-
-	public void setStartDateActivity(LocalDateTime startDateActivity) {
-		this.startDateActivity = startDateActivity;
-	}
-
 	public int getMaxPersons() {
 		return maxPersons;
 	}
 
 	public void setMaxPersons(int maxPersons) {
 		this.maxPersons = maxPersons;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
 	}
 
 	public Set<ReservationDB> getReservations() {
