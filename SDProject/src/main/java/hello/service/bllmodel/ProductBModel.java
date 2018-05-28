@@ -6,6 +6,7 @@ public class ProductBModel {
 	private String name;
 	private boolean isRented;
 	private float pricePerDay;
+	private int stock;
 	
 	public ProductBModel() {}
 
@@ -39,6 +40,14 @@ public class ProductBModel {
 
 	public void setPricePerDay(float pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 }

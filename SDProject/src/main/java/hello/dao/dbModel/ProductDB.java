@@ -19,6 +19,9 @@ public class ProductDB {
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "stock")
+	private int stock;
+	
 	@Column(name = "is_rented")
 	private boolean isRented;
 	
@@ -50,6 +53,14 @@ public class ProductDB {
 	}
 	public void setPricePerDay(float pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 	
 	

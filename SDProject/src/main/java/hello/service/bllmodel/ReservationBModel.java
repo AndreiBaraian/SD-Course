@@ -4,6 +4,7 @@ public class ReservationBModel {
 	
 	private int id;
 	private float deposit;
+	private String referenceNumber;
 	private CustomerBModel customer;
 	private ActivityBModel activity;
 	
@@ -39,6 +40,14 @@ public class ReservationBModel {
 
 	public void setActivity(ActivityBModel activity) {
 		this.activity = activity;
+	}
+
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
+
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
 	}
 
 }

@@ -7,5 +7,6 @@ import hello.dao.dbModel.UserDB;
 public interface UserDAO extends JpaRepository<UserDB,Integer> {
 	
 	public UserDB findUserByEmail(String email);
-
+	public UserDB findByUsername(String username);
+	
 }

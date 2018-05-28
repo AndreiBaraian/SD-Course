@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import hello.dao.dbModel.ProductDB;
 
 public interface ProductDAO extends JpaRepository<ProductDB,Integer>{
+	
+	public ProductDB findByName(String name);
 
 }

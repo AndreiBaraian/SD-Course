@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<menuFunctions>
+	<mainMenu>
+		<menuItem title="Users" style="sidebar-header" left="glyphicon glyphicon-user" right="fa fa-angle-down pull-right">
+			<option userTypes="Employee" href="/listUsers" left="glyphicon glyphicon-list">List Users</option>
+			<option userTypes="Employee" href="/addUser" left="glyphicon glyphicon-plus">Add New User</option>
+			<option userTypes="Employee, Technical" href="/modifyUser" left="glyphicon glyphicon-edit">Modify Existing Users</option>
+			<option userTypes="Employee" href="/deleteUsers" left="glyphicon glyphicon-remove">Delete Existing Users</option>
+			<option userTypes="Employee" href="/approveUsers" left="fa fa-circle-o" right="label pull-right label-info">Approve Users</option>
+		</menuItem>
+		<menuItem title="Accounts" style="sidebar-header" left="glyphicon glyphicon-piggy-bank" right="fa fa-angle-down pull-right">
+			<option userTypes="Employee, Client, Technical" href="/listAccounts" left="glyphicon glyphicon-list">List Accounts</option>
+			<option userTypes="Employee" href="/addAccount" target="page" left="glyphicon glyphicon-plus">Add New Account</option>
+			<option userTypes="Employee, Technical" href="/modifyAccounts" left="glyphicon glyphicon-edit">Modify Existing Accounts</option>				
+			<option userTypes="Employee" href="/deleteAccounts" left="glyphicon glyphicon-remove">Delete Existing Accounts</option>
+			<option userTypes="Employee" href="/approveAccounts" left="fa fa-circle-o" right="label pull-right label-info">Approve Accounts</option>
+		</menuItem>
+		<menuItem title="Profiles" left="glyphicon glyphicon-file" right="fa fa-angle-down pull-right">
+			<option userTypes="Employee, Technical" href="/listProfiles" left="glyphicon glyphicon-list">List Profiles</option>
+			<option userTypes="Employee" href="/addProfile" left="glyphicon glyphicon-plus">Add New Profile</option>
+			<option userTypes="Employee, Technical" href="/modifyProfiles" left="glyphicon glyphicon-edit">Modify Existing Profiles</option>
+			<option userTypes="Employee" href="/deleteProfiles" left="glyphicon glyphicon-remove">Delete Existing Profiles</option>
+			<option userTypes="Employee" href="/approveProfiles" left="fa fa-circle-o" right="label pull-right label-info">Approve Profiles</option>
+		</menuItem>
+		<menuItem title="Payments" style="sidebar-header" left="glyphicon glyphicon-euro" right="fa fa-angle-down pull-right">
+			<option userTypes="Employee, Technical" href="/enterPayment" left="fa fa-circle-o" right="label pull-right label-info">Enter Payment</option>
+			<option userTypes="Employee, Technical" href="/verifyPayments" left="fa fa-circle-o" right="label pull-right label-info">Verify Payments</option>
+			<option userTypes="Employee, Technical" href="/approvePayments" left="fa fa-circle-o" right="label pull-right label-info">Approve Payments</option>
+			<option userTypes="Employee, Technical" href="/authorizePayments" left="fa fa-circle-o" right="label pull-right label-info">Authorize Payments</option>
+			<option userTypes="Employee, Technical" href="/repairPayments" left="fa fa-circle-o" right="label pull-right label-info">Repair Payments</option>
+			<option userTypes="Employee, Technical" href="/viewCancelledPayments" left="fa fa-circle-o" right="label pull-right label-info">View Cancelled Payments</option>
+			<option userTypes="Employee, Technical" href="/viewCompletedPayments" left="fa fa-circle-o" right="label pull-right label-info">View Completed Payments</option>
+		</menuItem>
+		<menuItem title="Automatic Payments" style="sidebar-header" left="glyphicon glyphicon-usd" right="fa fa-angle-down pull-right">
+			<option href="/automaticPayments" left="fa fa-circle-o">Automatic Payments</option>
+		</menuItem>
+	</mainMenu>
+</menuFunctions>

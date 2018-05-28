@@ -21,6 +21,9 @@ public class ReservationDB {
 	@Column(name = "deposit")
 	private float deposit;
 	
+	@Column(name = "reference_number")
+	private String referenceNumber;
+	
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private CustomerDB customer;
@@ -61,6 +64,14 @@ public class ReservationDB {
 
 	public void setActivity(ActivityDB activity) {
 		this.activity = activity;
+	}
+
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
+
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
 	}
 	
 	
