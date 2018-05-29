@@ -3,6 +3,7 @@ package hello.service.bllmodel;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import hello.dao.dbModel.EmployeeDB;
 import hello.dao.dbModel.ReservationDB;
 
 public class ActivityBModel {
@@ -11,11 +12,12 @@ public class ActivityBModel {
 	private String name;
 	private String location;
 	private String description;
-	private String pictureLink;
+	private int availableSpots;
 	private float price;
 	private int maxPersons;
 	private LocalDateTime startDate;
 	private Set<ReservationDB> reservations;
+	private EmployeeDB employee;
 	
 	public ActivityBModel() {}
 
@@ -51,14 +53,6 @@ public class ActivityBModel {
 		this.description = description;
 	}
 
-	public String getPictureLink() {
-		return pictureLink;
-	}
-
-	public void setPictureLink(String pictureLink) {
-		this.pictureLink = pictureLink;
-	}
-
 	public float getPrice() {
 		return price;
 	}
@@ -89,6 +83,22 @@ public class ActivityBModel {
 
 	public void setReservations(Set<ReservationDB> reservations) {
 		this.reservations = reservations;
+	}
+
+	public int getAvailableSpots() {
+		return availableSpots;
+	}
+
+	public void setAvailableSpots(int availableSpots) {
+		this.availableSpots = availableSpots;
+	}
+
+	public EmployeeDB getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(EmployeeDB employee) {
+		this.employee = employee;
 	}
 
 }

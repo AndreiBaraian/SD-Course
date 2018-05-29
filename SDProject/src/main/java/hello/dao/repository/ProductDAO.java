@@ -7,5 +7,6 @@ import hello.dao.dbModel.ProductDB;
 public interface ProductDAO extends JpaRepository<ProductDB,Integer>{
 	
 	public ProductDB findByName(String name);
+	public ProductDB findByNameAndModel(String name, String model);
 
 }

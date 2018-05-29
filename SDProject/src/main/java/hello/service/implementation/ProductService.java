@@ -1,5 +1,6 @@
 package hello.service.implementation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -8,7 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hello.dao.dbModel.CustomerDB;
 import hello.dao.dbModel.ProductDB;
+import hello.dao.repository.CustomerDAO;
 import hello.dao.repository.ProductDAO;
 import hello.service.bllmodel.ProductBModel;
 import hello.service.interfaces.IProductService;
@@ -18,6 +21,9 @@ public class ProductService implements IProductService {
 	
 	@Autowired
 	private ProductDAO productDAO;
+	
+	@Autowired
+	private CustomerDAO customerDAO;
 	
 	@Autowired
 	private ModelMapper mapper;
@@ -41,7 +47,7 @@ public class ProductService implements IProductService {
 	@Override
 	public boolean addProduct(ProductBModel product) {
 		ProductDB productDB = mapper.map(product, ProductDB.class);
-		if(productDAO.findByName(product.getName()) == null) {
+		if(productDAO.findByNameAndModel(product.getName(), product.getModel()) == null) {
 			productDAO.save(productDB);
 			return true;
 		}
@@ -55,12 +61,22 @@ public class ProductService implements IProductService {
 			ProductDB prodDB = productDB.get();
 			prodDB.setName(product.getName());
 			prodDB.setPricePerDay(product.getPricePerDay());
-			prodDB.setStock(product.getStock());
+			prodDB.setModel(product.getModel());
 			prodDB.setRented(product.isRented());
 			productDAO.save(prodDB);
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void rentProduct(int customerId, int productId) {
+		CustomerDB customerDB = customerDAO.getOne(customerId);
+		ProductDB productDB = productDAO.getOne(productId);
+		productDB.setRented(true);
+		productDB.setCustomer(customerDB);
+		productDB.setDate(LocalDateTime.now());
+		productDAO.save(productDB);
 	}
 
 	@Override

@@ -32,6 +32,7 @@
 					<td><input type = "submit" class="submitResetBtn" value = "Login" /></td>
 					<td><input type = "reset" class="submitResetBtn" value = "Reset" /></td>
 					<td><input type = "button" class="submitResetBtn" value = "Register" id="registerButton" /></td>
+					<td><input type = "button" class="submitResetBtn" value = "Sign Up" id="signUpButton" /></td>
 				</tr>
 			</tbody>
 		</table>
@@ -44,6 +45,12 @@
 	jQuery("#registerButton").on('click', function() {
 		
 		window.location.assign("http://localhost:8080/registerView");
+		
+	});
+	
+	jQuery("#signUpButton").on('click', function() {
+		
+		window.location.assign("http://localhost:8080/signUp");
 		
 	});
 	</script>

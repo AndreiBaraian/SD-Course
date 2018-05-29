@@ -18,6 +18,8 @@
 </head>
 	<body>
 		<form name = "myForm" id="myForm">
+			<input type="hidden" name="activityId" id="activityId" value="${activityId }">
+			<input type="hidden" name="customerId" id="customerId" value="${sessionScope.userId }">
 			<center>
 				<table width = "30%" cellpadding = "7" frame="box" rules="none">
 					<thead>
@@ -27,16 +29,8 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Name</td>
-							<td><input type="text" name="name" id="name" value="" /></td>
-						</tr>
-						<tr>
-							<td>Email</td>
-							<td><input type="text" name="email" id="email" value="" /></td>
-						</tr>
-						<tr>
-							<td>Contract Expiration Date</td>
-							<td><input type="text" name="contractExpiration" id="contractExpiration" value="" /></td>
+							<td>Deposit</td>
+							<td><input type="text" name="deposit" id="deposit" value="" /></td>
 						</tr>
 						<tr>
 	                        <td><input type="button"  class="submitResetBtn" value="Submit" id="submitButton"/></td>
@@ -49,8 +43,40 @@
 	</body>
 	
 	<script>
+	
+	var relativeURL = "reservation/?customerId=" + $("#customerId").val() + "&" + "activityId=" + $("#activityId").val();
 		
-	sendFormData("#submitButton", "employee", "#myForm");
+jQuery("#submitButton").on("click", function() {
+		
+		var myData = $("#myForm").serializeArray().reduce(function(obj, item) {
+		    obj[item.name] = item.value;
+		    return obj;
+		}, {});
+		
+		console.log(JSON.stringify(myData));
+		//console.log(relativeURL);
+		
+		$.ajax({
+			type : "POST",
+			contentType : "application/json",
+			url : "http://localhost:8080/" + relativeURL,
+			data : JSON.stringify(myData),
+			dataType : 'html',
+			timeout : 100000,
+			success : function(response) {
+				$("#root").html(response);
+				console.log("SUCCESS: ", response);
+			},
+			error : function(xhr, status, error) {
+				
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+		});
+		
+	}); 
+	
 	</script>
 	
 </html>

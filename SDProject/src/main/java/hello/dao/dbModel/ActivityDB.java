@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,14 +35,14 @@ public class ActivityDB {
 	@Column(name = "description")
 	private String description;
 	
-	@Column(name = "picture_link")
-	private String pictureLink;
-	
 	@Column(name = "price")
 	private float price;
 	
 	@Column(name = "max_persons")
 	private int maxPersons;
+	
+	@Column(name = "available_spots")
+	private int availableSpots;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
 	@Column(name = "start_date")
@@ -49,6 +51,10 @@ public class ActivityDB {
 	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "activity")
 	private Set<ReservationDB> reservations;
+	
+	@ManyToOne
+	@JoinColumn(name = "employee_id")
+	private EmployeeDB employee;
 	
 	public ActivityDB() {}
 
@@ -84,14 +90,6 @@ public class ActivityDB {
 		this.description = description;
 	}
 
-	public String getPictureLink() {
-		return pictureLink;
-	}
-
-	public void setPictureLink(String pictureLink) {
-		this.pictureLink = pictureLink;
-	}
-
 	public float getPrice() {
 		return price;
 	}
@@ -122,6 +120,22 @@ public class ActivityDB {
 
 	public void setReservations(Set<ReservationDB> reservations) {
 		this.reservations = reservations;
+	}
+
+	public int getAvailableSpots() {
+		return availableSpots;
+	}
+
+	public void setAvailableSpots(int availableSpots) {
+		this.availableSpots = availableSpots;
+	}
+
+	public EmployeeDB getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(EmployeeDB employee) {
+		this.employee = employee;
 	}
 	
 }

@@ -13,13 +13,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @DiscriminatorValue("customer")
 public class CustomerDB extends UserDB {
-	
+
 	@Column(name = "balance")
 	private int balance;
 	
 	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL, mappedBy="customer")
 	private Set<ReservationDB> reservations;
+	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="customer")
+	private Set<ProductDB> products;
 
 	public CustomerDB() {}
 
@@ -37,6 +41,14 @@ public class CustomerDB extends UserDB {
 
 	public void setReservations(Set<ReservationDB> reservations) {
 		this.reservations = reservations;
+	}
+
+	public Set<ProductDB> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<ProductDB> products) {
+		this.products = products;
 	}
 	
 }

@@ -18,35 +18,31 @@
 	<%--<% response.setIntHeader("Refresh", 10); --%>
 	<section style="width: 250px">
 	<ul class="sidebar-menu">
-		<li class="sidebar-header">Admin</li>
+		<li class="sidebar-header">Employee</li>
 
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Employees </span>
+			<i class="glyphicon glyphicon-calendar"></i><span> Activities </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/listEmployees" target="page">
-			<span>View Employees</span>
+			<li><a href="/listActivities" target="page">
+			<span>View Activities</span>
 			</a>
 		</ul>
 		<ul class="sidebar-submenu">
-			<li><a href="/addEmployeeView" target="page">
-			<span>Add Employee</span>
+			<li><a href="/addActivityView" target="page">
+			<span>Add Activity</span>
 			</a>
 		</ul>
 		</li>
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Products </span>
+			<i class="glyphicon glyphicon-calendar"></i><span>Rented equipment</span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/listProducts" target="page">
-			<span>View Products</span>
+			<li><a href="/listCustomers" target="page">
+			<span>View Customers</span>
 			</a>
 		</ul>
-		<ul class="sidebar-submenu">
-			<li><a href="/addProductView" target="page">
-			<span>Add Product</span>
-			</a>
-		</ul>
+		
 		</li>
 		
 		<li><a href="#">

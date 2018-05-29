@@ -51,6 +51,42 @@ public class HelloController {
 		return mv;
 	}
 	
+	@RequestMapping("/mainEmployeeMenu")
+	public ModelAndView mainEmployeeMenu() {
+		ModelAndView mv = new ModelAndView("mainEmployeeMenu");
+		return mv;
+	}
+	
+	@RequestMapping("/mainEmployeePage")
+	public ModelAndView mainEmployeePage() {
+		ModelAndView mv = new ModelAndView("mainEmployeePage");
+		return mv;
+	}
+	
+	@RequestMapping("/mainCustomerPage")
+	public ModelAndView mainCustomerPage() {
+		ModelAndView mv = new ModelAndView("mainCustomerPage");
+		return mv;
+	}
+	
+	@RequestMapping("/mainCustomerMenu")
+	public ModelAndView mainCustomerMenu() {
+		ModelAndView mv = new ModelAndView("mainCustomerMenu");
+		return mv;
+	}
+	
+	@RequestMapping("/registerView")
+	public ModelAndView registration() {
+		ModelAndView mv = new ModelAndView("registration");
+		return mv;
+	}
+	
+	@RequestMapping("/signUp")
+	public ModelAndView signUp() {
+		ModelAndView mv = new ModelAndView("signUp");
+		return mv;
+	}
+	
 	/*
 	@RequestMapping("/mainMenu")
 	public ModelAndView mainMenu() throws ParserConfigurationException, SAXException, IOException {

@@ -1,11 +1,15 @@
 package hello.dao.dbModel;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -24,6 +28,10 @@ public class EmployeeDB extends UserDB {
 	
 	@Column(name = "rating")
 	private float rating;
+	
+	@JsonBackReference
+	@OneToMany(cascade = CascadeType.ALL, mappedBy="employee")
+	private Set<ActivityDB> activities;
 	
 	public EmployeeDB() {}
 
@@ -63,6 +71,14 @@ public class EmployeeDB extends UserDB {
 	public String toString() {
 		return "EmployeeDB [token=" + token + ", contractReference=" + contractReference + ", contractExpiration="
 				+ contractExpiration + ", rating=" + rating + "]";
+	}
+
+	public Set<ActivityDB> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(Set<ActivityDB> activities) {
+		this.activities = activities;
 	}
 
 }

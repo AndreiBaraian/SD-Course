@@ -43,4 +43,9 @@ public class UserService implements IUserService {
 		return mapper.map(user, UserBModel.class);
 	}
 	
+	public int getUserIdByUsername(String username) {
+		int id = userDAO.findByUsername(username).getId();
+		return id;
+	}
+	
 }

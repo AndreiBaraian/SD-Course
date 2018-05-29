@@ -31,12 +31,12 @@
 							<td><input type="text" name="name" id="name" value="" /></td>
 						</tr>
 						<tr>
-							<td>Email</td>
-							<td><input type="text" name="email" id="email" value="" /></td>
+							<td>Model</td>
+							<td><input type="text" name="model" id="model" value="" /></td>
 						</tr>
 						<tr>
-							<td>Contract Expiration Date</td>
-							<td><input type="text" name="contractExpiration" id="contractExpiration" value="" /></td>
+							<td>Price per day</td>
+							<td><input type="text" name="pricePerDay" id="pricePerDay" value="" /></td>
 						</tr>
 						<tr>
 	                        <td><input type="button"  class="submitResetBtn" value="Submit" id="submitButton"/></td>
@@ -50,7 +50,7 @@
 	
 	<script>
 		
-	sendFormData("#submitButton", "employee", "#myForm");
+	sendFormData("#submitButton", "product", "#myForm");
 	</script>
 	
 </html>

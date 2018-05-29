@@ -18,19 +18,14 @@
 	<%--<% response.setIntHeader("Refresh", 10); --%>
 	<section style="width: 250px">
 	<ul class="sidebar-menu">
-		<li class="sidebar-header">Admin</li>
+		<li class="sidebar-header">Customer</li>
 
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Employees </span>
+			<i class="glyphicon glyphicon-calendar"></i><span> Activities </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/listEmployees" target="page">
-			<span>View Employees</span>
-			</a>
-		</ul>
-		<ul class="sidebar-submenu">
-			<li><a href="/addEmployeeView" target="page">
-			<span>Add Employee</span>
+			<li><a href="/listCustomerActivities" target="page">
+			<span>View Activities</span>
 			</a>
 		</ul>
 		</li>
@@ -38,38 +33,38 @@
 			<i class="glyphicon glyphicon-calendar"></i><span> Products </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/listProducts" target="page">
-			<span>View Products</span>
+			<li><a href="/listCustomerProducts" target="page">
+			<span>View Available Products</span>
 			</a>
 		</ul>
 		<ul class="sidebar-submenu">
-			<li><a href="/addProductView" target="page">
-			<span>Add Product</span>
+			<li><a href="/listRentedProducts" target="page">
+			<span>View Rented Products</span>
 			</a>
 		</ul>
 		</li>
 		
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Students </span>
+			<i class="glyphicon glyphicon-calendar"></i><span> Reservation </span>
 		</a>
 		<ul class="sidebar-submenu">
 			<li><a href="/listStudents" target="page">
-			<span>View Students</span>
-			</a>
-		</ul>
-		<ul class="sidebar-submenu">
-			<li><a href="/addStudentView" target="page">
-			<span>Add Students</span>
+			<span>View Reservations</span>
 			</a>
 		</ul>
 		</li>
 		
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Attendance </span>
+			<i class="glyphicon glyphicon-calendar"></i><span> Balance </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/attendance/labsDisplay" target="page">
-			<span>View Attendace</span>
+			<li><a href="/listBalance" target="page">
+			<span>View Balance</span>
+			</a>
+		</ul>
+		<ul class="sidebar-submenu">
+			<li><a href="/addBalance" target="page">
+			<span>Add Balance</span>
 			</a>
 		</ul>
 		</li>

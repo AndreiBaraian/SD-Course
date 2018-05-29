@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.apimodel.ProductAPIModel;
@@ -63,6 +65,12 @@ public class ProductController {
 		if(productService.deleteProduct(productId))
 			return ResponseEntity.status(HttpStatus.OK).build();
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, value = "/customer")
+	public ResponseEntity<ProductAPIModel> rentProduct(@RequestParam("productId") int productId, @RequestParam("customerId") int customerId){
+		productService.rentProduct(customerId, productId);
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 }

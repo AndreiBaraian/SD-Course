@@ -16,4 +16,6 @@ public interface IProductService {
 	
 	public boolean deleteProduct(int id);
 
+	void rentProduct(int customerId, int productId);
+
 }

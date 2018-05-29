@@ -57,10 +57,10 @@ public class CustomerService implements ICustomerService {
 		Optional<CustomerDB> customerDB = customerDAO.findById(id);
 		if(customerDB.isPresent()) {
 			CustomerDB custDB = customerDB.get();
-			custDB.setEmail(customer.getEmail());
+			//custDB.setEmail(customer.getEmail());
 			custDB.setBalance(customer.getBalance());
-			custDB.setName(customer.getName());
-			custDB.setPassword(Utils.computeHash(customer.getPassword()));
+			//custDB.setName(customer.getName());
+			//custDB.setPassword(Utils.computeHash(customer.getPassword()));
 			customerDAO.save(custDB);
 			return true;
 		}

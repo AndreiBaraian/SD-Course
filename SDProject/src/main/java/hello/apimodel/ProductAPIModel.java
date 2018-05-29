@@ -5,6 +5,7 @@ public class ProductAPIModel {
 	private int id;
 	private String name;
 	private boolean isRented;
+	private String model;
 	private float pricePerDay;
 	
 	public ProductAPIModel() {}
@@ -39,6 +40,14 @@ public class ProductAPIModel {
 
 	public void setPricePerDay(float pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
 	}
 	
 }

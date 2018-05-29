@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hello.apimodel.ActivityAPIModel;
@@ -45,8 +46,8 @@ public class ActivityController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<ActivityAPIModel> addActivity(@RequestBody ActivityAPIModel activity){
-		if(activityService.addActivity(mapper.map(activity, ActivityBModel.class)))
+	public ResponseEntity<ActivityAPIModel> addActivity(@RequestParam("employeeId") int employeeId,@RequestBody ActivityAPIModel activity){
+		if(activityService.addActivity(employeeId,mapper.map(activity, ActivityBModel.class)))
 			return ResponseEntity.status(HttpStatus.OK).body(activity);
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}

@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import hello.dao.dbModel.EmployeeDB;
 import hello.dao.dbModel.Role;
 import hello.dao.repository.EmployeeDAO;
+import hello.exception.LoginException;
+import hello.service.Utils;
 import hello.service.bllmodel.EmployeeBModel;
 import hello.service.interfaces.IEmployeeService;
 
@@ -51,8 +53,27 @@ public class EmployeeService implements IEmployeeService {
 		employeeDB.setPasswordSet(false);
 		employeeDB.setRole(Role.ROLE_EMPLOYEE);
 		employeeDB.setContractReference(getNextContractReference());
+		employeeDB.setToken(Utils.generateToken());
 		employeeDAO.save(employeeDB);
 		return true;
+	}
+	
+	@Override
+	public void register(String email, String username, String password, String token) throws LoginException {
+		EmployeeDB employeeDB = employeeDAO.findByEmail(email);
+		if(employeeDB == null)
+			throw new LoginException("User not found!");
+		if(!token.equals(employeeDB.getToken()))
+			throw new LoginException("Incorrect authentification token!");
+		EmployeeDB e = employeeDAO.findByUsername(username);
+		if(e != null)
+			throw new LoginException("Username already used");
+		else {
+			employeeDB.setPassword(Utils.computeHash(password));
+			employeeDB.setPasswordSet(true);
+			employeeDB.setUsername(username);
+			employeeDAO.save(employeeDB);
+		}
 	}
 	
 	private String getNextContractReference() {

@@ -3,6 +3,9 @@ package hello.apimodel;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import hello.dao.dbModel.EmployeeDB;
 import hello.dao.dbModel.ReservationDB;
 
 public class ActivityAPIModel {
@@ -11,11 +14,14 @@ public class ActivityAPIModel {
 	private String name;
 	private String location;
 	private String description;
-	private String pictureLink;
 	private float price;
 	private int maxPersons;
+	private int availableSpots;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime startDate;
 	private Set<ReservationDB> reservations;
+	private EmployeeDB employee;
 	
 	public ActivityAPIModel() {}
 
@@ -51,14 +57,6 @@ public class ActivityAPIModel {
 		this.description = description;
 	}
 
-	public String getPictureLink() {
-		return pictureLink;
-	}
-
-	public void setPictureLink(String pictureLink) {
-		this.pictureLink = pictureLink;
-	}
-
 	public float getPrice() {
 		return price;
 	}
@@ -89,6 +87,22 @@ public class ActivityAPIModel {
 
 	public void setReservations(Set<ReservationDB> reservations) {
 		this.reservations = reservations;
+	}
+
+	public int getAvailableSpots() {
+		return availableSpots;
+	}
+
+	public void setAvailableSpots(int availableSpots) {
+		this.availableSpots = availableSpots;
+	}
+
+	public EmployeeDB getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(EmployeeDB employee) {
+		this.employee = employee;
 	}
 	
 }

@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hello.dao.dbModel.ActivityDB;
+import hello.dao.dbModel.EmployeeDB;
 import hello.dao.repository.ActivityDAO;
+import hello.dao.repository.EmployeeDAO;
 import hello.service.bllmodel.ActivityBModel;
 import hello.service.interfaces.IActivityService;
 
@@ -18,6 +20,9 @@ public class ActivityService implements IActivityService {
 
 	@Autowired
 	private ActivityDAO activityDAO;
+	
+	@Autowired
+	private EmployeeDAO employeeDAO;
 	
 	@Autowired
 	private ModelMapper mapper;
@@ -33,15 +38,18 @@ public class ActivityService implements IActivityService {
 	public ActivityBModel getActivityById(int id) {
 		Optional<ActivityDB> activityDB = activityDAO.findById(id);
 		if(activityDB.isPresent())
-			return mapper.map(activityDB, ActivityBModel.class);
+			return mapper.map(activityDB.get(), ActivityBModel.class);
 		return null;
 	}
 
 	@Override
-	public boolean addActivity(ActivityBModel activity) {
+	public boolean addActivity(int employeeId, ActivityBModel activity) {
 		ActivityDB activityDB = mapper.map(activity, ActivityDB.class);
 		if(activityDAO.findByName(activity.getName()) != null)
 			return false;
+		activityDB.setAvailableSpots(activityDB.getMaxPersons());
+		EmployeeDB e = employeeDAO.getOne(employeeId);
+		activityDB.setEmployee(e);
 		activityDAO.save(activityDB);
 		return true;
 	}

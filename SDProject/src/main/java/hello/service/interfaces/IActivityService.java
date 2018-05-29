@@ -10,10 +10,10 @@ public interface IActivityService {
 	
 	public ActivityBModel getActivityById(int id);
 	
-	public boolean addActivity(ActivityBModel activity);
-	
 	public boolean updateActivity(int id, ActivityBModel activity);
 	
 	public boolean deleteActivity(int id);
+
+	boolean addActivity(int employeeId, ActivityBModel activity);
 
 }

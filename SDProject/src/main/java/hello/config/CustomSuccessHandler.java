@@ -39,29 +39,36 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         HttpSession session = request.getSession();
         
-        //session.setAttribute("userId", Integer.toString(userService.getUserIdByEmail(authentication.getName())));
+        session.setAttribute("userId", Integer.toString(userService.getUserIdByUsername(authentication.getName())));
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
     protected String determineTargetUrl(Authentication authentication) {
         boolean isAdmin = false;
-        boolean isStudent = false;
+        boolean isEmployee = false;
+        boolean isCustomer = false;
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
             	isAdmin = true;
                 break;
-            } else if (grantedAuthority.getAuthority().equals("ROLE_STUDENT")) {
-            	isStudent = true;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_EMPLOYEE")) {
+            	isEmployee = true;
                 break;
+            }
+            else if (grantedAuthority.getAuthority().equals("ROLE_CUSTOMER")) {
+            	isCustomer = true;
+            	break;
             }
         }
 
         if (isAdmin) {
             return "/mainAdminPage";
-        } else if (isStudent) {
-            return "/mainCustomerPage";
+        } else if (isEmployee) {
+            return "/mainEmployeePage";
+        } else if(isCustomer) {
+        	return "/mainCustomerPage";
         } else {
             throw new IllegalStateException();
         }

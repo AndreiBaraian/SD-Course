@@ -1,11 +1,17 @@
 package hello.dao.dbModel;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "products")
@@ -19,14 +25,22 @@ public class ProductDB {
 	@Column(name = "name")
 	private String name;
 	
-	@Column(name = "stock")
-	private int stock;
+	@Column(name = "model")
+	private String model;
 	
 	@Column(name = "is_rented")
 	private boolean isRented;
 	
 	@Column(name = "price_per_day")
 	private float pricePerDay;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm")
+	@Column(name = "start_date_rental")
+	private LocalDateTime date;
+	
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private CustomerDB customer;
 	
 	public ProductDB() {}
 	
@@ -55,12 +69,28 @@ public class ProductDB {
 		this.pricePerDay = pricePerDay;
 	}
 
-	public int getStock() {
-		return stock;
+	public String getModel() {
+		return model;
 	}
 
-	public void setStock(int stock) {
-		this.stock = stock;
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public CustomerDB getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(CustomerDB customer) {
+		this.customer = customer;
 	}
 	
 	
