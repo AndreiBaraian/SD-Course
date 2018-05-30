@@ -40,6 +40,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession();
         
         session.setAttribute("userId", Integer.toString(userService.getUserIdByUsername(authentication.getName())));
+        session.setAttribute("nameOfUser", authentication.getName());
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 

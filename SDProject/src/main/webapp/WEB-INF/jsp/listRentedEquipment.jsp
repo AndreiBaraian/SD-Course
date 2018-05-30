@@ -17,11 +17,12 @@
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Laboratories</title>
+<title>List Products</title>
 </head>
 <body>
 	<table border="2" class="hoverTable">
 		<thead>
+		
 			<tr>
 				<th>Select</th>
 				<th>Name</th>
@@ -35,14 +36,9 @@
 	</table>
 	
 	<div>
-	
-	<button type="button" class="deleteBtn" id="delete-btn"
-				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Product
-	</button>
-	
+	<input type="hidden" name="customerId" id="customerId" value="${customerId }">
 	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify Product</button>
+			style="width: 300px; position: relative; right: 400px;padding: 20px" >Return equipment</button>
 					
 	</div>
 	
@@ -56,7 +52,7 @@
 	            dataType: 'JSON',
 	            success: function(data){
 	                $(data).each(function(){ 
-	                	
+	                	console.log(data);
 	                	var dispRented = '';
 	                	if(this.rented)
 	                		dispRented = "true";
@@ -73,35 +69,6 @@
 
 	        });
 	    });
-	
-		jQuery("#delete-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			
-			$.ajax({
-				type : "DELETE",
-				contentType : "application/json",
-				url : "http://localhost:8080/product/" + id,
-				dataType : 'json',
-				timeout : 100000,
-				success : function(response) {
-					console.log("SUCCESS: ", response);
-				},
-				error : function(e) {
-					console.log("ERROR: ", e);
-				},
-				done : function(e) {
-					console.log("DONE");
-				}
-			});
-		});
 		
 		jQuery("#modify-btn").on('click', function() {
 			var id;
@@ -114,7 +81,26 @@
 				}
 			});
 			//console.log(id);
-			window.location.assign("http://localhost:8080/modifyProduct/" + id);
+			
+			var relativeURL = "?productId=" + id + "&" + "customerId=" + $("#customerId").val();
+			console.log(relativeURL);
+			
+			
+			$.ajax({
+
+	            url: 'http://localhost:8080/product/customer/' + relativeURL,
+	            type: 'POST',
+	            dataType: 'JSON',
+	            success: function(data){
+	                console.log("SUCCESS" + data);
+	                alert("The total price is " + data);
+	            },
+	            error: function(e){
+	                console.log("EROOR: " + e);
+	            }
+
+	        });
+			
 		});
 		
 		

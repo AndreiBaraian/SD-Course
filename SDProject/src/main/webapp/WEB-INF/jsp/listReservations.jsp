@@ -14,30 +14,31 @@
 <link rel="stylesheet" href="/css/modify-btn.css">
 <link rel="stylesheet" href="/css/checkbox-style.css">
 <link rel="stylesheet" href="/css/delete-btn.css">
-<link rel="stylesheet" href="/css/approve-btn.css">
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Customers</title>
+<title>List Reservations</title>
 </head>
 <body>
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
-				<th>Select</th>
 				<th>Name</th>
+				<th>Location</th>
+				<th>Description</th>
+				<th>Price</th>
+				<th>Date</th>
+				<th>Max Persons</th>
+				<th>Available Spots</th>
 			</tr>
 		</thead>
-		<tbody id = "customer">
+		<tbody id = "activity">
 		</tbody>
 	</table>
 	
 	<div>
 	
-	<button type="button" class="approveBtn" id="approve-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >View Rented Equipments</button>
 	
-					
 	</div>
 	
 	<script>
@@ -45,13 +46,12 @@
 	 $(document).ready(function(){
 	        $.ajax({
 
-	            url: 'http://localhost:8080/customer',
+	            url: 'http://localhost:8080/activity',
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){
-	            	console.log(data);
 	                $(data).each(function(){ 
-	                    $('#customer').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>');
+	                    $('#activity').append('<tr class="row-which-triggers-popup" onclick="goToCustomers(' + this.id + ')"><td>' + this.name + '</td><td>' + this.location + '</td><td>' + this.description + '</td><td>' + this.price + '</td><td>' + this.startDate + '</td><td>' +  this.maxPersons + '</td><td>' + this.availableSpots + '</td></tr>');
 	                });
 
 	            },
@@ -61,35 +61,12 @@
 
 	        });
 	    });
-	
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/addReservationView/" + id);
-		});
-		
-		jQuery("#approve-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/viewRentedEquipments/" + id);
-		});
+	 
+	 function goToCustomers(id) {
+			window.location.assign("http://localhost:8080/viewActivityCustomers/" + id);
+		}
+	 
+	 
 		
 		
 		$('input[type="checkbox"]').on('change', function() {

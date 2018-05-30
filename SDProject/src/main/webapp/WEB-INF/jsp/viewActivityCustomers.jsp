@@ -24,7 +24,6 @@
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
-				<th>Select</th>
 				<th>Name</th>
 			</tr>
 		</thead>
@@ -34,24 +33,25 @@
 	
 	<div>
 	
-	<button type="button" class="approveBtn" id="approve-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >View Rented Equipments</button>
 	
+	<input type="hidden" name="activityId" id="activityId" value="${activityId }">
 					
 	</div>
 	
 	<script>
 	
+	var relativeURL = "?activityId=" + $("#activityId").val();
+	
 	 $(document).ready(function(){
 	        $.ajax({
 
-	            url: 'http://localhost:8080/customer',
+	            url: 'http://localhost:8080/reservation/activity/' + $("#activityId").val(),
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){
 	            	console.log(data);
 	                $(data).each(function(){ 
-	                    $('#customer').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>');
+	                    $('#customer').append('<tr><td>' + this.customer.name + '</td><td>');
 	                });
 
 	            },
@@ -62,34 +62,6 @@
 	        });
 	    });
 	
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/addReservationView/" + id);
-		});
-		
-		jQuery("#approve-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/viewRentedEquipments/" + id);
-		});
 		
 		
 		$('input[type="checkbox"]').on('change', function() {

@@ -33,11 +33,11 @@ public class CustomerService implements ICustomerService {
 
 	@Override
 	public CustomerBModel getCustomerById(int id) {
-		Optional<CustomerDB> reservationDB = customerDAO.findById(id);
-		if(!reservationDB.isPresent())
+		Optional<CustomerDB> customerDB = customerDAO.findById(id);
+		if(!customerDB.isPresent())
 			return null;
-		CustomerBModel reservation = mapper.map(reservationDB.get(), CustomerBModel.class);
-		return reservation;
+		CustomerBModel customer = mapper.map(customerDB.get(), CustomerBModel.class);
+		return customer;
 	}
 
 	@Override

@@ -58,4 +58,17 @@ public class CustomerViewController {
 		return mv;
 	}
 	
+	@RequestMapping("/listCustomers")
+	public ModelAndView listCustomer() {
+		ModelAndView mv = new ModelAndView("listCustomers");
+		return mv;
+	}
+	
+	@RequestMapping("/viewRentedEquipments/{customerId}")
+	public ModelAndView viewRentedEquipment(@PathVariable("customerId") int customerId) {
+		ModelAndView mv = new ModelAndView("listRentedEquipment");
+		mv.addObject("customerId",customerId);
+		return mv;
+	}
+	
 }

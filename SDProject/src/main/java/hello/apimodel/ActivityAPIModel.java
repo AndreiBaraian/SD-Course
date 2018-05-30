@@ -20,8 +20,8 @@ public class ActivityAPIModel {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private LocalDateTime startDate;
-	private Set<ReservationDB> reservations;
-	private EmployeeDB employee;
+	//private Set<ReservationDB> reservations;
+	//private EmployeeDB employee;
 	
 	public ActivityAPIModel() {}
 
@@ -81,28 +81,12 @@ public class ActivityAPIModel {
 		this.startDate = startDate;
 	}
 
-	public Set<ReservationDB> getReservations() {
-		return reservations;
-	}
-
-	public void setReservations(Set<ReservationDB> reservations) {
-		this.reservations = reservations;
-	}
-
 	public int getAvailableSpots() {
 		return availableSpots;
 	}
 
 	public void setAvailableSpots(int availableSpots) {
 		this.availableSpots = availableSpots;
-	}
-
-	public EmployeeDB getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(EmployeeDB employee) {
-		this.employee = employee;
 	}
 	
 }

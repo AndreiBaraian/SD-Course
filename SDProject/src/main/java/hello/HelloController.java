@@ -1,37 +1,20 @@
 package hello;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.xml.sax.SAXException;
 
-import hello.service.bllmodel.UserBModel;
-import hello.service.interfaces.IProfileService;
 import hello.service.interfaces.IUserService;
-import hello.utilities.FunctionalityFilter;
-import hello.utilities.MenuItem;
-import hello.utilities.MenuXMLParser;
-import hello.utilities.Option;
 
 @Controller
 public class HelloController {
 	
-	private Map<MenuItem, List<Option>> filteredFunctions = null;
-	
 	@Autowired
 	private IUserService userService;
-	
-	@Autowired
-	private IProfileService profileService;
 
 	@RequestMapping("/")
 	public ModelAndView index() {
@@ -104,8 +87,11 @@ public class HelloController {
 	*/
 	
 	@RequestMapping("/hello")
-	public ModelAndView hello() {
+	public ModelAndView hello(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String name = (String) session.getAttribute("nameOfUser");
 		ModelAndView mv = new ModelAndView("hello");
+		mv.addObject("theName",name);
 		return mv;
 	}
 	

@@ -18,4 +18,8 @@ public interface IProductService {
 
 	void rentProduct(int customerId, int productId);
 
+	List<ProductBModel> getProductsByCustomerId(int customerId);
+
+	int returnProduct(int customerId, int productId);
+
 }

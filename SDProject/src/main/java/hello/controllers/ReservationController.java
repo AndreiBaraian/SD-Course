@@ -66,4 +66,18 @@ public class ReservationController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/activity/{activityId}")
+	public ResponseEntity<List<ReservationAPIModel>> getReservationsByActivity(@PathVariable("activityId") int activityId){
+		List<ReservationBModel> list = reservationService.getReservationsByActivity(activityId);
+		List<ReservationAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, ReservationAPIModel.class)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/customer/{customerId}")
+	public ResponseEntity<List<ReservationAPIModel>> getReservationsByCustomer(@PathVariable("customerId") int customerId){
+		List<ReservationBModel> list = reservationService.getReservationsByCustomer(customerId);
+		List<ReservationAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, ReservationAPIModel.class)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
+	}
+	
 }

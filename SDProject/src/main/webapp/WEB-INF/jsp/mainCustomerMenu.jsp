@@ -48,7 +48,7 @@
 			<i class="glyphicon glyphicon-calendar"></i><span> Reservation </span>
 		</a>
 		<ul class="sidebar-submenu">
-			<li><a href="/listStudents" target="page">
+			<li><a href="/listReservationsCustomer" target="page">
 			<span>View Reservations</span>
 			</a>
 		</ul>

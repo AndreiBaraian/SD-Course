@@ -98,6 +98,20 @@ public class ReservationService implements IReservationService {
 		}
 		return newSysReference.toString();
 	}
+	
+	@Override
+	public List<ReservationBModel> getReservationsByActivity(int activityId) {
+		List<ReservationDB> list = reservationDAO.findByActivityId(activityId);
+		List<ReservationBModel> resultList = list.parallelStream().map(x -> mapper.map(x, ReservationBModel.class)).collect(Collectors.toList());
+		return resultList;
+	}
+	
+	@Override
+	public List<ReservationBModel> getReservationsByCustomer(int customerId) {
+		List<ReservationDB> list = reservationDAO.findByCustomerId(customerId);
+		List<ReservationBModel> resultList = list.parallelStream().map(x -> mapper.map(x, ReservationBModel.class)).collect(Collectors.toList());
+		return resultList;
+	}
 
 	@Override
 	public boolean updateReservation(int id, ReservationBModel reservation) {

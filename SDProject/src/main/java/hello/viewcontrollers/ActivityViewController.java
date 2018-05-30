@@ -27,4 +27,11 @@ public class ActivityViewController {
 		return mv;
 	}
 	
+	
+	@RequestMapping("/viewActivityCustomers/{activityId}")
+	public ModelAndView viewActivityCustomers(@PathVariable("activityId") int activityId) {
+		ModelAndView mv = new ModelAndView("viewActivityCustomers");
+		mv.addObject("activityId",activityId);
+		return mv;
+	}
 }

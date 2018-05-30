@@ -78,6 +78,27 @@ public class ProductService implements IProductService {
 		productDB.setDate(LocalDateTime.now());
 		productDAO.save(productDB);
 	}
+	
+	@Override
+	public int returnProduct(int customerId, int productId) {
+		CustomerDB customerDB = customerDAO.getOne(customerId);
+		ProductDB productDB = productDAO.getOne(productId);
+		productDB.setRented(false);
+		productDB.setCustomer(null);
+		LocalDateTime now = LocalDateTime.now();
+		long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(productDB.getDate(),now);
+		int price = (int) (productDB.getPricePerDay() * ((int)daysBetween + 1));
+		System.out.println(daysBetween);
+		productDAO.save(productDB);
+		return price;
+	}
+	
+	@Override
+	public List<ProductBModel> getProductsByCustomerId(int customerId) { 
+		List<ProductDB> list = productDAO.findByCustomerId(customerId);
+		List<ProductBModel> resultList = list.parallelStream().map(x -> mapper.map(x, ProductBModel.class)).collect(Collectors.toList());
+		return resultList;
+	}
 
 	@Override
 	public boolean deleteProduct(int id) {

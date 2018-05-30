@@ -17,20 +17,19 @@
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Laboratories</title>
+<title>List Resrevations</title>
 </head>
 <body>
 	<table border="2" class="hoverTable">
 		<thead>
 			<tr>
 				<th>Select</th>
-				<th>Name</th>
-				<th>Price per day</th>
-				<th>Model</th>
-				<th>Rented</th>
+				<th>Activity Name</th>
+				<th>Activity Date</th>
+				<th>Reference Number</th>
 			</tr>
 		</thead>
-		<tbody id = "product">
+		<tbody id = "reservation">
 		</tbody>
 	</table>
 	
@@ -38,12 +37,11 @@
 	
 	<button type="button" class="deleteBtn" id="delete-btn"
 				style="width: 300px; position: relative; left: 20px;">
-				<span class="glyphicon glyphicon-trash"></span> Delete Product
+				<span class="glyphicon glyphicon-trash"></span> Delete Reservation
 	</button>
 	
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify Product</button>
-					
+	
+	<input type="hidden" name="customerId" id="customerId" value="${sessionScope.userId }">		
 	</div>
 	
 	<script>
@@ -51,19 +49,12 @@
 	 $(document).ready(function(){
 	        $.ajax({
 
-	            url: 'http://localhost:8080/product',
+	            url: 'http://localhost:8080/reservation/customer/' + $("#customerId").val(),
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){
 	                $(data).each(function(){ 
-	                	
-	                	var dispRented = '';
-	                	if(this.rented)
-	                		dispRented = "true";
-	                	else
-	                		dispRented = "false";
-	                	
-	                    $('#product').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.name + '</td><td>' + this.pricePerDay + '</td><td>' + this.model + '</td><td>' + dispRented + '</td></tr>');
+	                    $('#reservation').append('<tr><td><input type="radio" name="id" value="' + this.id + '"</td><td>' + this.activity.name + '</td><td>' + this.activity.startDate + '</td><td>' + this.referenceNumber + '</td></tr>');
 	                });
 
 	            },
@@ -88,7 +79,7 @@
 			$.ajax({
 				type : "DELETE",
 				contentType : "application/json",
-				url : "http://localhost:8080/product/" + id,
+				url : "http://localhost:8080/reservation/" + id,
 				dataType : 'json',
 				timeout : 100000,
 				success : function(response) {
@@ -102,21 +93,6 @@
 				}
 			});
 		});
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/modifyProduct/" + id);
-		});
-		
 		
 		$('input[type="checkbox"]').on('change', function() {
 			   $('input[type="checkbox"]').not(this).prop('checked', false);

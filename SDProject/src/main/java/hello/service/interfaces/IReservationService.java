@@ -16,4 +16,8 @@ public interface IReservationService {
 	
 	public boolean deleteReservation(int id);
 
+	List<ReservationBModel> getReservationsByActivity(int activityId);
+
+	List<ReservationBModel> getReservationsByCustomer(int customerId);
+
 }

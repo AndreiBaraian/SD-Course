@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>
-	Hello dear  user <!--  <c:out value="${msg}"/>!   -->
+	Hello dear  <c:out value="${theName}"/>
 	</h1>
 </body>
 </html>

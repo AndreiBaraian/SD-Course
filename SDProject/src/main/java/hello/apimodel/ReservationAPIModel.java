@@ -1,14 +1,12 @@
 package hello.apimodel;
 
-import hello.service.bllmodel.ActivityBModel;
-import hello.service.bllmodel.CustomerBModel;
-
 public class ReservationAPIModel {
 
 	private int id;
 	private float deposit;
-	private CustomerBModel customer;
-	private ActivityBModel activity;
+	private String referenceNumber;
+	private CustomerAPIModel customer;
+	private ActivityAPIModel activity;
 	
 	public ReservationAPIModel() {}
 
@@ -28,19 +26,27 @@ public class ReservationAPIModel {
 		this.deposit = deposit;
 	}
 
-	public CustomerBModel getCustomer() {
+	public String getReferenceNumber() {
+		return referenceNumber;
+	}
+
+	public void setReferenceNumber(String referenceNumber) {
+		this.referenceNumber = referenceNumber;
+	}
+
+	public CustomerAPIModel getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(CustomerBModel customer) {
+	public void setCustomer(CustomerAPIModel customer) {
 		this.customer = customer;
 	}
 
-	public ActivityBModel getActivity() {
+	public ActivityAPIModel getActivity() {
 		return activity;
 	}
 
-	public void setActivity(ActivityBModel activity) {
+	public void setActivity(ActivityAPIModel activity) {
 		this.activity = activity;
 	}
 	

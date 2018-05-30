@@ -73,4 +73,17 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/customer")
+	public ResponseEntity<List<ProductAPIModel>> rentProduct(@RequestParam("customerId") int customerId){		
+		List<ProductBModel> list = productService.getProductsByCustomerId(customerId);
+		List<ProductAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, ProductAPIModel.class)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/customer")
+	public ResponseEntity<Integer> returnProduct(@RequestParam("productId") int productId, @RequestParam("customerId") int customerId){
+		int price = productService.returnProduct(customerId, productId);
+		return ResponseEntity.status(HttpStatus.OK).body(price);
+	}
+	
 }

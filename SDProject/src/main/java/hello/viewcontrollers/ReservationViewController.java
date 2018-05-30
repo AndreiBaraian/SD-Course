@@ -15,4 +15,16 @@ public class ReservationViewController {
 		return mv;
 	}
 	
+	@RequestMapping("/listReservations")
+	public ModelAndView listReservations() {
+		ModelAndView mv = new ModelAndView("listReservations");
+		return mv;
+	}
+	
+	@RequestMapping("/listReservationsCustomer")
+	public ModelAndView listReservationsCustomer() {
+		ModelAndView mv = new ModelAndView("listReservationsCustomer");
+		return mv;
+	}
+	
 }
