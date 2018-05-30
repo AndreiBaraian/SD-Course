@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="/css/table-style.css">
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 
-<title>List Laboratories</title>
+<title>List Activities</title>
 </head>
 <body>
 	<table border="2" class="hoverTable">
@@ -46,7 +46,8 @@
 	
 	<button type="button" class="modifyBtn" id="modify-btn"
 			style="width: 300px; position: relative; right: 400px;padding: 20px" >Modify Activity</button>
-					
+	
+	<input type="hidden" name="employeeId" id="employeeId" value="${sessionScope.userId }">		
 	</div>
 	
 	<script>
@@ -54,7 +55,7 @@
 	 $(document).ready(function(){
 	        $.ajax({
 
-	            url: 'http://localhost:8080/activity',
+	            url: 'http://localhost:8080/activity/employee/' + $("#employeeId").val(),
 	            type: 'GET',
 	            dataType: 'JSON',
 	            success: function(data){

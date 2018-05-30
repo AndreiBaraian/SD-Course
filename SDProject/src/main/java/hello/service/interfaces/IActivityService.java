@@ -16,4 +16,6 @@ public interface IActivityService {
 
 	boolean addActivity(int employeeId, ActivityBModel activity);
 
+	List<ActivityBModel> getActivitiesByEmployee(int employeeId);
+
 }

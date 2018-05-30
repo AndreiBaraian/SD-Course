@@ -50,31 +50,6 @@
 		</li>
 		
 		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Students </span>
-		</a>
-		<ul class="sidebar-submenu">
-			<li><a href="/listStudents" target="page">
-			<span>View Students</span>
-			</a>
-		</ul>
-		<ul class="sidebar-submenu">
-			<li><a href="/addStudentView" target="page">
-			<span>Add Students</span>
-			</a>
-		</ul>
-		</li>
-		
-		<li><a href="#">
-			<i class="glyphicon glyphicon-calendar"></i><span> Attendance </span>
-		</a>
-		<ul class="sidebar-submenu">
-			<li><a href="/attendance/labsDisplay" target="page">
-			<span>View Attendace</span>
-			</a>
-		</ul>
-		</li>
-		
-		<li><a href="#">
 			<i class="glyphicon glyphicon-envelope"></i><span> Mailbox</span>
 		</a>
 		</li>

@@ -66,4 +66,11 @@ public class ActivityController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/employee/{employeeId}")
+	public ResponseEntity<List<ActivityAPIModel>> getActivitiesByEmployee(@PathVariable("employeeId") int employeeId) {
+		List<ActivityBModel> list = activityService.getActivitiesByEmployee(employeeId);
+		List<ActivityAPIModel> resultList = list.parallelStream().map(x -> mapper.map(x, ActivityAPIModel.class)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(resultList);
+	}
+	
 }

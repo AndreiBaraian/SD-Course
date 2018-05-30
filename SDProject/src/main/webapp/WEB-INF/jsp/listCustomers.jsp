@@ -61,21 +61,6 @@
 
 	        });
 	    });
-	
-		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			window.location.assign("http://localhost:8080/addReservationView/" + id);
-		});
 		
 		jQuery("#approve-btn").on('click', function() {
 			var id;

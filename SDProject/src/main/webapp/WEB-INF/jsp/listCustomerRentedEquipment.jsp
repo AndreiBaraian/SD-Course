@@ -36,10 +36,8 @@
 	</table>
 	
 	<div>
-	<input type="hidden" name="customerId" id="customerId" value="${customerId }">
-	<button type="button" class="modifyBtn" id="modify-btn"
-			style="width: 300px; position: relative; right: 400px;padding: 20px" >Return equipment</button>
-					
+	<input type="hidden" name="customerId" id="customerId" value="${sessionScope.userId }">
+		
 	</div>
 	
 	<script>
@@ -70,38 +68,6 @@
 	        });
 	    });
 		
-		jQuery("#modify-btn").on('click', function() {
-			var id;
-			$('input[type=radio]').each(function() {
-				if (this.checked) {
-					id = $(this).val();
-					this.checked = false;
-					this.disabled = true;
-					
-				}
-			});
-			//console.log(id);
-			
-			var relativeURL = "?productId=" + id + "&" + "customerId=" + $("#customerId").val();
-			console.log(relativeURL);
-			
-			
-			$.ajax({
-
-	            url: 'http://localhost:8080/product/customer/' + relativeURL,
-	            type: 'POST',
-	            dataType: 'JSON',
-	            success: function(data){
-	                console.log("SUCCESS" + data);
-	                alert("The total price is " + data);
-	            },
-	            error: function(e){
-	                console.log("EROOR: " + e);
-	            }
-
-	        });
-			
-		});
 		
 		
 		$('input[type="checkbox"]').on('change', function() {

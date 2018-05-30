@@ -71,4 +71,10 @@ public class CustomerViewController {
 		return mv;
 	}
 	
+	@RequestMapping("/listRentedProducts")
+	public ModelAndView listRentedEquipmentss() {
+		ModelAndView mv = new ModelAndView("listCustomerRentedEquipment");
+		return mv;
+	}
+	
 }

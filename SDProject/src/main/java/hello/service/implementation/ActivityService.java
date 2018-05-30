@@ -33,6 +33,13 @@ public class ActivityService implements IActivityService {
 		List<ActivityBModel> resultList = list.parallelStream().map(x -> mapper.map(x, ActivityBModel.class)).collect(Collectors.toList());
 		return resultList;
 	}
+	
+	@Override
+	public List<ActivityBModel> getActivitiesByEmployee(int employeeId) {
+		List<ActivityDB> list = activityDAO.findByEmployeeId(employeeId);
+		List<ActivityBModel> resultList = list.parallelStream().map(x -> mapper.map(x, ActivityBModel.class)).collect(Collectors.toList());
+		return resultList;
+	}
 
 	@Override
 	public ActivityBModel getActivityById(int id) {
